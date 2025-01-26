@@ -8,6 +8,7 @@ public class BoardGenerator : MonoBehaviour
     [Header("CUSTOMIZE")]
     [SerializeField] private int numRow;
     [SerializeField] private int numColumn;
+    [SerializeField] private float distanceRatio;
 
     private GameObject[] tiles;
     private int _numTile;
@@ -39,8 +40,8 @@ public class BoardGenerator : MonoBehaviour
             {
                 int tileIndex = j + i * numColumn;
 
-                position.x = (-(numColumn - 1) / 2 + j) * _tileSize.x;
-                position.z = ((numRow - 1) / 2 - i) * _tileSize.z;
+                position.x = (-(numColumn - 1) / 2 + (j + distanceRatio)) * _tileSize.x;
+                position.z = ((numRow - 1) / 2 - (i + distanceRatio)) * _tileSize.z;
 
                 tiles[tileIndex].transform.position = position;
             }
