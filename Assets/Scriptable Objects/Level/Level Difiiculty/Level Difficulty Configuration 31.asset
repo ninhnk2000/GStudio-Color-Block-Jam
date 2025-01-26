@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d11e07b994d983d458f79a4cbe5daca9, type: 3}
+  m_Name: Level Difficulty Configuration 31
+  m_EditorClassIdentifier: 
+  levelPhases:
+  - phaseIndex: 0
+    endProgress: 0.2
+  - phaseIndex: 2
+    endProgress: 0.73
+  - phaseIndex: 7
+    endProgress: 1
+  screwPortFactionDifficultyModifier: 0
+  ratioGeneratingSameFactionForTripleNoBlockedScrewStartGame: 1

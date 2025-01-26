@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpacePuple
+  m_Shader: {fileID: 4800000, guid: cd7f64c19f9d57e4ab9338f99aea8c43, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _ENABLECLOUD222_ON
+  - _ENABLEFOG1_ON
+  - _ENABLEHORIZONMASK_ON
+  - _ENABLESUNDIRECTION_ON
+  - _ENEABLESKYTONY_ON
+  - _ENEABLESTARS_ON
+  - _ENEABLETOONSKY_ON
+  - _OUTLINEONOFF_ON
+  - _RIMONOFF_ON
+  - _SHADOWONOFF_ON
+  - _SOLIDCOLORONOFF_KEY0
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+      _Tex1:
+        m_Texture: {fileID: 8900000, guid: 5dcd6921e2b764a4290272b8ce2c88a8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _Tex2:
+        m_Texture: {fileID: 8900000, guid: cf1cdb771acc94b49ad61fe074ff2dce, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+      _Tex3:
+        m_Texture: {fileID: 8900000, guid: 8d5963a5352f3384b8d6c4c4298d7aae, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+      _BumpScale: 1
+      _Cloud222: -0.32
+      _CloudHeader: 1
+      _CloudIntensity: 1
+      _CloudIntensity1: 1
+      _CloudPosition: 0
+      _CloudRotation222: 11.22
+      _CloudRotationSpeed: 1
+      _CollorHeader: 1
+      _ColorHeader: 1
+      _Cubem: 1
+      _CubemapPosition: 0
+      _CubemapPosition1: 0
+      _Cubemapp1: 1
+      _Cutoff: 0.5
+      _DetailNormalMapScale: 1
+      _DstBlend: 0
+      _EnableCloud: 0
+      _EnableCloud222: 1
+      _EnableCloudRotation: 0
+      _EnableDirLightDirection: 0
+      _EnableFog: 0
+      _EnableFog1: 1
+      _EnableHorizonMask: 1
+      _EnableRotation: 0
+      _EnableRotation1: 0
+      _EnableStars: 0
+      _EnableStarsRotation: 0
+      _EnableStarsShine: 0
+      _EnableSun: 0
+      _EnableSunDirection: 1
+      _EnableToonSky: 0
+      _EnableToonSkyRotation: 0
+      _EnableToonySkyRotation: 0
+      _EneableSkyTony: 1
+      _EneableStars: 1
+      _EneableToonSky: 1
+      _Falloff: 1
+      _Float0: 0.5
+      _Float1: 2.17
+      _Float2: 1.9
+      _Float3: 0.91
+      _FogFill: 0
+      _FogHeader: 1
+      _FogHeight: 1
+      _FogIntensity: 0.9
+      _FogMessage: 0
+      _FogPosition: 0
+      _FogSmoothness: 0.5
+      _GlossMapScale: 1
+      _Glossiness: 0.5
+      _GlossyReflections: 1
+      _HighlightONOFF: 0
+      _HighlightSpeed: 1
+      _Highlightonoff: 0
+      _HorizonHeight: 0.22
+      _HorizonSize: 0.5
+      _LightIntensity: 50
+      _Metallic: 0
+      _Mode: 0
+      _OcclusionStrength: 1
+      _OutlineWidth: 0.5
+      _Outlineonoff: 1
+      _Parallax: 0.02
+      _Power: 0.5
+      _RimOffset: 0.4
+      _RimPower: 0.9
+      _Rimonoff: 1
+      _Rotation: 192
+      _Rotation1: 0
+      _RotationSpeed: 1
+      _RotationSpeed1: 1
+      _ShadowOffset: 0.55
+      _ShadowSoftness: 0
+      _Shadowonoff: 1
+      _ShineSpeed: 0.25260225
+      _SmoothnessTextureChannel: 0
+      _SolidColorONOFF: 0
+      _SpecularHighlights: 1
+      _SrcBlend: 1
+      _StarsHeader: 1
+      _StarsIntensity: 1
+      _StarsRotationSpeed: 1
+      _StarsShineSpeed: 0.1
+      _SunDiskSharpness: 0.75
+      _SunDiskSharpness1: 0
+      _SunDiskSize: 0.05
+      _SunDiskSize1: 0.083
+      _SunDiskSizeAdjust: 0.00408
+      _SunDiskSizeAdjust1: 0.00495
+      _SunIntensity: 0.4
+      _SunRotationH: 0
+      _SunRotationY: 115
+      _SunSharpness: 1
+      _SunSize: 0.05
+      _TextureHeader: 1
+      _ToggleSwitch0: 0
+      _ToonSkyCubemapPosition: 0
+      _ToonSkyHeader: 1
+      _ToonSkyRotationSpeed: 0.75
+      _ToonSkyRotationSpeed1: 0.75
+      _ToonySkyIntensity: 1
+      _ToonySkyRotation: 0
+      _ToonySkyRotationSpeed: 5
+      _UVSec: 0
+      _VariablesHeader: 1
+      _ZWrite: 1
+      __dirty: 0
+      _isOutlineSolid: 0
+      _isSkyTony: 0
+      _isTextureSolid: 0
+    m_Colors:
+      _Color: {r: 1, g: 1, b: 1, a: 1}
+      _Color0: {r: 1, g: 0.9889412, b: 0.14509803, a: 1}
+      _Color1: {r: 1, g: 1, b: 1, a: 1}
+      _ColorBottom: {r: 0.7582633, g: 0.7216981, b: 1, a: 1}
+      _ColorMultiply: {r: 0.9528302, g: 0.89350307, b: 0.89350307, a: 0}
+      _ColorTop: {r: 0.8666667, g: 0.8235294, b: 1, a: 0}
+      _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+      _HighlightColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+      _OutlineColor: {r: 0, g: 0, b: 0, a: 0}
+      _ShadowColor: {r: 0.1, g: 0.1, b: 0.1, a: 0}
+      _SolidColor: {r: 1, g: 1, b: 1, a: 0}
+      _SunColor: {r: 1, g: 1, b: 1, a: 1}
+      _SunColor1: {r: 0.14509803, g: 1, b: 0.6235873, a: 1}
+      _SunColor2: {r: 0.07806373, g: 1, b: 0, a: 1}
+      _Tex_HDR1: {r: 0, g: 0, b: 0, a: 0}
+      _Vector0: {r: -0.86, g: 1.05, b: -4.07, a: 0}
+      _Vector1: {r: 0.52, g: 2.29, b: -2.14, a: 0}
+      _Vector2: {r: 0.99, g: 1.85, b: 1.4, a: 0.04}
+  m_BuildTextureStacks: []
