@@ -53,7 +53,8 @@ MonoBehaviour:
     numTileZ: 1
   tilePrefab: {fileID: 2683738924053683454, guid: 2afd069626cabf34fbc47ab08308b3db, type: 3}
   blockRigidBody: {fileID: 5589559259589497264}
-  speedMultiplier: 0.6
+  speedMultiplier: 5
+  snappingLerpRatio: 0.2
 --- !u!33 &126730976145045635
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -85,7 +86,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1ab2d71c89d276242b7367e3d49a38c2, type: 2}
+  - {fileID: 2100000, guid: edc527939fe25d041bc440d59fde5297, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

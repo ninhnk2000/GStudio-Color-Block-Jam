@@ -149,4 +149,8 @@ public static class GameConstants
     #region SWIPE
     public static int TYPICAL_FRAME_MILISECOND = 13;
     #endregion
+
+    #region COLOR BLOCK JAM
+    public static float TINY_FLOAT_VALUE = 0.001f;
+    #endregion
 }

@@ -8,10 +8,30 @@ public class BaseBlock : MonoBehaviour
     [SerializeField] private Rigidbody blockRigidBody;
 
     [SerializeField] private float speedMultiplier;
+    [SerializeField] private float snappingLerpRatio;
+
+    #region PRIVATE FIELD
+    private Vector3 _snapPosition;
+    private bool _isSnapping;
+    #endregion
 
     public BlockProperty BlockProperty
     {
         get => blockProperty;
+    }
+
+    private void Update()
+    {
+        if (_isSnapping)
+        {
+            transform.position = Vector3.Lerp(transform.position, _snapPosition, snappingLerpRatio);
+
+            if (Vector3.Distance(transform.position, _snapPosition) < GameConstants.TINY_FLOAT_VALUE)
+            {
+                _isSnapping = false;
+            }
+        }
+
     }
 
     public void Move(Vector2 inputDirection)
@@ -52,6 +72,8 @@ public class BaseBlock : MonoBehaviour
         finalPosition.x = coordinator.x * tileDistance - (BlockProperty.NumTileX - 1) / 2f * tileDistance;
         finalPosition.z = coordinator.y * tileDistance + (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
 
-        transform.position = finalPosition;
+        _snapPosition = finalPosition;
+
+        _isSnapping = true;
     }
 }
