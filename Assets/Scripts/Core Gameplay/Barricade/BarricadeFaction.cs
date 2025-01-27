@@ -56,5 +56,12 @@ public class BarricadeFaction : MonoBehaviour
         _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(faction));
 
         _renderer.SetPropertyBlock(_propertyBlock);
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            BarricadeTile barricadeTile = transform.GetChild(i).GetComponent<BarricadeTile>();
+
+            barricadeTile.DisintegrationFx.GetComponent<ParticleSystemRenderer>().SetPropertyBlock(_propertyBlock);
+        }
     }
 }

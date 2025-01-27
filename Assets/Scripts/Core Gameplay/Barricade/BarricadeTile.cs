@@ -8,6 +8,11 @@ public class BarricadeTile : MonoBehaviour
 
     [SerializeField] private ParticleSystem disintegrationFx;
 
+    public ParticleSystem DisintegrationFx
+    {
+        get => disintegrationFx;
+    }
+
     private bool _isReadyToPlayFx;
 
     public Direction Direction
@@ -51,22 +56,11 @@ public class BarricadeTile : MonoBehaviour
 
         if (block != null)
         {
-            if (!_isReadyToPlayFx)
+            if (block.Faction == barricadeServiceLocator.barricadeFaction.Faction)
             {
-                _isReadyToPlayFx = true;
-            }
-            else
-            {
-                if (block.Faction == barricadeServiceLocator.barricadeFaction.Faction)
+                if (!_isReadyToPlayFx)
                 {
-                    disintegrationFx.Play();
-
-                    Tween.Delay(barricadeServiceLocator.barricade.DisintegrationDuration).OnComplete(() =>
-                    {
-                        disintegrationFx.Stop();
-
-                        _isReadyToPlayFx = false;
-                    });
+                    _isReadyToPlayFx = true;
                 }
             }
         }
