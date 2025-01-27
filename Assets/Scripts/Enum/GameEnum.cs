@@ -42,6 +42,7 @@ public class GameEnum : MonoBehaviour
         Yellow,
         Cyan,
         White,
+        Disabled,
         All,
         None
     }

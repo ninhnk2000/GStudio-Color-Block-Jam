@@ -15,9 +15,4 @@ public class BaseBarricade : MonoBehaviour
     {
         get => disintegrationDuration;
     }
-
-    public void Disintegrate()
-    {
-
-    }
 }

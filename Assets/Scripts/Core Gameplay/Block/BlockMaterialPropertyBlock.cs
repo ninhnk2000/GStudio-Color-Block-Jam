@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PrimeTween;
 using UnityEngine;
+using static GameEnum;
 
 public class BlockMaterialPropertyBlock : MonoBehaviour
 {
@@ -38,6 +39,15 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         {
             _propertyBlock = new MaterialPropertyBlock();
         }
+    }
+
+    public void SetFaction(GameFaction faction)
+    {
+        Init();
+        
+        _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(faction));
+
+        _renderer.SetPropertyBlock(_propertyBlock);
     }
 
     public void Disintegrate(Direction direction)

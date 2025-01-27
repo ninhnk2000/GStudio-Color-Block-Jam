@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using PrimeTween;
 using UnityEngine;
+using static GameEnum;
 
 public class BaseBlock : MonoBehaviour
 {
@@ -8,7 +10,8 @@ public class BaseBlock : MonoBehaviour
     [SerializeField] private BlockProperty blockProperty;
     [SerializeField] private GameObject tilePrefab;
 
-    [SerializeField] private Rigidbody blockRigidBody;
+    private Rigidbody _blockRigidBody;
+    private MeshCollider _blockCollider;
 
     [SerializeField] private float speedMultiplier;
     [SerializeField] private float snappingLerpRatio;
@@ -24,9 +27,28 @@ public class BaseBlock : MonoBehaviour
         get => blockProperty;
     }
 
+    public GameFaction Faction
+    {
+        get => blockProperty.Faction;
+    }
+
+    public static event Action disintegrateBlockEvent;
+
     private void Awake()
     {
         _tileSize = tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
+
+        _blockRigidBody = GetComponent<Rigidbody>();
+        _blockCollider = GetComponent<MeshCollider>();
+
+        _blockRigidBody.isKinematic = true;
+    }
+
+    private void OnValidate()
+    {
+        blockServiceLocator.Init();
+
+        blockServiceLocator.blockMaterialPropertyBlock.SetFaction(blockProperty.Faction);
     }
 
     private void Update()
@@ -42,7 +64,7 @@ public class BaseBlock : MonoBehaviour
 
             if (Vector3.Distance(transform.position, _snapPosition) < GameConstants.TINY_FLOAT_VALUE)
             {
-                blockRigidBody.isKinematic = false;
+                // _blockRigidBody.isKinematic = false;
 
                 _isSnapping = false;
             }
@@ -56,13 +78,18 @@ public class BaseBlock : MonoBehaviour
         {
             return;
         }
+        else
+        {
+            _blockRigidBody.isKinematic = false;
+        }
 
-        blockRigidBody.linearVelocity = speedMultiplier * new Vector3(inputDirection.x, 0, inputDirection.y);
+        _blockRigidBody.linearVelocity = speedMultiplier * new Vector3(inputDirection.x, 0, inputDirection.y);
     }
-
 
     public void Stop()
     {
+        _blockRigidBody.isKinematic = true;
+
         Snap();
     }
 
@@ -95,16 +122,20 @@ public class BaseBlock : MonoBehaviour
 
         _snapPosition = finalPosition;
 
-        blockRigidBody.isKinematic = true;
+        _blockRigidBody.isKinematic = true;
 
         _isSnapping = true;
     }
 
     public async Task Disintegrate(Direction direction)
     {
+        _blockCollider.enabled = false;
+
         Snap();
 
         await Task.Delay(200);
+
+        disintegrateBlockEvent?.Invoke();
 
         if (direction == Direction.Right)
         {

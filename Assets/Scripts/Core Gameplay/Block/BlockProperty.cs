@@ -1,13 +1,21 @@
 using System;
 using UnityEngine;
+using static GameEnum;
 
 [Serializable]
 public class BlockProperty
 {
+    [SerializeField] private GameFaction faction;
     [SerializeField] private int numTileX;
     [SerializeField] private int numTileZ;
 
     private bool _isDisintegrating;
+
+    public GameFaction Faction
+    {
+        get => faction;
+        set => faction = value;
+    }
 
     public bool IsDisintegrating
     {
