@@ -43,7 +43,7 @@ public class BaseBlock : MonoBehaviour
 
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 30;
+        speedMultiplier = 20;
     }
 
     private void OnValidate()
@@ -141,27 +141,46 @@ public class BaseBlock : MonoBehaviour
     {
         _blockCollider.enabled = false;
 
+        blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
+
         Snap();
 
         await Task.Delay(200);
 
+        if (blockProperty.IsPreventDisintegrating)
+        {
+            return;
+        }
+
+        blockProperty.IsReadyTriggerDisintegrateFx = true;
+
         disintegrateBlockEvent?.Invoke();
+
+        Vector3 raycastDirection = Vector3.right;
 
         if (direction == Direction.Right)
         {
             Tween.PositionX(transform, transform.position.x + blockProperty.NumTileX * _tileSize, duration: 1f);
+
+            raycastDirection = Vector3.right;
         }
         if (direction == Direction.Left)
         {
             Tween.PositionX(transform, transform.position.x - blockProperty.NumTileX * _tileSize, duration: 1f);
+
+            raycastDirection = -Vector3.right;
         }
         if (direction == Direction.Up)
         {
             Tween.PositionZ(transform, transform.position.z + blockProperty.NumTileZ * _tileSize, duration: 1f);
+
+            raycastDirection = Vector3.forward;
         }
-        if (direction == Direction.Down)
+        else if (direction == Direction.Down)
         {
             Tween.PositionZ(transform, transform.position.z - blockProperty.NumTileZ * _tileSize, duration: 1f);
+
+            raycastDirection = -Vector3.forward;
         }
 
         blockServiceLocator.blockMaterialPropertyBlock.Disintegrate(direction);

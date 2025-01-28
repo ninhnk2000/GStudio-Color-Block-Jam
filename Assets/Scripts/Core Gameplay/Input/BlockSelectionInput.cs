@@ -57,9 +57,12 @@ public class BlockSelectionInput : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            _selectedBlock.Stop();
+            if (_selectedBlock != null)
+            {
+                _selectedBlock.Stop();
 
-            _selectedBlock = null;
+                _selectedBlock = null;
+            }
         }
     }
 

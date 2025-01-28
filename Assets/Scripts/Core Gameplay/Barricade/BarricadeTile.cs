@@ -25,29 +25,16 @@ public class BarricadeTile : MonoBehaviour
         get => barricadeServiceLocator.barricadeFaction.Faction;
     }
 
-    private void Awake()
-    {
-        BaseBlock.disintegrateBlockEvent += PlayDisintegrationFx;
-    }
-
-    private void OnDestroy()
-    {
-        BaseBlock.disintegrateBlockEvent -= PlayDisintegrationFx;
-    }
-
     private void PlayDisintegrationFx()
     {
-        if (_isReadyToPlayFx)
+        disintegrationFx.Play();
+
+        Tween.Delay(barricadeServiceLocator.barricade.DisintegrationDuration).OnComplete(() =>
         {
-            disintegrationFx.Play();
+            disintegrationFx.Stop();
 
-            Tween.Delay(barricadeServiceLocator.barricade.DisintegrationDuration).OnComplete(() =>
-            {
-                disintegrationFx.Stop();
-
-                _isReadyToPlayFx = false;
-            });
-        }
+            _isReadyToPlayFx = false;
+        });
     }
 
     private void OnCollisionEnter(Collision other)
@@ -56,12 +43,16 @@ public class BarricadeTile : MonoBehaviour
 
         if (block != null)
         {
-            if (block.Faction == barricadeServiceLocator.barricadeFaction.Faction)
+            if (block.Faction == barricadeServiceLocator.barricadeFaction.Faction &&
+                block.BlockProperty.IsReadyTriggerDisintegrateFx
+            )
             {
-                if (!_isReadyToPlayFx)
-                {
-                    _isReadyToPlayFx = true;
-                }
+                PlayDisintegrationFx();
+
+                // if (!_isReadyToPlayFx)
+                // {
+                //     _isReadyToPlayFx = true;
+                // }
             }
         }
     }

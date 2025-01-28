@@ -5,6 +5,7 @@ using static GameEnum;
 
 public class BlockMaterialPropertyBlock : MonoBehaviour
 {
+    [SerializeField] private BlockServiceLocator blockServiceLocator;
     [SerializeField] private MeshFilter meshFilter;
 
     [Header("CUSTOMIZE")]
@@ -24,7 +25,12 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
         Init();
 
-        SetFaction(_cachedFaction);
+        SetFaction(blockServiceLocator.block.BlockProperty.Faction);
+    }
+
+    private void Start()
+    {
+        SetFaction(blockServiceLocator.block.BlockProperty.Faction);
     }
 
     void OnDestroy()
@@ -43,6 +49,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         {
             _propertyBlock = new MaterialPropertyBlock();
         }
+
+        blockServiceLocator = GetComponent<BlockServiceLocator>();
     }
 
     public void SetFaction(GameFaction faction)
@@ -109,18 +117,20 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
             _isInTransition = true;
         }
 
-        float startValue = 1;
-        float endValue = 1.1f;
+        float startValue = 0;
+        float endValue = 1;
 
         if (!isShow)
         {
-            startValue = 1.1f;
-            endValue = 1;
+            startValue = 1;
+            endValue = 0;
         }
+
+        Color outlineColor = _propertyBlock.GetColor("_OutlineColor");
 
         _tweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
         {
-            _propertyBlock.SetFloat("_OutlineWidth", newVal);
+            _propertyBlock.SetColor("_OutlineColor", ColorUtil.WithAlpha(outlineColor, newVal));
             _renderer.SetPropertyBlock(_propertyBlock);
         })
             .OnComplete(() =>
