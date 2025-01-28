@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using Unity.VisualScripting;
@@ -98,3 +99,4 @@ public class BoardGeneratorTool : EditorWindow
         return (1 + distanceRatio) * tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
     }
 }
+#endif

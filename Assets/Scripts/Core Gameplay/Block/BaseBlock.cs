@@ -42,6 +42,8 @@ public class BaseBlock : MonoBehaviour
         _blockCollider = GetComponent<MeshCollider>();
 
         _blockRigidBody.isKinematic = true;
+
+        speedMultiplier = 30;
     }
 
     private void OnValidate()
@@ -74,13 +76,17 @@ public class BaseBlock : MonoBehaviour
 
     public void Move(Vector2 inputDirection)
     {
-        if (blockProperty.IsDisintegrating)
+        if (blockProperty.IsMoving)
         {
-            return;
+            // return;
         }
         else
         {
+            blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(true);
+
             _blockRigidBody.isKinematic = false;
+
+            blockProperty.IsMoving = true;
         }
 
         _blockRigidBody.linearVelocity = speedMultiplier * new Vector3(inputDirection.x, 0, inputDirection.y);
@@ -91,6 +97,10 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.isKinematic = true;
 
         Snap();
+
+        blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
+
+        blockProperty.IsMoving = false;
     }
 
     private float GetTileDistance()

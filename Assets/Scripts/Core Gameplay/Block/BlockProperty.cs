@@ -9,12 +9,19 @@ public class BlockProperty
     [SerializeField] private int numTileX;
     [SerializeField] private int numTileZ;
 
+    private bool _isMoving;
     private bool _isDisintegrating;
 
     public GameFaction Faction
     {
         get => faction;
         set => faction = value;
+    }
+
+    public bool IsMoving
+    {
+        get => _isMoving;
+        set => _isMoving = value;
     }
 
     public bool IsDisintegrating

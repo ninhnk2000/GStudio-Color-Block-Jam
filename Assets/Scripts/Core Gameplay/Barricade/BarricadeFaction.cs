@@ -24,6 +24,8 @@ public class BarricadeFaction : MonoBehaviour
         _tweens = new List<Tween>();
 
         Init();
+
+        SetFaction();
     }
 
     private void OnValidate()
@@ -51,7 +53,10 @@ public class BarricadeFaction : MonoBehaviour
 
     public void SetFaction()
     {
-        Init();
+        if (_propertyBlock == null)
+        {
+            Init();
+        }
 
         _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(faction));
 

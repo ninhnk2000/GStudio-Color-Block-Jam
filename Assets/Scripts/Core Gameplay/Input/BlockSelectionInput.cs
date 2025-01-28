@@ -98,7 +98,7 @@ public class BlockSelectionInput : MonoBehaviour
         {
             Vector2 direction = Input.mousePosition - _prevTouchPosition;
 
-            _selectedBlock.Move(direction);
+            _selectedBlock.Move(direction.normalized);
 
             _prevTouchPosition = Input.mousePosition;
         }

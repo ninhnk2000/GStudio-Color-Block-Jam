@@ -14,6 +14,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
     [SerializeField] private List<Tween> _tweens;
     [SerializeField] private Renderer _renderer;
     private MaterialPropertyBlock _propertyBlock;
+    private GameFaction _cachedFaction;
+    private bool _isInTransition;
     #endregion
 
     private void Awake()
@@ -21,6 +23,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         _tweens = new List<Tween>();
 
         Init();
+
+        SetFaction(_cachedFaction);
     }
 
     void OnDestroy()
@@ -43,11 +47,16 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     public void SetFaction(GameFaction faction)
     {
-        Init();
-        
+        if (_propertyBlock == null)
+        {
+            Init();
+        }
+
         _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(faction));
 
         _renderer.SetPropertyBlock(_propertyBlock);
+
+        _cachedFaction = faction;
     }
 
     public void Disintegrate(Direction direction)
@@ -87,5 +96,37 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
             _propertyBlock.SetFloat("_ClipValue", newVal);
             _renderer.SetPropertyBlock(_propertyBlock);
         }));
+    }
+
+    public void ShowOutline(bool isShow)
+    {
+        if (_isInTransition)
+        {
+            return;
+        }
+        else
+        {
+            _isInTransition = true;
+        }
+
+        float startValue = 1;
+        float endValue = 1.1f;
+
+        if (!isShow)
+        {
+            startValue = 1.1f;
+            endValue = 1;
+        }
+
+        _tweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
+        {
+            _propertyBlock.SetFloat("_OutlineWidth", newVal);
+            _renderer.SetPropertyBlock(_propertyBlock);
+        })
+            .OnComplete(() =>
+            {
+                _isInTransition = false;
+            })
+        );
     }
 }

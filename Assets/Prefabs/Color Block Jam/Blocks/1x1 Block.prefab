@@ -57,7 +57,7 @@ MonoBehaviour:
     numTileX: 1
     numTileZ: 1
   tilePrefab: {fileID: 2683738924053683454, guid: 2afd069626cabf34fbc47ab08308b3db, type: 3}
-  speedMultiplier: 5
+  speedMultiplier: 15
   snappingLerpRatio: 0.2
 --- !u!114 &934061906453731607
 MonoBehaviour:
@@ -134,6 +134,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fcb632d8e36baeb4c955c2d0b63eda48, type: 2}
+  - {fileID: 2100000, guid: 04103f884bf7c9c49be1c03509aa315f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
