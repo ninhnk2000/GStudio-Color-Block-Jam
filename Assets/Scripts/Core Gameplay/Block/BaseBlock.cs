@@ -38,6 +38,7 @@ public class BaseBlock : MonoBehaviour
 
     public static event Action disintegrateBlockEvent;
 
+    #region LIFE CYCLE
     private void Awake()
     {
         _tweens = new List<Tween>();
@@ -83,6 +84,7 @@ public class BaseBlock : MonoBehaviour
             _blockRigidBody.linearVelocity = speedMultiplier * (_targetPosition - transform.position);
         }
     }
+    #endregion
 
     public void Move(Vector3 targetPosition)
     {
@@ -110,26 +112,6 @@ public class BaseBlock : MonoBehaviour
 
         // _blockRigidBody.linearVelocity = speedMultiplier * new Vector3(inputDirection.x, 0, inputDirection.y);
     }
-
-    // public void Move(Vector2 inputDirection)
-    // {
-    //     if (blockProperty.IsMoving)
-    //     {
-    //         // return;
-    //     }
-    //     else
-    //     {
-    //         blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(true);
-
-    //         _blockRigidBody.isKinematic = false;
-
-    //         _isSnapping = false;
-
-    //         blockProperty.IsMoving = true;
-    //     }
-
-    //     _blockRigidBody.linearVelocity = speedMultiplier * new Vector3(inputDirection.x, 0, inputDirection.y);
-    // }
 
     public void Stop()
     {
@@ -237,5 +219,13 @@ public class BaseBlock : MonoBehaviour
         blockServiceLocator.blockMaterialPropertyBlock.StopDisintegrating();
 
         blockProperty.IsDisintegrating = false;
+    }
+
+    public void Break()
+    {
+        Tween.ShakeScale(transform, 1.5f * Vector3.one, duration: 0.3f).OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+        });
     }
 }

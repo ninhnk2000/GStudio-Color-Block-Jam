@@ -30,29 +30,37 @@ public class BlockSelectionInput : MonoBehaviour
     void Awake()
     {
         GameStateMachine.enableInputEvent += EnableInput;
+        BoosterUI.enableBreakObjectModeEvent += EnableBreakBlockMode;
+        BoosterUI.disableBreakObjectModeEvent += DisableBreakBlockMode;
 
         twoTouchPoints = new List<Vector3>();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-
-        Gizmos.DrawRay(ray);
     }
 
     void OnDestroy()
     {
         GameStateMachine.enableInputEvent -= EnableInput;
+        BoosterUI.enableBreakObjectModeEvent -= EnableBreakBlockMode;
+        BoosterUI.disableBreakObjectModeEvent -= DisableBreakBlockMode;
     }
 
     void Update()
     {
         if (Input.GetMouseButton(0))
         {
-            SelectBlock();
+            if (_inputMode == InputMode.Select)
+            {
+                SelectBlock();
 
-            MoveBlock();
+                MoveBlock();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (_inputMode == InputMode.BreakObject)
+            {
+                BreakBlock();
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -95,6 +103,35 @@ public class BlockSelectionInput : MonoBehaviour
         }
     }
 
+    private BaseBlock GetBlock()
+    {
+        if (_selectedBlock != null)
+        {
+            return null;
+        }
+
+        if (IsClickedOnUI())
+        {
+            return null;
+        }
+
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+        Physics.Raycast(ray, out RaycastHit hit, 999);
+
+        if (hit.collider != null)
+        {
+            BaseBlock block = hit.collider.GetComponent<BaseBlock>();
+
+            if (block != null)
+            {
+                return block;
+            }
+        }
+
+        return null;
+    }
+
     private void MoveBlock()
     {
         if (_selectedBlock != null)
@@ -114,6 +151,18 @@ public class BlockSelectionInput : MonoBehaviour
         }
     }
 
+    private void BreakBlock()
+    {
+        BaseBlock block = GetBlock();
+
+        if (block != null)
+        {
+            block.Break();
+
+            _inputMode = InputMode.Select;
+        }
+    }
+
     private void EnableInput(bool isEnable)
     {
         if (isEnable)
@@ -124,6 +173,16 @@ public class BlockSelectionInput : MonoBehaviour
         {
             _inputMode = InputMode.Disabled;
         }
+    }
+
+    private void EnableBreakBlockMode()
+    {
+        _inputMode = InputMode.BreakObject;
+    }
+
+    private void DisableBreakBlockMode()
+    {
+        _inputMode = InputMode.Select;
     }
 
     private bool IsClickedOnUI()

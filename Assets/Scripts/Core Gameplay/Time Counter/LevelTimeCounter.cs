@@ -1,6 +1,8 @@
 using System.Collections;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
+using static GameEnum;
 
 public class LevelTimeCounter : MonoBehaviour
 {
@@ -9,15 +11,18 @@ public class LevelTimeCounter : MonoBehaviour
     [SerializeField] private int totalSecond;
 
     private Coroutine _countingCoroutine;
+    private bool _isFreeze;
 
     private void Awake()
     {
         LevelLoader.startLevelEvent += OnLevelStarted;
+        BoosterItemUI.useBoosterEvent += FreezeTime;
     }
 
     private void OnDestroy()
     {
         LevelLoader.startLevelEvent -= OnLevelStarted;
+        BoosterItemUI.useBoosterEvent -= FreezeTime;
     }
 
     private void OnLevelStarted()
@@ -38,11 +43,27 @@ public class LevelTimeCounter : MonoBehaviour
 
         while (remainingSecond > 0)
         {
-            timeText.text = ConvertSecondsToMinutesSeconds(remainingSecond);
+            if (!_isFreeze)
+            {
+                timeText.text = ConvertSecondsToMinutesSeconds(remainingSecond);
 
-            remainingSecond--;
+                remainingSecond--;
+            }
 
             yield return waitForSeconds;
+        }
+    }
+
+    private void FreezeTime(BoosterType boosterType)
+    {
+        if (boosterType == BoosterType.FreezeTime)
+        {
+            _isFreeze = true;
+
+            Tween.Delay(10).OnComplete(() =>
+            {
+                _isFreeze = false;
+            });
         }
     }
 

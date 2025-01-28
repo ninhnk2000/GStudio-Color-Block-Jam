@@ -13,6 +13,7 @@ public class BoosterItemUI : MonoBehaviour
     [SerializeField] private RectTransform addButtonRT;
 
     [SerializeField] private TMP_Text quantityText;
+    [SerializeField] private Button useBoosterButton;
     [SerializeField] private Button addButton;
 
     [Header("CUSTOMIZE")]
@@ -22,6 +23,7 @@ public class BoosterItemUI : MonoBehaviour
     [SerializeField] private UserResourcesObserver userResourcesObserver;
 
     public static event Action<BoosterType> showBuyBoosterPopupEvent;
+    public static event Action<BoosterType> useBoosterEvent;
 
     void Awake()
     {
@@ -29,6 +31,7 @@ public class BoosterItemUI : MonoBehaviour
         BoosterUI.updateBoosterQuantityEvent += UpdateQuantityText;
         ResourceEarnPopup.showResourcesEarnPopupEvent += OnResourceEarnPopupShow;
 
+        useBoosterButton.onClick.AddListener(UseBooster);
         addButton.onClick.AddListener(ShowBuyBoosterPopup);
 
         Setup();
@@ -59,6 +62,11 @@ public class BoosterItemUI : MonoBehaviour
             quantityTextContainer.gameObject.SetActive(false);
             addButtonRT.gameObject.SetActive(true);
         }
+    }
+
+    private void UseBooster()
+    {
+        useBoosterEvent?.Invoke((BoosterType)boosterIndex);
     }
 
     private void ShowBuyBoosterPopup()

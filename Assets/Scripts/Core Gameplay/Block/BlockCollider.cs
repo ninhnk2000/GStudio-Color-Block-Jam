@@ -21,17 +21,6 @@ public class BlockCollider : MonoBehaviour
     public Vector3 boxCastDirection = -Vector3.forward;
     public Color gizmoColor = Color.green;
 
-    private void OnDrawGizmos()
-    {
-
-        Color oldColor = Gizmos.color;
-        Gizmos.color = gizmoColor;
-        Vector3 castCenter = transform.position;
-        Gizmos.DrawWireCube(castCenter + boxCastDirection * 0.5f, blockServiceLocator.Size);
-        Gizmos.DrawLine(castCenter, castCenter + boxCastDirection * 10f);
-        Gizmos.color = oldColor;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         // BarricadeTile barricadeTile = other.gameObject.GetComponent<BarricadeTile>();
@@ -84,7 +73,6 @@ public class BlockCollider : MonoBehaviour
                         
                         if (barricadeTile != null)
                         {
-                            Debug.Log(barricadeTile.name + "/" + barricadeTile.Faction);
                             if (barricadeTile.Faction != blockServiceLocator.block.BlockProperty.Faction)
                             {
                                 return;

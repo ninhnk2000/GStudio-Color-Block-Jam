@@ -23,12 +23,10 @@ public class BoosterUI : MonoBehaviour
     [SerializeField] private Vector2Variable canvasSize;
     [SerializeField] private Vector2Variable canvasSizeOfReferenceDevice;
     [SerializeField] private UserResourcesObserver userResourcesObserver;
-    [SerializeField] private ScrewBoxesObserver screwBoxesObserver;
     [SerializeField] private LevelBoosterObserver levelBoosterObserver;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float transitionTime;
-    [SerializeField] private float waitTimeBetweenClicks;
 
     public static event Action addMoreScrewPortEvent;
     public static event Action enableBreakObjectModeEvent;
@@ -52,13 +50,10 @@ public class BoosterUI : MonoBehaviour
 
     private void Awake()
     {
-        ScrewSelectionInput.breakObjectEvent += DisableBreakObjectMode;
         LevelLoader.startLevelEvent += Reset;
         BuyBoosterPopup.useBoosterEvent += UseBooster;
-        ScrewSelectionInput.breakObjectEvent += UseBreakObjectBooster;
         ScrewBoxManager.enableBoosterEvent += EnableBooster;
         ScrewManager.enableBoosterEvent += EnableBoosterWithoutWarningPopup;
-        ScrewBoxManager.screwPortsClearedEvent += OnAllScrewPortsCleared;
         RevivePopup.reviveEvent += OnRevived;
 
         addMoreScrewPortButton.onClick.AddListener(() => UseBooster(BoosterType.AddScrewPort));
@@ -81,13 +76,10 @@ public class BoosterUI : MonoBehaviour
 
     void OnDestroy()
     {
-        ScrewSelectionInput.breakObjectEvent -= DisableBreakObjectMode;
         LevelLoader.startLevelEvent -= Reset;
         BuyBoosterPopup.useBoosterEvent -= UseBooster;
-        ScrewSelectionInput.breakObjectEvent -= UseBreakObjectBooster;
         ScrewBoxManager.enableBoosterEvent -= EnableBooster;
         ScrewManager.enableBoosterEvent -= EnableBoosterWithoutWarningPopup;
-        ScrewBoxManager.screwPortsClearedEvent -= OnAllScrewPortsCleared;
         RevivePopup.reviveEvent -= OnRevived;
 
         CommonUtil.StopAllTweens(_tweens);
@@ -134,69 +126,23 @@ public class BoosterUI : MonoBehaviour
             return;
         }
 
-        if (boosterType == BoosterType.AddScrewPort)
+        if (boosterType == BoosterType.FreezeTime)
         {
-            AddMoreScrewPort();
+
         }
         else if (boosterType == BoosterType.BreakObject)
         {
             EnableBreakObjectMode();
         }
-        else if (boosterType == BoosterType.ClearScrewPorts)
-        {
-            ClearAllScrewPorts();
-        }
+        // else if (boosterType == BoosterType.ClearScrewPorts)
+        // {
+        //     ClearAllScrewPorts();
+        // }
     }
 
-    private void AddMoreScrewPort()
+    private void FreezeTime()
     {
-        if (!IsBoosterAvailable(boosterIndex: 0))
-        {
-            showBuyBoosterPopupEvent?.Invoke(BoosterType.AddScrewPort);
 
-            return;
-        }
-
-        if (_isInTransition)
-        {
-            return;
-        }
-        else
-        {
-            _isInTransition = true;
-        }
-
-        ConsumeBooster(boosterIndex: 0);
-
-        addMoreScrewPortEvent?.Invoke();
-
-        _numScrewPortsAdded++;
-
-        if (_numScrewPortsAdded == 2)
-        {
-            addMoreScrewPortButton.interactable = false;
-
-            Tween.LocalPositionY(addMoreScrewPortButtonRT, addMoreScrewPortButtonRT.localPosition.y - 600, duration: 0.3f);
-
-            Tween.LocalPositionX(breakModeButtonRT, -0.7f * breakModeButtonRT.sizeDelta.x, duration: 0.3f);
-            Tween.LocalPositionX(clearAllScrewPortsButtonRT, 0.7f * breakModeButtonRT.sizeDelta.x, duration: 0.3f);
-        }
-
-        Tween.Delay(waitTimeBetweenClicks).OnComplete(() =>
-        {
-            _isInTransition = false;
-        });
-    }
-
-    private void EnableBooster(bool isEnable)
-    {
-        _isEnable = isEnable;
-    }
-
-    private void EnableBoosterWithoutWarningPopup(bool isEnable)
-    {
-        _isEnable = isEnable;
-        _isPreventShowWarningPopup = true;
     }
 
     private void EnableBreakObjectMode()
@@ -246,40 +192,15 @@ public class BoosterUI : MonoBehaviour
         disableBreakObjectModeEvent?.Invoke();
     }
 
-    private void ClearAllScrewPorts()
+    private void EnableBooster(bool isEnable)
     {
-        if (screwBoxesObserver.NumScrewInScrewPorts == 0)
-        {
-            // shakeScrewPortsEvent?.Invoke();
-            showNotificationEvent?.Invoke(GameConstants.TIPS, GameConstants.NO_SCREW_TO_BE_CLEARED);
+        _isEnable = isEnable;
+    }
 
-            return;
-        }
-
-        if (!IsBoosterAvailable(boosterIndex: 2))
-        {
-            showBuyBoosterPopupEvent?.Invoke(BoosterType.ClearScrewPorts);
-
-            return;
-        }
-
-        if (_isInTransition)
-        {
-            return;
-        }
-        else
-        {
-            _isInTransition = true;
-        }
-
-        clearAllScrewPortsEvent?.Invoke();
-
-        SoundManager.Instance.PlaySoundClearScrewPorts();
-
-        Tween.Delay(waitTimeBetweenClicks).OnComplete(() =>
-        {
-            _isInTransition = false;
-        });
+    private void EnableBoosterWithoutWarningPopup(bool isEnable)
+    {
+        _isEnable = isEnable;
+        _isPreventShowWarningPopup = true;
     }
 
     private bool IsBoosterAvailable(int boosterIndex)
@@ -304,22 +225,5 @@ public class BoosterUI : MonoBehaviour
         updateBoosterQuantityEvent?.Invoke(boosterIndex);
 
         SaferioTracking.TrackBoosterUsage((BoosterType)boosterIndex);
-    }
-
-    private void UseBreakObjectBooster()
-    {
-        ConsumeBooster(boosterIndex: 1);
-    }
-
-    private void OnAllScrewPortsCleared(int numScrewCleared)
-    {
-        if (numScrewCleared > 0)
-        {
-            ConsumeBooster(boosterIndex: 2);
-        }
-        else
-        {
-            showNotificationEvent?.Invoke(GameConstants.TIPS, GameConstants.NO_SCREW_TO_BE_CLEARED);
-        }
     }
 }

@@ -66,6 +66,11 @@ public class BarricadeFaction : MonoBehaviour
         {
             BarricadeTile barricadeTile = transform.GetChild(i).GetComponent<BarricadeTile>();
 
+            if (barricadeTile == null)
+            {
+                return;
+            }
+
             barricadeTile.DisintegrationFx.GetComponent<ParticleSystemRenderer>().SetPropertyBlock(_propertyBlock);
         }
     }

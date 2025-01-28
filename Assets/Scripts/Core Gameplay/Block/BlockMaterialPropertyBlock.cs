@@ -99,7 +99,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
             _propertyBlock.SetFloat("_MaxPositionX", 0.5f * meshSizeWorld.x);
         }
 
-        _tweens.Add(Tween.Custom(0, 1, duration: 0.5f * GameGeneralConfiguration.DISINTEGRATION_TIME, onValueChange: newVal =>
+        _tweens.Add(Tween.Custom(0, 1,
+            startDelay: 0.1f * GameGeneralConfiguration.DISINTEGRATION_TIME, duration: 0.5f * GameGeneralConfiguration.DISINTEGRATION_TIME, onValueChange: newVal =>
         {
             _propertyBlock.SetFloat("_ClipValue", newVal);
             _renderer.SetPropertyBlock(_propertyBlock);
