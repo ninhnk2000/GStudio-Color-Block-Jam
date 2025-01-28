@@ -18,30 +18,94 @@ public class BlockCollider : MonoBehaviour
         CommonUtil.StopAllTweens(_tweens);
     }
 
-    private void OnCollisionEnter(Collision other)
+    public Vector3 boxCastDirection = -Vector3.forward;
+    public Color gizmoColor = Color.green;
+
+    private void OnDrawGizmos()
     {
+
+        Color oldColor = Gizmos.color;
+        Gizmos.color = gizmoColor;
+        Vector3 castCenter = transform.position;
+        Gizmos.DrawWireCube(castCenter + boxCastDirection * 0.5f, blockServiceLocator.Size);
+        Gizmos.DrawLine(castCenter, castCenter + boxCastDirection * 10f);
+        Gizmos.color = oldColor;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // BarricadeTile barricadeTile = other.gameObject.GetComponent<BarricadeTile>();
+
+        // if (barricadeTile != null)
+        // {
+        //     if (barricadeTile.Faction != blockServiceLocator.block.BlockProperty.Faction)
+        //     {
+        //         blockServiceLocator.block.StopDisintegrating();
+        //     }
+        // }
+
         if (blockServiceLocator.block.BlockProperty.IsDisintegrating)
         {
             return;
         }
 
-        BarricadeTile barricadeTile = other.gameObject.GetComponent<BarricadeTile>();
+        BaseBarricade barricade = other.gameObject.GetComponent<BaseBarricade>();
 
-        if (barricadeTile != null)
+        if (barricade != null)
         {
-            if (barricadeTile.Faction == blockServiceLocator.block.BlockProperty.Faction)
+            if (barricade.Faction == blockServiceLocator.block.BlockProperty.Faction)
             {
-                blockServiceLocator.block.Disintegrate(barricadeTile.Direction);
-            }
-            else
-            {
-                blockServiceLocator.block.BlockProperty.IsPreventDisintegrating = true;
+                Vector3 direction;
 
-                _tweens.Add(Tween.Delay(0.5f).OnComplete(() =>
+                if (barricade.Direction == Direction.Right)
                 {
-                    blockServiceLocator.block.BlockProperty.IsPreventDisintegrating = false;
-                }));
+                    direction = Vector3.right;
+                }
+                else if (barricade.Direction == Direction.Left)
+                {
+                    direction = -Vector3.right;
+                }
+                else if (barricade.Direction == Direction.Up)
+                {
+                    direction = Vector3.forward;
+                }
+                else
+                {
+                    direction = -Vector3.forward;
+                }
+
+                RaycastHit[] hits = Physics.BoxCastAll(transform.position, 0.5f * blockServiceLocator.Size, direction, Quaternion.identity, 10);
+
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    if (hits[i].collider != null)
+                    {
+                        BarricadeTile barricadeTile = hits[i].collider.GetComponent<BarricadeTile>();
+                        
+                        if (barricadeTile != null)
+                        {
+                            Debug.Log(barricadeTile.name + "/" + barricadeTile.Faction);
+                            if (barricadeTile.Faction != blockServiceLocator.block.BlockProperty.Faction)
+                            {
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                blockServiceLocator.block.Disintegrate(barricade.Direction);
             }
+            // else
+            // {
+            //     CommonUtil.StopAllTweens(_tweens);
+
+            //     blockServiceLocator.block.BlockProperty.IsPreventDisintegrating = true;
+
+            //     // _tweens.Add(Tween.Delay(2f).OnComplete(() =>
+            //     // {
+            //     //     blockServiceLocator.block.BlockProperty.IsPreventDisintegrating = false;
+            //     // }));
+            // }
         }
     }
 }

@@ -90,43 +90,47 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
         if (direction == Direction.Up || direction == Direction.Down)
         {
-            _propertyBlock.SetFloat("_LowestPosition", -0.5f * meshSizeWorld.y);
-            _propertyBlock.SetFloat("_HighestPosition", 0.5f * meshSizeWorld.y);
+            _propertyBlock.SetFloat("_MinPositionY", -0.5f * meshSizeWorld.y);
+            _propertyBlock.SetFloat("_MaxPositionY", 0.5f * meshSizeWorld.y);
         }
         else
         {
-            _propertyBlock.SetFloat("_LowestPosition", -0.5f * meshSizeWorld.x);
-            _propertyBlock.SetFloat("_HighestPosition", 0.5f * meshSizeWorld.x);
+            _propertyBlock.SetFloat("_MinPositionX", -0.5f * meshSizeWorld.x);
+            _propertyBlock.SetFloat("_MaxPositionX", 0.5f * meshSizeWorld.x);
         }
 
-        _tweens.Add(Tween.Custom(0, 1, duration: 1f, onValueChange: newVal =>
+        _tweens.Add(Tween.Custom(0, 1, duration: 0.5f * GameGeneralConfiguration.DISINTEGRATION_TIME, onValueChange: newVal =>
         {
             _propertyBlock.SetFloat("_ClipValue", newVal);
             _renderer.SetPropertyBlock(_propertyBlock);
-        }));
+        })
+        .OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+
+            blockServiceLocator.block.BlockProperty.IsDone = true;
+        })
+        );
+    }
+
+    public void StopDisintegrating()
+    {
+        CommonUtil.StopAllTweens(_tweens);
     }
 
     public void ShowOutline(bool isShow)
     {
-        if (_isInTransition)
-        {
-            return;
-        }
-        else
-        {
-            _isInTransition = true;
-        }
+        Color outlineColor = _propertyBlock.GetColor("_OutlineColor");
 
-        float startValue = 0;
+        float startValue = outlineColor.a;
         float endValue = 1;
 
         if (!isShow)
         {
-            startValue = 1;
             endValue = 0;
         }
 
-        Color outlineColor = _propertyBlock.GetColor("_OutlineColor");
+        CommonUtil.StopAllTweens(_tweens);
 
         _tweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
         {

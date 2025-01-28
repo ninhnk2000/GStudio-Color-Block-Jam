@@ -63,7 +63,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -132,7 +132,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -201,7 +201,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 7707497794677575831}
   - component: {fileID: 8916775758205492052}
   - component: {fileID: 574832555576461507}
+  - component: {fileID: 1279257852687496827}
   m_Layer: 0
   m_Name: Blockade 3x1
   m_TagString: Untagged
@@ -258,6 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 938baf3e18beea844aa148f7b5775c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barricadeServiceLocator: {fileID: 4623236987445485292}
   direction: 1
   disintegrationDuration: 0.6
 --- !u!114 &4623236987445485292
@@ -341,6 +343,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1279257852687496827
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8718780417076064390}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 3.5472538, z: 0.5}
+  m_Center: {x: 0, y: 0.7966269, z: 1.5}
 --- !u!1001 &3382492863862064220
 PrefabInstance:
   m_ObjectHideFlags: 0

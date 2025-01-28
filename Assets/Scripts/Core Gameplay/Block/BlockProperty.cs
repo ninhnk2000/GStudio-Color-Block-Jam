@@ -13,6 +13,7 @@ public class BlockProperty
     private bool _isDisintegrating;
     private bool _isPreventDisintegrating;
     private bool _isReadyTriggerDisintegrateFx;
+    private bool _isDone;
 
     public GameFaction Faction
     {
@@ -42,6 +43,12 @@ public class BlockProperty
     {
         get => _isReadyTriggerDisintegrateFx;
         set => _isReadyTriggerDisintegrateFx = value;
+    }
+
+    public bool IsDone
+    {
+        get => _isDone;
+        set => _isDone = value;
     }
 
     public int NumTileX

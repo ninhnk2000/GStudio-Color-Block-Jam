@@ -1,7 +1,10 @@
 using UnityEngine;
+using static GameEnum;
 
 public class BaseBarricade : MonoBehaviour
 {
+    [SerializeField] private BarricadeServiceLocator barricadeServiceLocator;
+
     [Header("CUSTOMIZE")]
     [SerializeField] private Direction direction;
     [SerializeField] private float disintegrationDuration;
@@ -9,6 +12,11 @@ public class BaseBarricade : MonoBehaviour
     public Direction Direction
     {
         get => direction;
+    }
+
+    public GameFaction Faction
+    {
+        get => barricadeServiceLocator.barricadeFaction.Faction;
     }
 
     public float DisintegrationDuration

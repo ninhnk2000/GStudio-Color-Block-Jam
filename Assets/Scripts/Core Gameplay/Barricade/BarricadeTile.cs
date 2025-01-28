@@ -29,7 +29,7 @@ public class BarricadeTile : MonoBehaviour
     {
         disintegrationFx.Play();
 
-        Tween.Delay(barricadeServiceLocator.barricade.DisintegrationDuration).OnComplete(() =>
+        Tween.Delay(0.5f * GameGeneralConfiguration.DISINTEGRATION_TIME).OnComplete(() =>
         {
             disintegrationFx.Stop();
 
@@ -37,9 +37,9 @@ public class BarricadeTile : MonoBehaviour
         });
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        BaseBlock block = other.gameObject.GetComponent<BaseBlock>();
+        BaseBlock block = other.GetComponent<BaseBlock>();
 
         if (block != null)
         {
@@ -56,6 +56,26 @@ public class BarricadeTile : MonoBehaviour
             }
         }
     }
+
+    // private void OnCollisionEnter(Collision other)
+    // {
+    //     BaseBlock block = other.gameObject.GetComponent<BaseBlock>();
+
+    //     if (block != null) 
+    //     {
+    //         if (block.Faction == barricadeServiceLocator.barricadeFaction.Faction &&
+    //             block.BlockProperty.IsReadyTriggerDisintegrateFx
+    //         )
+    //         {
+    //             PlayDisintegrationFx();
+
+    //             // if (!_isReadyToPlayFx)
+    //             // {
+    //             //     _isReadyToPlayFx = true;
+    //             // }
+    //         }
+    //     }
+    // }
 
     // private void OnTriggerEnter(Collider other)
     // {

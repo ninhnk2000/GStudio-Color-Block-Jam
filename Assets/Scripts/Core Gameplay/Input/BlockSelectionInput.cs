@@ -101,7 +101,14 @@ public class BlockSelectionInput : MonoBehaviour
         {
             Vector2 direction = Input.mousePosition - _prevTouchPosition;
 
-            _selectedBlock.Move(direction.normalized);
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+            Physics.Raycast(ray, out RaycastHit hit, 100);
+
+            if (hit.collider != null)
+            {
+                _selectedBlock.Move(hit.point);
+            }
 
             _prevTouchPosition = Input.mousePosition;
         }
