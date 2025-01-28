@@ -20,6 +20,7 @@ public class LevelLoader : MonoBehaviour
     public static event Action<int> setLevelScrewNumberEvent;
     public static event Action<int> setMultiPhaseLevelScrewNumberEvent;
     public static event Action showSceneTransitionEvent;
+    public static event Action<BaseBlock[]> sendLevelBaseBlocksDataEvent;
 
     private void Awake()
     {
@@ -92,6 +93,8 @@ public class LevelLoader : MonoBehaviour
             if (op.Status == AsyncOperationStatus.Succeeded)
             {
                 GameObject level = Instantiate(op.Result, transform);
+
+                ManageBaseBlocks(level.transform);
             }
         };
 
@@ -131,5 +134,12 @@ public class LevelLoader : MonoBehaviour
     private void Replay()
     {
         GoLevel(currentLevel.Value);
+    }
+
+    private void ManageBaseBlocks(Transform level)
+    {
+        BaseBlock[] blocks = TransformUtil.GetComponentsFromAllChildren<BaseBlock>(level).ToArray();
+
+        sendLevelBaseBlocksDataEvent?.Invoke(blocks);
     }
 }

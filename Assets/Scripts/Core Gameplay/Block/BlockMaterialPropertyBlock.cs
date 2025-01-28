@@ -101,16 +101,18 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
         _tweens.Add(Tween.Custom(0, 1,
             startDelay: 0.1f * GameGeneralConfiguration.DISINTEGRATION_TIME, duration: 0.5f * GameGeneralConfiguration.DISINTEGRATION_TIME, onValueChange: newVal =>
-        {
-            _propertyBlock.SetFloat("_ClipValue", newVal);
-            _renderer.SetPropertyBlock(_propertyBlock);
-        })
-        .OnComplete(() =>
-        {
-            gameObject.SetActive(false);
+            {
+                _propertyBlock.SetFloat("_ClipValue", newVal);
+                _renderer.SetPropertyBlock(_propertyBlock);
+            })
+            .OnComplete(() =>
+            {
+                gameObject.SetActive(false);
 
-            blockServiceLocator.block.BlockProperty.IsDone = true;
-        })
+                blockServiceLocator.block.BlockProperty.IsDone = true;
+
+                blockServiceLocator.block.InvokeBlockCompletedEvent();
+            })
         );
     }
 

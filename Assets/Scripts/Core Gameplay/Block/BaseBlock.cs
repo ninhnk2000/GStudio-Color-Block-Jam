@@ -37,6 +37,8 @@ public class BaseBlock : MonoBehaviour
     }
 
     public static event Action disintegrateBlockEvent;
+    public static event Action blockCompletedEvent;
+
 
     #region LIFE CYCLE
     private void Awake()
@@ -226,6 +228,15 @@ public class BaseBlock : MonoBehaviour
         Tween.ShakeScale(transform, 1.5f * Vector3.one, duration: 0.3f).OnComplete(() =>
         {
             gameObject.SetActive(false);
+
+            blockProperty.IsDone = true;
+
+            blockCompletedEvent?.Invoke();
         });
+    }
+
+    public void InvokeBlockCompletedEvent()
+    {
+        blockCompletedEvent?.Invoke();
     }
 }

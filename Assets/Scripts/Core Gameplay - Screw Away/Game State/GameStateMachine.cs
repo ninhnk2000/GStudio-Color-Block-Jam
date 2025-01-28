@@ -26,7 +26,7 @@ public class GameStateMachine : MonoBehaviour
     private void Awake()
     {
         LevelLoader.startLevelEvent += EnterPlayingState;
-        ScrewManager.winLevelEvent += EnterWinState;
+        BlockManager.winLevelEvent += EnterWinState;
         ScrewBoxManager.loseLevelEvent += EnterLoseState;
         RevivePopup.reviveEvent += OnRevived;
 
@@ -36,7 +36,7 @@ public class GameStateMachine : MonoBehaviour
     void OnDestroy()
     {
         LevelLoader.startLevelEvent -= EnterPlayingState;
-        ScrewManager.winLevelEvent -= EnterWinState;
+        BlockManager.winLevelEvent -= EnterWinState;
         ScrewBoxManager.loseLevelEvent -= EnterLoseState;
         RevivePopup.reviveEvent -= OnRevived;
     }
