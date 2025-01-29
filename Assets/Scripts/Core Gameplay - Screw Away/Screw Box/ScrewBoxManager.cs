@@ -181,22 +181,22 @@ public class ScrewBoxManager : MonoBehaviour
 
     private void OnRevived(BoosterType boosterType)
     {
-        if (boosterType == BoosterType.UnlockScrewBox)
-        {
-            for (int i = 0; i < screwBoxs.Length; i++)
-            {
-                if (screwBoxs[i].IsLocked)
-                {
-                    screwBoxs[i].ScrewBoxServiceLocator.screwBoxUI.Unlock();
+        // if (boosterType == BoosterType.UnlockScrewBox)
+        // {
+        //     for (int i = 0; i < screwBoxs.Length; i++)
+        //     {
+        //         if (screwBoxs[i].IsLocked)
+        //         {
+        //             screwBoxs[i].ScrewBoxServiceLocator.screwBoxUI.Unlock();
 
-                    break;
-                }
-            }
-        }
-        else if (boosterType == BoosterType.ClearScrewPorts)
-        {
-            ClearAllScrewPorts();
-        }
+        //             break;
+        //         }
+        //     }
+        // }
+        // else if (boosterType == BoosterType.ClearScrewPorts)
+        // {
+        //     ClearAllScrewPorts();
+        // }
     }
 
     private void OnScrewSelected(int screwId, GameFaction selectedFaction)

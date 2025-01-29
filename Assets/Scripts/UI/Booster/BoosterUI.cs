@@ -31,6 +31,7 @@ public class BoosterUI : MonoBehaviour
     public static event Action addMoreScrewPortEvent;
     public static event Action enableBreakObjectModeEvent;
     public static event Action disableBreakObjectModeEvent;
+    public static event Action<bool> enableVacumnModeEvent;
     public static event Action clearAllScrewPortsEvent;
     public static event Action<BoosterType> showBuyBoosterPopupEvent;
     public static event Action<int> updateBoosterQuantityEvent;
@@ -55,10 +56,12 @@ public class BoosterUI : MonoBehaviour
         ScrewBoxManager.enableBoosterEvent += EnableBooster;
         ScrewManager.enableBoosterEvent += EnableBoosterWithoutWarningPopup;
         RevivePopup.reviveEvent += OnRevived;
+        BlockSelectionInput.breakObjectEvent += DisableBreakObjectMode;
+        BlockSelectionInput.vacumnEvent += DisableVacumnMode;
 
-        addMoreScrewPortButton.onClick.AddListener(() => UseBooster(BoosterType.AddScrewPort));
+        addMoreScrewPortButton.onClick.AddListener(() => UseBooster(BoosterType.FreezeTime));
         breakObjectButton.onClick.AddListener(() => UseBooster(BoosterType.BreakObject));
-        clearAllScrewPortsButton.onClick.AddListener(() => UseBooster(BoosterType.ClearScrewPorts));
+        clearAllScrewPortsButton.onClick.AddListener(() => UseBooster(BoosterType.Vacumn));
         disableBreakObjectModeEarlyButton.onClick.AddListener(DisableBreakObjectModeEarly);
 
         _tweens = new List<Tween>();
@@ -81,6 +84,8 @@ public class BoosterUI : MonoBehaviour
         ScrewBoxManager.enableBoosterEvent -= EnableBooster;
         ScrewManager.enableBoosterEvent -= EnableBoosterWithoutWarningPopup;
         RevivePopup.reviveEvent -= OnRevived;
+        BlockSelectionInput.breakObjectEvent -= DisableBreakObjectMode;
+        BlockSelectionInput.vacumnEvent -= DisableVacumnMode;
 
         CommonUtil.StopAllTweens(_tweens);
     }
@@ -134,6 +139,10 @@ public class BoosterUI : MonoBehaviour
         {
             EnableBreakObjectMode();
         }
+        else if (boosterType == BoosterType.Vacumn)
+        {
+            EnableVacumnMode();
+        }
         // else if (boosterType == BoosterType.ClearScrewPorts)
         // {
         //     ClearAllScrewPorts();
@@ -176,6 +185,46 @@ public class BoosterUI : MonoBehaviour
     }
 
     private void DisableBreakObjectMode()
+    {
+        Tween.LocalPositionY(boosterContainer, _initialBoosterContainerPosition.y, duration: transitionTime);
+        Tween.LocalPositionY(breakModeContainer, -canvasSizeOfReferenceDevice.Value.y, duration: transitionTime)
+        .OnComplete(() =>
+        {
+            breakModeContainer.gameObject.SetActive(false);
+        });
+    }
+
+    private void EnableVacumnMode()
+    {
+        if (!IsBoosterAvailable(boosterIndex: 1))
+        {
+            showBuyBoosterPopupEvent?.Invoke(BoosterType.Vacumn);
+
+            return;
+        }
+
+        if (_isInTransition)
+        {
+            return;
+        }
+        else
+        {
+            _isInTransition = true;
+        }
+
+        breakModeContainer.gameObject.SetActive(true);
+
+        Tween.LocalPositionY(boosterContainer, -canvasSizeOfReferenceDevice.Value.y, duration: transitionTime);
+        Tween.LocalPositionY(breakModeContainer, _initialBoosterContainerPosition.y + 0.5f * breakModeContainer.sizeDelta.y, duration: transitionTime)
+        .OnComplete(() =>
+        {
+            enableVacumnModeEvent?.Invoke(true);
+
+            _isInTransition = false;
+        });
+    }
+
+    private void DisableVacumnMode(GameFaction faction)
     {
         Tween.LocalPositionY(boosterContainer, _initialBoosterContainerPosition.y, duration: transitionTime);
         Tween.LocalPositionY(breakModeContainer, -canvasSizeOfReferenceDevice.Value.y, duration: transitionTime)

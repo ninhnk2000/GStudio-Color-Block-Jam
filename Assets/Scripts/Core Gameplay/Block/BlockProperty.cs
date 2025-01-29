@@ -11,6 +11,7 @@ public class BlockProperty
 
     private bool _isMoving;
     private bool _isDisintegrating;
+    private bool _isRotating;
     private bool _isPreventDisintegrating;
     private bool _isReadyTriggerDisintegrateFx;
     private bool _isDone;
@@ -31,6 +32,12 @@ public class BlockProperty
     {
         get => _isDisintegrating;
         set => _isDisintegrating = value;
+    }
+
+    public bool IsRotating
+    {
+        get => _isRotating;
+        set => _isRotating = value;
     }
 
     public bool IsPreventDisintegrating

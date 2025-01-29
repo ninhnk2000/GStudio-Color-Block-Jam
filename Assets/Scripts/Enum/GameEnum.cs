@@ -64,6 +64,7 @@ public class GameEnum : MonoBehaviour
     {
         Select,
         BreakObject,
+        Vacumn,
         Disabled
     }
 
@@ -75,11 +76,8 @@ public class GameEnum : MonoBehaviour
 
     public enum BoosterType
     {
-        AddScrewPort,
-        BreakObject,
-        ClearScrewPorts,
-        UnlockScrewBox,
         FreezeTime,
+        BreakObject,
         Vacumn
     }
 

@@ -74,7 +74,7 @@ public class ScrewBoxUI : MonoBehaviour
 
     private void ClickButtonUnlockByAds()
     {
-        showBuyBoosterPopupEvent?.Invoke(BoosterType.UnlockScrewBox);
+        // showBuyBoosterPopupEvent?.Invoke(BoosterType.UnlockScrewBox);
     }
 
     public void Lock()

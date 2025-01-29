@@ -68,14 +68,14 @@ public class BuyBoosterPopup : BasePopup
 
         getWithAdsButton.onClick.RemoveAllListeners();
 
-        if (boosterType == BoosterType.UnlockScrewBox)
-        {
-            getWithAdsButton.onClick.AddListener(UnlockScrewBoxWithAds);
-        }
-        else
-        {
-            getWithAdsButton.onClick.AddListener(GetWithAds);
-        }
+        // if (boosterType == BoosterType.UnlockScrewBox)
+        // {
+        //     getWithAdsButton.onClick.AddListener(UnlockScrewBoxWithAds);
+        // }
+        // else
+        // {
+        //     getWithAdsButton.onClick.AddListener(GetWithAds);
+        // }
     }
 
     private void GetWithCoin()
@@ -94,22 +94,19 @@ public class BuyBoosterPopup : BasePopup
 
                 _isBoughtBreakObjectBoosterByCoin = true;
             }
-            else if (_boosterType == BoosterType.UnlockScrewBox)
-            {
-                userResourcesObserver.ChangeCoin(-boosterDataObserver.BoosterCosts[boosterIndex]);
+            // else if (_boosterType == BoosterType.UnlockScrewBox)
+            // {
+            //     userResourcesObserver.ChangeCoin(-boosterDataObserver.BoosterCosts[boosterIndex]);
 
-                Hide(onCompletedAction: () =>
-                {
-                    unlockScrewBoxEvent?.Invoke();
-                });
+            //     Hide(onCompletedAction: () =>
+            //     {
+            //         unlockScrewBoxEvent?.Invoke();
+            //     });
 
-                return;
-            }
+            //     return;
+            // }
             else
             {
-                // userResourcesObserver.ChangeCoin(boosterDataObserver.BoosterCosts[boosterIndex]);
-                // userResourcesObserver.ChangeBoosterQuantity(boosterIndex, 1);
-
                 userResourcesObserver.UserResources.CoinQuantity -= boosterDataObserver.BoosterCosts[boosterIndex];
                 userResourcesObserver.UserResources.BoosterQuantities[boosterIndex]++;
             }
@@ -132,17 +129,17 @@ public class BuyBoosterPopup : BasePopup
 
     private void GetWithAds()
     {
-        ActionWatchVideo actionWatchVideo;
+        // ActionWatchVideo actionWatchVideo;
 
-        switch (_boosterType)
-        {
-            case BoosterType.AddScrewPort: actionWatchVideo = ActionWatchVideo.AddHole; break;
-            case BoosterType.BreakObject: actionWatchVideo = ActionWatchVideo.BreakObject; break;
-            case BoosterType.ClearScrewPorts: actionWatchVideo = ActionWatchVideo.ClearHoles; break;
-            default: actionWatchVideo = ActionWatchVideo.AddHole; break;
-        }
+        // switch (_boosterType)
+        // {
+        //     case BoosterType.AddScrewPort: actionWatchVideo = ActionWatchVideo.AddHole; break;
+        //     case BoosterType.BreakObject: actionWatchVideo = ActionWatchVideo.BreakObject; break;
+        //     case BoosterType.ClearScrewPorts: actionWatchVideo = ActionWatchVideo.ClearHoles; break;
+        //     default: actionWatchVideo = ActionWatchVideo.AddHole; break;
+        // }
 
-        AdmobAdsMax.Instance.ShowVideoReward(OnRewaredAdCompleted, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: actionWatchVideo);
+        // AdmobAdsMax.Instance.ShowVideoReward(OnRewaredAdCompleted, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: actionWatchVideo);
     }
 
     private void OnRewaredAdCompleted()

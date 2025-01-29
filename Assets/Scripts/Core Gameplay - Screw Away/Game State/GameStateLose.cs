@@ -30,15 +30,15 @@ public class GameStateLose : BaseGameState
 
     public override void Enter()
     {
-        if (_gameStateMachine.ScrewBoxesObserver.NumLockedScrewBoxes == 0)
-        {
-            // loseLevelEvent?.Invoke();
-            showRevivePopupEvent?.Invoke(BoosterType.ClearScrewPorts);
-        }
-        else
-        {
-            showRevivePopupEvent?.Invoke(BoosterType.UnlockScrewBox);
-        }
+        // if (_gameStateMachine.ScrewBoxesObserver.NumLockedScrewBoxes == 0)
+        // {
+        //     // loseLevelEvent?.Invoke();
+        //     showRevivePopupEvent?.Invoke(BoosterType.ClearScrewPorts);
+        // }
+        // else
+        // {
+        //     showRevivePopupEvent?.Invoke(BoosterType.UnlockScrewBox);
+        // }
     }
 
     public override void Exit()

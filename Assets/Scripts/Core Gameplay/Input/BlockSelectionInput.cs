@@ -25,6 +25,7 @@ public class BlockSelectionInput : MonoBehaviour
     public static event Action mouseUpEvent;
     public static event Action selectScrewEvent;
     public static event Action breakObjectEvent;
+    public static event Action<GameFaction> vacumnEvent;
     #endregion
 
     void Awake()
@@ -32,6 +33,7 @@ public class BlockSelectionInput : MonoBehaviour
         GameStateMachine.enableInputEvent += EnableInput;
         BoosterUI.enableBreakObjectModeEvent += EnableBreakBlockMode;
         BoosterUI.disableBreakObjectModeEvent += DisableBreakBlockMode;
+        BoosterUI.enableVacumnModeEvent += EnableVacumnMode;
 
         twoTouchPoints = new List<Vector3>();
     }
@@ -41,6 +43,7 @@ public class BlockSelectionInput : MonoBehaviour
         GameStateMachine.enableInputEvent -= EnableInput;
         BoosterUI.enableBreakObjectModeEvent -= EnableBreakBlockMode;
         BoosterUI.disableBreakObjectModeEvent -= DisableBreakBlockMode;
+        BoosterUI.enableVacumnModeEvent -= EnableVacumnMode;
     }
 
     void Update()
@@ -60,6 +63,10 @@ public class BlockSelectionInput : MonoBehaviour
             if (_inputMode == InputMode.BreakObject)
             {
                 BreakBlock();
+            }
+            else if (_inputMode == InputMode.Vacumn)
+            {
+                VacumnBlock();
             }
         }
 
@@ -159,6 +166,22 @@ public class BlockSelectionInput : MonoBehaviour
         {
             block.Break();
 
+            breakObjectEvent?.Invoke();
+
+            _inputMode = InputMode.Select;
+        }
+    }
+
+    private void VacumnBlock()
+    {
+        BaseBlock block = GetBlock();
+
+        if (block != null)
+        {
+            block.Vacumn();
+
+            vacumnEvent?.Invoke(block.BlockProperty.Faction);
+
             _inputMode = InputMode.Select;
         }
     }
@@ -183,6 +206,11 @@ public class BlockSelectionInput : MonoBehaviour
     private void DisableBreakBlockMode()
     {
         _inputMode = InputMode.Select;
+    }
+
+    private void EnableVacumnMode(bool isEnable)
+    {
+        _inputMode = isEnable ? InputMode.Vacumn : InputMode.Select;
     }
 
     private bool IsClickedOnUI()

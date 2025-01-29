@@ -50,6 +50,8 @@ public class BaseBlock : MonoBehaviour
     #region LIFE CYCLE
     private void Awake()
     {
+        BlockSelectionInput.vacumnEvent += Vacumn;
+
         _tweens = new List<Tween>();
 
         _tileSize = tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
@@ -71,6 +73,8 @@ public class BaseBlock : MonoBehaviour
 
     private void OnDestroy()
     {
+        BlockSelectionInput.vacumnEvent -= Vacumn;
+
         CommonUtil.StopAllTweens(_tweens);
     }
 
@@ -86,6 +90,11 @@ public class BaseBlock : MonoBehaviour
 
                 _isSnapping = false;
             }
+        }
+
+        if (blockProperty.IsRotating)
+        {
+            transform.RotateAround(Vector3.up, 6);
         }
 
         if (blockProperty.IsMoving)
@@ -282,6 +291,35 @@ public class BaseBlock : MonoBehaviour
 
             blockCompletedEvent?.Invoke();
         });
+    }
+
+    public void Vacumn()
+    {
+        Tween.Scale(transform, 0, duration: 0.6f);
+        Tween.LocalPositionY(transform, transform.position.y + 20, duration: 0.6f)
+        .OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+
+            blockProperty.IsDone = true;
+
+            blockCompletedEvent?.Invoke();
+        });
+
+        blockProperty.IsRotating = true;
+    }
+
+    public void Vacumn(GameFaction faction)
+    {
+        if (blockProperty.IsRotating)
+        {
+            return;
+        }
+
+        if (faction == Faction)
+        {
+            Vacumn();
+        }
     }
 
     public void InvokeBlockCompletedEvent()

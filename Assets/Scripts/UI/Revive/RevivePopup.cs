@@ -62,14 +62,14 @@ public class RevivePopup : BasePopup
 
         SoundManager.Instance.PlaySoundLose();
 
-        if (boosterType == BoosterType.UnlockScrewBox)
-        {
-            boosterImage.sprite = unlockBoxSprite;
-        }
-        else if (boosterType == BoosterType.ClearScrewPorts)
-        {
-            boosterImage.sprite = clearHolesSprite;
-        }
+        // if (boosterType == BoosterType.UnlockScrewBox)
+        // {
+        //     boosterImage.sprite = unlockBoxSprite;
+        // }
+        // else if (boosterType == BoosterType.ClearScrewPorts)
+        // {
+        //     boosterImage.sprite = clearHolesSprite;
+        // }
 
         UIUtil.SetSizeKeepRatioY(boosterImage, 0.2f * container.sizeDelta.x);
 
@@ -115,23 +115,23 @@ public class RevivePopup : BasePopup
 
     private void ReviveByAds()
     {
-        if (_isInTransition)
-        {
-            return;
-        }
+        // if (_isInTransition)
+        // {
+        //     return;
+        // }
 
-        ActionWatchVideo actionWatchVideo;
+        // ActionWatchVideo actionWatchVideo;
 
-        switch (_currentBoosterOnRevive)
-        {
-            case BoosterType.AddScrewPort: actionWatchVideo = ActionWatchVideo.AddHole; break;
-            case BoosterType.BreakObject: actionWatchVideo = ActionWatchVideo.BreakObject; break;
-            case BoosterType.ClearScrewPorts: actionWatchVideo = ActionWatchVideo.ClearHoles; break;
-            case BoosterType.UnlockScrewBox: actionWatchVideo = ActionWatchVideo.UnlockScrewBox; break;
-            default: actionWatchVideo = ActionWatchVideo.UnlockScrewBox; break;
-        }
+        // switch (_currentBoosterOnRevive)
+        // {
+        //     case BoosterType.AddScrewPort: actionWatchVideo = ActionWatchVideo.AddHole; break;
+        //     case BoosterType.BreakObject: actionWatchVideo = ActionWatchVideo.BreakObject; break;
+        //     case BoosterType.ClearScrewPorts: actionWatchVideo = ActionWatchVideo.ClearHoles; break;
+        //     case BoosterType.UnlockScrewBox: actionWatchVideo = ActionWatchVideo.UnlockScrewBox; break;
+        //     default: actionWatchVideo = ActionWatchVideo.UnlockScrewBox; break;
+        // }
 
-        AdmobAdsMax.Instance.ShowVideoReward(OnRewaredAdCompleted, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: actionWatchVideo);
+        // AdmobAdsMax.Instance.ShowVideoReward(OnRewaredAdCompleted, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: actionWatchVideo);
     }
 
     private void OnRewaredAdCompleted()
