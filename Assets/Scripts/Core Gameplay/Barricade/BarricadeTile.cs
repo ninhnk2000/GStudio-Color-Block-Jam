@@ -22,7 +22,7 @@ public class BarricadeTile : MonoBehaviour
 
     public GameFaction Faction
     {
-        get => barricadeServiceLocator.barricadeFaction.Faction;
+        get => barricadeServiceLocator.BarricadeProperty.Faction;
     }
 
     private void PlayDisintegrationFx()
@@ -43,7 +43,7 @@ public class BarricadeTile : MonoBehaviour
 
         if (block != null)
         {
-            if (block.Faction == barricadeServiceLocator.barricadeFaction.Faction &&
+            if (block.Faction == barricadeServiceLocator.BarricadeProperty.Faction &&
                 block.BlockProperty.IsReadyTriggerDisintegrateFx
             )
             {

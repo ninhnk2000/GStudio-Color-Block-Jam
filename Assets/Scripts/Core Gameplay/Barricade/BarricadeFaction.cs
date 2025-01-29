@@ -6,7 +6,8 @@ using static GameEnum;
 
 public class BarricadeFaction : MonoBehaviour
 {
-    [SerializeField] private GameFaction faction;
+    // [SerializeField] private GameFaction faction;
+    [SerializeField] private BarricadeServiceLocator barricadeServiceLocator;
 
     #region PRIVATE FIELD
     [SerializeField] private List<Tween> _tweens;
@@ -14,23 +15,16 @@ public class BarricadeFaction : MonoBehaviour
     private MaterialPropertyBlock _propertyBlock;
     #endregion
 
-    public GameFaction Faction
-    {
-        get => faction;
-    }
+    // public GameFaction Faction
+    // {
+    //     get => faction;
+    // }
 
     private void Awake()
     {
         _tweens = new List<Tween>();
 
         Init();
-
-        SetFaction();
-    }
-
-    private void OnValidate()
-    {
-        SetFaction();
     }
 
     void OnDestroy()
@@ -51,7 +45,7 @@ public class BarricadeFaction : MonoBehaviour
         }
     }
 
-    public void SetFaction()
+    public void SetFaction(GameFaction faction)
     {
         if (_propertyBlock == null)
         {
@@ -59,6 +53,33 @@ public class BarricadeFaction : MonoBehaviour
         }
 
         _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(faction));
+
+        _renderer.SetPropertyBlock(_propertyBlock);
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            BarricadeTile barricadeTile = transform.GetChild(i).GetComponent<BarricadeTile>();
+
+            if (barricadeTile == null)
+            {
+                continue;
+            }
+
+            barricadeTile.DisintegrationFx.GetComponent<ParticleSystemRenderer>().SetPropertyBlock(_propertyBlock);
+        }
+
+        barricadeServiceLocator.BarricadeProperty.Faction = faction;
+        Debug.Log(barricadeServiceLocator.BarricadeProperty.Faction);
+    }
+
+    public void SetFaction()
+    {
+        if (_propertyBlock == null)
+        {
+            Init();
+        }
+
+        _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(barricadeServiceLocator.BarricadeProperty.Faction));
 
         _renderer.SetPropertyBlock(_propertyBlock);
 

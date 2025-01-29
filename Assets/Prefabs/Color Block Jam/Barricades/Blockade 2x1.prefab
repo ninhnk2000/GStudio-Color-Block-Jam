@@ -191,6 +191,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barricadeServiceLocator: {fileID: 6009796535730344415}
+  barricadeProperty:
+    faction: 0
+    numTileX: 2
+    numTileZ: 1
   direction: 1
   disintegrationDuration: 0.6
 --- !u!114 &6009796535730344415
@@ -219,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5928c205d7b5da4e834c95821e7b79d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faction: 0
+  barricadeServiceLocator: {fileID: 6009796535730344415}
   _renderer: {fileID: 1491862154851190768}
 --- !u!33 &7561789924032189543
 MeshFilter:

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using Unity.VisualScripting;
 using System.Collections.Generic;
+using static GameEnum;
 
 public class BoardGeneratorTool : EditorWindow
 {
@@ -12,8 +13,11 @@ public class BoardGeneratorTool : EditorWindow
     private float distanceRatio = 0.05f;
 
     private BaseBlock[] blocks;
+    private BaseBarricade[] barricades;
+    private Transform blockContainer;
 
     private string folderPath = "Assets/Prefabs/Color Block Jam/Blocks";
+    private string barricadeFolderPath = "Assets/Prefabs/Color Block Jam/Barricades";
 
     [MenuItem("Saferio/Board Generator")]
     public static void ShowWindow()
@@ -38,6 +42,28 @@ public class BoardGeneratorTool : EditorWindow
         }
 
         blocks = blockList.ToArray();
+
+
+        LoadBarricadePrefabs();
+    }
+
+    private void LoadBarricadePrefabs()
+    {
+        GameObject[] prefabs = LoadAllPrefabsInFolder(barricadeFolderPath);
+
+        List<BaseBarricade> barricadeList = new List<BaseBarricade>();
+
+        for (int i = 0; i < prefabs.Length; i++)
+        {
+            BaseBarricade barricade = prefabs[i].GetComponent<BaseBarricade>();
+
+            if (barricade != null)
+            {
+                barricadeList.Add(barricade);
+            }
+        }
+
+        barricades = barricadeList.ToArray();
     }
 
     private void OnGUI()
@@ -49,6 +75,8 @@ public class BoardGeneratorTool : EditorWindow
         numRow = EditorGUILayout.IntField("Number of Rows", numRow);
         numColumn = EditorGUILayout.IntField("Number of Columns", numColumn);
         distanceRatio = EditorGUILayout.FloatField("Distance Ratio", distanceRatio);
+
+        blockContainer = (Transform)EditorGUILayout.ObjectField("Block Container", blockContainer, typeof(Transform));
 
         if (GUILayout.Button("Generate Board"))
         {
@@ -62,7 +90,8 @@ public class BoardGeneratorTool : EditorWindow
 
         if (GUILayout.Button("Generate Blocks"))
         {
-            GenerateBlocks();
+            // GenerateBlocks();
+            GenerateBarricades();
         }
     }
 
@@ -173,7 +202,7 @@ public class BoardGeneratorTool : EditorWindow
             {
                 for (int j = randomStartX; j < numColumn; j++)
                 {
-                    bool isValid = IsValidArea(j, i, sizeX, sizeZ);
+                    bool isValid = IsValidArea(isTileFull, j, i, sizeX, sizeZ);
 
                     if (!isValid)
                     {
@@ -261,32 +290,295 @@ public class BoardGeneratorTool : EditorWindow
         }
 
         EditorUtility.SetDirty(Selection.activeGameObject);
+    }
 
-        bool IsValidArea(int startX, int startZ, int sizeX, int sizeZ)
+    private void GenerateBarricades()
+    {
+        Transform selected = Selection.activeTransform;
+
+        int totalBarricadeTiles = 2 * (numRow + numColumn);
+        int remainingBarricadeTiles = totalBarricadeTiles;
+
+        int expandedNumRow = numRow + 2;
+        int expandedNumColumn = numColumn + 2;
+
+        bool[] isTileFull = new bool[expandedNumRow * expandedNumColumn];
+
+        for (int i = 0; i < expandedNumRow; i++)
         {
-            for (int i = startZ; i <= startZ + sizeZ - 1; i++)
+            for (int j = 0; j < expandedNumColumn; j++)
             {
-                if (i >= numRow)
+                int index = j + i * expandedNumColumn;
+
+                if (j > 0 && j < expandedNumColumn - 1 && i > 0 && i < expandedNumRow - 1)
+                {
+                    isTileFull[index] = true;
+
+                    continue;
+                }
+
+                if (i == 0 && j == 0)
+                {
+                    isTileFull[index] = true;
+
+                    continue;
+                }
+
+                if (i == 0 && j == expandedNumColumn - 1)
+                {
+                    isTileFull[index] = true;
+
+                    continue;
+                }
+
+                if (i == expandedNumRow - 1 && j == 0)
+                {
+                    isTileFull[index] = true;
+
+                    continue;
+                }
+
+                if (i == expandedNumRow - 1 && j == expandedNumColumn - 1)
+                {
+                    isTileFull[index] = true;
+
+                    continue;
+                }
+
+                isTileFull[index] = false;
+            }
+        }
+
+        // Remove all existing blocks
+        List<GameObject> toRemoveList = new List<GameObject>();
+
+        for (int i = 0; i < selected.childCount; i++)
+        {
+            toRemoveList.Add(selected.GetChild(i).gameObject);
+        }
+
+        foreach (var item in toRemoveList)
+        {
+            DestroyImmediate(item);
+        }
+
+        // Start
+        Vector2Int coordinator = new Vector2Int();
+
+        int sizeX = 0;
+        int sizeZ = 0;
+
+        bool isValid = false;
+        int tryTime = 0;
+        int maxTryTime = 200;
+
+        List<BaseBarricade> generatedBarricades = new List<BaseBarricade>();
+
+        while (remainingBarricadeTiles > 0 && tryTime < maxTryTime)
+        {
+            tryTime++;
+
+            for (int i = 0; i < expandedNumRow; i++)
+            {
+                for (int j = 0; j < expandedNumColumn; j++)
+                {
+                    if (j > 0 && j < expandedNumColumn - 1 && i > 0 && i < expandedNumRow - 1)
+                    {
+                        continue;
+                    }
+
+                    int random = Random.Range(0, barricades.Length);
+
+                    BaseBarricade selectedPrefab = barricades[random];
+
+                    sizeX = selectedPrefab.BarricadeServiceLocator.BarricadeProperty.NumTileX;
+                    sizeZ = selectedPrefab.BarricadeServiceLocator.BarricadeProperty.NumTileZ;
+
+                    isValid = IsValidArea(isTileFull, j, i, sizeX, sizeZ, expandedNumRow, expandedNumColumn);
+
+                    if (!isValid)
+                    {
+                        continue;
+                    }
+
+                    if (j - (sizeX - 1) < 0 || j + (sizeX - 1) >= expandedNumColumn)
+                    {
+                        isValid = false;
+
+                        continue;
+                    }
+
+                    if (i - (sizeZ - 1) < 0 || i + (sizeZ - 1) >= expandedNumRow)
+                    {
+                        isValid = false;
+
+                        continue;
+                    }
+
+                    if (isValid)
+                    {
+                        coordinator = new Vector2Int(j, i);
+
+                        Vector2Int barricadeCoordinator = coordinator;
+
+                        if (sizeZ > sizeX)
+                        {
+                            if (coordinator.x >= expandedNumColumn / 2f)
+                            {
+                                barricadeCoordinator.x++;
+                            }
+                            else
+                            {
+                                barricadeCoordinator.x--;
+                            }
+                        }
+                        else
+                        {
+                            if (coordinator.y >= expandedNumRow / 2f)
+                            {
+                                barricadeCoordinator.y++;
+                            }
+                            else
+                            {
+                                barricadeCoordinator.y--;
+                            }
+                        }
+
+                        BaseBarricade barricade = Instantiate(selectedPrefab, Selection.activeTransform);
+
+                        generatedBarricades.Add(barricade);
+
+                        Vector3 placedPosition = new Vector3();
+
+                        placedPosition.x = (-(expandedNumColumn - 1) / 2f + (coordinator.x + (sizeX - 1) / 2f)) * GetTileDistance();
+                        placedPosition.y = 0;
+                        placedPosition.z = ((expandedNumRow - 1) / 2f - (coordinator.y + (sizeZ - 1) / 2f)) * GetTileDistance();
+
+                        barricade.transform.position = placedPosition;
+
+                        if (barricade.BarricadeProperty.NumTileX == 1 && barricade.BarricadeProperty.NumTileZ == 1)
+                        {
+                            if (coordinator.x == 0 || coordinator.x == expandedNumColumn - 1)
+                            {
+                                barricade.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
+                            }
+                        }
+
+                        remainingBarricadeTiles -= sizeX * sizeZ;
+
+                        break;
+                    }
+                }
+
+                if (isValid)
+                {
+                    break;
+                }
+            }
+
+            if (isValid)
+            {
+                for (int i = coordinator.y; i <= coordinator.y + sizeZ - 1; i++)
+                {
+                    for (int j = coordinator.x; j <= coordinator.x + sizeX - 1; j++)
+                    {
+                        isTileFull[j + expandedNumColumn * i] = true;
+                    }
+                }
+            }
+        }
+
+        GenerateBarricadeFactions(generatedBarricades);
+    }
+
+    private void GenerateBarricadeFactions(List<BaseBarricade> barricades)
+    {
+        List<GameFaction> factions = GetFactionFromAllBlocks();
+
+        int barricadeIndex = 0;
+
+        foreach (var faction in factions)
+        {
+            barricades[barricadeIndex].BarricadeServiceLocator.barricadeFaction.SetFaction(faction);
+
+            // factions.Remove(faction);
+
+            barricadeIndex++;
+        }
+
+        for (int i = barricadeIndex; i < barricades.Count; i++)
+        {
+            barricades[i].BarricadeServiceLocator.barricadeFaction.SetFaction(GameFaction.Disabled);
+        }
+    }
+
+    private List<GameFaction> GetFactionFromAllBlocks()
+    {
+        List<BaseBlock> blockList = TransformUtil.GetComponentsFromAllChildren<BaseBlock>(blockContainer);
+
+        List<GameFaction> factions = new List<GameFaction>();
+
+        foreach (var block in blockList)
+        {
+            if (!factions.Contains(block.Faction))
+            {
+                factions.Add(block.Faction);
+            }
+        }
+
+        return factions;
+    }
+
+    bool IsValidArea(bool[] isTileFull, int startX, int startZ, int sizeX, int sizeZ)
+    {
+        for (int i = startZ; i <= startZ + sizeZ - 1; i++)
+        {
+            if (i >= numRow)
+            {
+                return false;
+            }
+
+            for (int j = startX; j <= startX + sizeX - 1; j++)
+            {
+                if (j >= numColumn)
                 {
                     return false;
                 }
 
-                for (int j = startX; j <= startX + sizeX - 1; j++)
+                if (isTileFull[j + numColumn * i])
                 {
-                    if (j >= numColumn)
-                    {
-                        return false;
-                    }
-
-                    if (isTileFull[j + numColumn * i])
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
-
-            return true;
         }
+
+        return true;
+    }
+
+    bool IsValidArea(bool[] isTileFull, int startX, int startZ, int sizeX, int sizeZ, int numRow, int numColumn)
+    {
+        for (int i = startZ; i <= startZ + sizeZ - 1; i++)
+        {
+            if (i >= numRow)
+            {
+                return false;
+            }
+
+            for (int j = startX; j <= startX + sizeX - 1; j++)
+            {
+                if (j >= numColumn)
+                {
+                    return false;
+                }
+
+                if (isTileFull[j + numColumn * i])
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private float GetTileDistance()
