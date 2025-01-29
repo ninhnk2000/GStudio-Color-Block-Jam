@@ -67,6 +67,18 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         _cachedFaction = faction;
     }
 
+    public void SetFaction()
+    {
+        if (_propertyBlock == null)
+        {
+            Init();
+        }
+
+        _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(blockServiceLocator.block.BlockProperty.Faction));
+
+        _renderer.SetPropertyBlock(_propertyBlock);
+    }
+
     public void Disintegrate(Direction direction)
     {
         if (direction == Direction.Up)

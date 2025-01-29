@@ -136,7 +136,22 @@ public class BoardGeneratorTool : EditorWindow
 
         BaseBlock selectedPrefab;
 
-        while (remainingTile > 0.2f * totalTile && tryTime < maxTryTime)
+        Transform selected = Selection.activeTransform;
+
+        // Remove all existing blocks
+        List<GameObject> toRemoveList = new List<GameObject>();
+
+        for (int i = 0; i < selected.childCount; i++)
+        {
+            toRemoveList.Add(selected.GetChild(i).gameObject);
+        }
+
+        foreach (var item in toRemoveList)
+        {
+            DestroyImmediate(item);
+        }
+
+        while (remainingTile > 0.3f * totalTile && tryTime < maxTryTime)
         {
             int random = Random.Range(0, blocks.Length);
 
@@ -151,9 +166,12 @@ public class BoardGeneratorTool : EditorWindow
 
             bool isFound = false;
 
-            for (int i = 0; i < numRow; i++)
+            int randomStartZ = Random.Range(0, numRow - 1);
+            int randomStartX = Random.Range(0, numColumn - 1);
+
+            for (int i = randomStartZ; i < numRow; i++)
             {
-                for (int j = 0; j < numColumn; j++)
+                for (int j = randomStartX; j < numColumn; j++)
                 {
                     bool isValid = IsValidArea(j, i, sizeX, sizeZ);
 
@@ -162,14 +180,14 @@ public class BoardGeneratorTool : EditorWindow
                         continue;
                     }
 
-                    if (i - (sizeX - 1) < 0 || i + (sizeX - 1) >= numColumn)
+                    if (i - (sizeX - 1) < 0 || i + (sizeX - 1) >= numRow)
                     {
                         isValid = false;
 
                         continue;
                     }
 
-                    if (j - (sizeZ - 1) < 0 || j + (sizeZ - 1) >= numRow)
+                    if (j - (sizeZ - 1) < 0 || j + (sizeZ - 1) >= numColumn)
                     {
                         isValid = false;
 
@@ -178,7 +196,7 @@ public class BoardGeneratorTool : EditorWindow
 
                     if (isValid)
                     {
-                        int randomIsPicked = Random.Range(0, 5);
+                        int randomIsPicked = Random.Range(0, 10);
 
                         if (randomIsPicked == 0)
                         {
@@ -221,7 +239,7 @@ public class BoardGeneratorTool : EditorWindow
             BaseBlock block = Instantiate(selectedPrefab, Selection.activeTransform);
 
             Vector3 placedPosition = new Vector3();
-            Debug.Log(block.name + "/" + coordinator + "/" + remainingTile);
+
             placedPosition.x = (-(numColumn - 1) / 2f + (coordinator.x + (sizeX - 1) / 2f)) * tileDistance;
             placedPosition.y = 2;
             placedPosition.z = ((numRow - 1) / 2f - (coordinator.y + (sizeZ - 1) / 2f)) * tileDistance;
@@ -236,8 +254,13 @@ public class BoardGeneratorTool : EditorWindow
                 }
             }
 
+            block.BlockProperty.Faction = (GameEnum.GameFaction)Random.Range(0, GameConstants.SCREW_FACTION.Length);
+            block.BlockServiceLocator.blockMaterialPropertyBlock.SetFaction();
+
             remainingTile -= numTile;
         }
+
+        EditorUtility.SetDirty(Selection.activeGameObject);
 
         bool IsValidArea(int startX, int startZ, int sizeX, int sizeZ)
         {

@@ -26,6 +26,11 @@ public class BaseBlock : MonoBehaviour
     private float _tileSize;
     #endregion
 
+    public BlockServiceLocator BlockServiceLocator
+    {
+        get => blockServiceLocator;
+    }
+
     public BlockProperty BlockProperty
     {
         get => blockProperty;
