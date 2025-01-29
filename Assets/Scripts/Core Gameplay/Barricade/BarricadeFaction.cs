@@ -69,7 +69,6 @@ public class BarricadeFaction : MonoBehaviour
         }
 
         barricadeServiceLocator.BarricadeProperty.Faction = faction;
-        Debug.Log(barricadeServiceLocator.BarricadeProperty.Faction);
     }
 
     public void SetFaction()

@@ -4,6 +4,7 @@ using UnityEditor;
 using Unity.VisualScripting;
 using System.Collections.Generic;
 using static GameEnum;
+using Dreamteck.Utilities;
 
 public class BoardGeneratorTool : EditorWindow
 {
@@ -489,6 +490,8 @@ public class BoardGeneratorTool : EditorWindow
         }
 
         GenerateBarricadeFactions(generatedBarricades);
+
+        EditorUtility.SetDirty(selected);
     }
 
     private void GenerateBarricadeFactions(List<BaseBarricade> barricades)
@@ -497,18 +500,48 @@ public class BoardGeneratorTool : EditorWindow
 
         int barricadeIndex = 0;
 
-        foreach (var faction in factions)
+        bool isRandomDisabled;
+        int random;
+
+        List<GameFaction> factionForAllBarricades = new List<GameFaction>();
+
+        factionForAllBarricades.AddRange(factions);
+
+        for (int i = 0; i < barricades.Count - factions.Count; i++)
         {
-            barricades[barricadeIndex].BarricadeServiceLocator.barricadeFaction.SetFaction(faction);
-
-            // factions.Remove(faction);
-
-            barricadeIndex++;
+            factionForAllBarricades.Add(GameFaction.Disabled);
         }
+
+        factionForAllBarricades.Shuffle();
+
+        // foreach (var faction in factions)
+        // {
+        //     random = Random.Range(0, 3);
+
+        //     if (random == 0)
+        //     {
+        //         isRandomDisabled = true;
+        //     }
+        //     else
+        //     {
+        //         isRandomDisabled = false;
+        //     }
+
+        //     if (isRandomDisabled)
+        //     {
+        //         barricades[barricadeIndex].BarricadeServiceLocator.barricadeFaction.SetFaction(GameFaction.Disabled);
+        //     }
+        //     else
+        //     {
+        //         barricades[barricadeIndex].BarricadeServiceLocator.barricadeFaction.SetFaction(faction);
+        //     }
+
+        //     barricadeIndex++;
+        // }
 
         for (int i = barricadeIndex; i < barricades.Count; i++)
         {
-            barricades[i].BarricadeServiceLocator.barricadeFaction.SetFaction(GameFaction.Disabled);
+            barricades[i].BarricadeServiceLocator.barricadeFaction.SetFaction(factionForAllBarricades[i]);
         }
     }
 
