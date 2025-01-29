@@ -60,6 +60,9 @@ MonoBehaviour:
   tilePrefab: {fileID: 2683738924053683454, guid: 2afd069626cabf34fbc47ab08308b3db, type: 3}
   speedMultiplier: 5
   snappingLerpRatio: 0.2
+  layerMaskCheckTile:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &8913571175212257983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +78,7 @@ MonoBehaviour:
   block: {fileID: 8562186795554760408}
   blockFaction: {fileID: 0}
   blockMaterialPropertyBlock: {fileID: 1027175892221683888}
+  meshFilter: {fileID: 7384128855724679265}
 --- !u!114 &175597443996277860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,6 +92,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockServiceLocator: {fileID: 8913571175212257983}
+  boxCastDirection: {x: -0, y: -0, z: -1}
+  gizmoColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &1027175892221683888
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using static GameEnum;
 public class BarricadeProperty
 {
     [SerializeField] private GameFaction faction;
+    [SerializeField] private Direction direction;
     [SerializeField] private int numTileX;
     [SerializeField] private int numTileZ;
 
@@ -13,6 +14,12 @@ public class BarricadeProperty
     {
         get => faction;
         set => faction = value;
+    }
+
+    public Direction Direction
+    {
+        get => direction;
+        set => direction = value;
     }
 
     public int NumTileX

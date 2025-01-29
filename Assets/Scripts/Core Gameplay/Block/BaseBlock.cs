@@ -17,8 +17,10 @@ public class BaseBlock : MonoBehaviour
     private MeshCollider _blockCollider;
     private Vector3 _targetPosition;
 
+    [Header("CUSTOMIZE")]
     [SerializeField] private float speedMultiplier;
     [SerializeField] private float snappingLerpRatio;
+    [SerializeField] private LayerMask layerMaskCheckTile;
 
     #region PRIVATE FIELD
     private Vector3 _snapPosition;
@@ -141,29 +143,67 @@ public class BaseBlock : MonoBehaviour
         return 1.05f * tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position, 5 * Vector3.down);
+    }
+
     private void Snap()
     {
         float tileDistance = GetTileDistance();
 
-        Vector3 position = transform.position;
+        // Vector3 position = transform.position;
 
-        Vector2 coordinator;
+        // Vector2 coordinator;
 
-        // covert to bottom-right position
-        Vector3 bottomRightPosition = new Vector3();
+        // // covert to bottom-right position
+        // Vector3 bottomRightPosition = new Vector3();
 
-        bottomRightPosition.x = transform.position.x + (BlockProperty.NumTileX - 1) / 2f * tileDistance;
-        bottomRightPosition.z = transform.position.z - (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+        // bottomRightPosition.x = transform.position.x + (BlockProperty.NumTileX - 1) / 2f * tileDistance;
+        // bottomRightPosition.z = transform.position.z - (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
 
-        coordinator.x = Mathf.Round(bottomRightPosition.x / tileDistance);
-        coordinator.y = Mathf.Round(bottomRightPosition.z / tileDistance);
+        // coordinator.x = Mathf.Round(bottomRightPosition.x / tileDistance);
+        // coordinator.y = Mathf.Round(bottomRightPosition.z / tileDistance);
 
-        Vector3 finalPosition = new Vector3(0, 2, 0);
+        // Vector3 finalPosition = new Vector3(0, 2, 0);
 
-        finalPosition.x = coordinator.x * tileDistance - (BlockProperty.NumTileX - 1) / 2f * tileDistance;
-        finalPosition.z = coordinator.y * tileDistance + (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+        // finalPosition.x = coordinator.x * tileDistance - (BlockProperty.NumTileX - 1) / 2f * tileDistance;
+        // finalPosition.z = coordinator.y * tileDistance + (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
 
-        _snapPosition = finalPosition;
+        // // finalPosition.x += 0.5f * tileDistance;
+        // finalPosition.z += 0.5f * tileDistance;
+
+        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5, layerMaskCheckTile);
+
+        if (hit.collider != null)
+        {
+            _snapPosition = hit.collider.transform.position;
+
+            if (_snapPosition.x > transform.position.x)
+            {
+                _snapPosition.x -= (BlockProperty.NumTileX - 1) / 2f * tileDistance;
+            }
+            else
+            {
+                _snapPosition.x += (BlockProperty.NumTileX - 1) / 2f * tileDistance;
+            }
+
+            if (_snapPosition.z > transform.position.z)
+            {
+                _snapPosition.z -= (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+            }
+            else
+            {
+                _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+            }
+
+            // _snapPosition.x -= (BlockProperty.NumTileX - 1) / 2f * tileDistance;
+            // _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+
+            _snapPosition.y = transform.position.y;
+        }
+
+        // _snapPosition = finalPosition;
 
         _blockRigidBody.isKinematic = true;
 

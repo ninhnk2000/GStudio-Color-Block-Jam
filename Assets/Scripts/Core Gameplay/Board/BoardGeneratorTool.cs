@@ -266,7 +266,7 @@ public class BoardGeneratorTool : EditorWindow
                 continue;
             }
 
-            BaseBlock block = Instantiate(selectedPrefab, Selection.activeTransform);
+            BaseBlock block = PrefabUtility.InstantiatePrefab(selectedPrefab, selected).GetComponent<BaseBlock>();
 
             Vector3 placedPosition = new Vector3();
 
@@ -445,7 +445,7 @@ public class BoardGeneratorTool : EditorWindow
                             }
                         }
 
-                        BaseBarricade barricade = Instantiate(selectedPrefab, Selection.activeTransform);
+                        BaseBarricade barricade = PrefabUtility.InstantiatePrefab(selectedPrefab, selected).GetComponent<BaseBarricade>(); ;
 
                         generatedBarricades.Add(barricade);
 
@@ -463,6 +463,23 @@ public class BoardGeneratorTool : EditorWindow
                             {
                                 barricade.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
                             }
+                        }
+
+                        if (coordinator.x == 0)
+                        {
+                            barricade.Direction = Direction.Left;
+                        }
+                        else if (coordinator.x == expandedNumColumn - 1)
+                        {
+                            barricade.Direction = Direction.Right;
+                        }
+                        else if (coordinator.y == 0)
+                        {
+                            barricade.Direction = Direction.Up;
+                        }
+                        else if (coordinator.y == expandedNumRow - 1)
+                        {
+                            barricade.Direction = Direction.Down;
                         }
 
                         remainingBarricadeTiles -= sizeX * sizeZ;

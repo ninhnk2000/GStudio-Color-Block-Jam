@@ -7,7 +7,6 @@ public class BaseBarricade : MonoBehaviour
 
     [Header("CUSTOMIZE")]
     [SerializeField] private BarricadeProperty barricadeProperty;
-    [SerializeField] private Direction direction;
     [SerializeField] private float disintegrationDuration;
 
     public BarricadeServiceLocator BarricadeServiceLocator
@@ -22,7 +21,8 @@ public class BaseBarricade : MonoBehaviour
 
     public Direction Direction
     {
-        get => direction;
+        get => barricadeProperty.Direction;
+        set => barricadeProperty.Direction = value;
     }
 
     public GameFaction Faction
