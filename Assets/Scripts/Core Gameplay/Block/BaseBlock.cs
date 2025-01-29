@@ -201,13 +201,17 @@ public class BaseBlock : MonoBehaviour
             // _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
 
             _snapPosition.y = transform.position.y;
+
+            _blockRigidBody.isKinematic = true;
+
+            _isSnapping = true;
         }
 
         // _snapPosition = finalPosition;
 
-        _blockRigidBody.isKinematic = true;
+        // _blockRigidBody.isKinematic = true;
 
-        _isSnapping = true;
+        // _isSnapping = true;
     }
 
     public async Task Disintegrate(Direction direction)

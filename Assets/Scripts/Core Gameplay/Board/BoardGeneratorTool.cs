@@ -513,70 +513,77 @@ public class BoardGeneratorTool : EditorWindow
 
     private void GenerateBarricadeFactions(List<BaseBarricade> barricades)
     {
-        List<GameFaction> factions = GetFactionFromAllBlocks();
+        Dictionary<GameFaction, int> factionsWithMaxSize = GetFactionFromAllBlocks();
 
         int barricadeIndex = 0;
 
         bool isRandomDisabled;
         int random;
 
-        List<GameFaction> factionForAllBarricades = new List<GameFaction>();
+        // List<GameFaction> factionForAllBarricades = new List<GameFaction>();
 
-        factionForAllBarricades.AddRange(factions);
+        // factionForAllBarricades.AddRange(factions);
 
-        for (int i = 0; i < barricades.Count - factions.Count; i++)
+        List<BaseBarricade> remainingBarricades = barricades;
+
+        foreach (var item in factionsWithMaxSize)
         {
-            factionForAllBarricades.Add(GameFaction.Disabled);
-        }
-
-        factionForAllBarricades.Shuffle();
-
-        // foreach (var faction in factions)
-        // {
-        //     random = Random.Range(0, 3);
-
-        //     if (random == 0)
-        //     {
-        //         isRandomDisabled = true;
-        //     }
-        //     else
-        //     {
-        //         isRandomDisabled = false;
-        //     }
-
-        //     if (isRandomDisabled)
-        //     {
-        //         barricades[barricadeIndex].BarricadeServiceLocator.barricadeFaction.SetFaction(GameFaction.Disabled);
-        //     }
-        //     else
-        //     {
-        //         barricades[barricadeIndex].BarricadeServiceLocator.barricadeFaction.SetFaction(faction);
-        //     }
-
-        //     barricadeIndex++;
-        // }
-
-        for (int i = barricadeIndex; i < barricades.Count; i++)
-        {
-            barricades[i].BarricadeServiceLocator.barricadeFaction.SetFaction(factionForAllBarricades[i]);
-        }
-    }
-
-    private List<GameFaction> GetFactionFromAllBlocks()
-    {
-        List<BaseBlock> blockList = TransformUtil.GetComponentsFromAllChildren<BaseBlock>(blockContainer);
-
-        List<GameFaction> factions = new List<GameFaction>();
-
-        foreach (var block in blockList)
-        {
-            if (!factions.Contains(block.Faction))
+            for (int j = 0; j < barricades.Count; j++)
             {
-                factions.Add(block.Faction);
+                BarricadeProperty barricadeProperty = barricades[j].BarricadeProperty;
+
+                int barricadeMaxSize = Mathf.Max(barricadeProperty.NumTileX, barricadeProperty.NumTileZ);
+
+                if (barricadeMaxSize >= item.Value)
+                {
+                    barricades[j].BarricadeServiceLocator.barricadeFaction.SetFaction(item.Key);
+
+                    remainingBarricades.Remove(barricades[j]);
+
+                    break;
+                }
             }
         }
 
-        return factions;
+        for (int i = 0; i < remainingBarricades.Count; i++)
+        {
+            remainingBarricades[i].BarricadeServiceLocator.barricadeFaction.SetFaction(GameFaction.Disabled);
+        }
+
+        // factionForAllBarricades.Shuffle();
+
+        // for (int i = barricadeIndex; i < barricades.Count; i++)
+        // {
+        //     barricades[i].BarricadeServiceLocator.barricadeFaction.SetFaction(factionForAllBarricades[i]);
+        // }
+    }
+
+    private Dictionary<GameFaction, int> GetFactionFromAllBlocks()
+    {
+        List<BaseBlock> blockList = TransformUtil.GetComponentsFromAllChildren<BaseBlock>(blockContainer);
+
+        Dictionary<GameFaction, int> factionsWithMaxSize = new Dictionary<GameFaction, int>();
+
+        foreach (var block in blockList)
+        {
+            if (!factionsWithMaxSize.ContainsKey(block.Faction))
+            {
+                int maxSize = Mathf.Max(block.BlockProperty.NumTileX, block.BlockProperty.NumTileZ);
+
+                factionsWithMaxSize.Add(block.Faction, maxSize);
+            }
+            else
+            {
+                int maxSize = Mathf.Max(block.BlockProperty.NumTileX, block.BlockProperty.NumTileZ);
+
+                if (maxSize > factionsWithMaxSize[block.Faction])
+                {
+                    factionsWithMaxSize[block.Faction] = maxSize;
+                }
+            }
+        }
+
+        return factionsWithMaxSize;
     }
 
     bool IsValidArea(bool[] isTileFull, int startX, int startZ, int sizeX, int sizeZ)
