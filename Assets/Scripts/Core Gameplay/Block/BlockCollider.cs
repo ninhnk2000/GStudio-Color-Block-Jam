@@ -19,10 +19,11 @@ public class BlockCollider : MonoBehaviour
     }
 
     public Vector3 boxCastDirection = -Vector3.forward;
-    public Color gizmoColor = Color.green;
 
     private void OnTriggerEnter(Collider other)
     {
+        return;
+
         // BarricadeTile barricadeTile = other.gameObject.GetComponent<BarricadeTile>();
 
         // if (barricadeTile != null)
@@ -70,7 +71,7 @@ public class BlockCollider : MonoBehaviour
                     if (hits[i].collider != null)
                     {
                         BarricadeTile barricadeTile = hits[i].collider.GetComponent<BarricadeTile>();
-                        
+
                         if (barricadeTile != null)
                         {
                             if (barricadeTile.Faction != blockServiceLocator.block.BlockProperty.Faction)
@@ -94,6 +95,44 @@ public class BlockCollider : MonoBehaviour
             //     //     blockServiceLocator.block.BlockProperty.IsPreventDisintegrating = false;
             //     // }));
             // }
+        }
+    }
+
+    public bool CheckDisintegration(Vector3 direction, float maxDistance)
+    {
+        RaycastHit[] hits = Physics.BoxCastAll(transform.position, 0.5f * blockServiceLocator.Size, direction, Quaternion.identity, maxDistance);
+
+        BaseBarricade matchBarricade = null;
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider != null)
+            {
+                BarricadeTile barricadeTile = hits[i].collider.GetComponent<BarricadeTile>();
+
+                if (barricadeTile != null)
+                {
+                    if (barricadeTile.Faction != blockServiceLocator.block.BlockProperty.Faction)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        matchBarricade = barricadeTile.BarricadeServiceLocator.barricade;
+                    }
+                }
+            }
+        }
+
+        if (matchBarricade != null)
+        {
+            blockServiceLocator.block.Disintegrate(matchBarricade.Direction);
+
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

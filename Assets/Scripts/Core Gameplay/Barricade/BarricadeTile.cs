@@ -13,7 +13,10 @@ public class BarricadeTile : MonoBehaviour
         get => disintegrationFx;
     }
 
-    private bool _isReadyToPlayFx;
+    public BarricadeServiceLocator BarricadeServiceLocator
+    {
+        get => barricadeServiceLocator;
+    }
 
     public Direction Direction
     {
@@ -32,8 +35,6 @@ public class BarricadeTile : MonoBehaviour
         Tween.Delay(0.5f * GameGeneralConfiguration.DISINTEGRATION_TIME).OnComplete(() =>
         {
             disintegrationFx.Stop();
-
-            _isReadyToPlayFx = false;
         });
     }
 

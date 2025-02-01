@@ -4,6 +4,7 @@ public class BlockServiceLocator : MonoBehaviour
 {
     public BaseBlock block;
     public BlockFaction blockFaction;
+    public BlockCollider blockCollider;
     public BlockMaterialPropertyBlock blockMaterialPropertyBlock;
 
     public MeshFilter meshFilter;
@@ -27,6 +28,7 @@ public class BlockServiceLocator : MonoBehaviour
     {
         block = GetComponent<BaseBlock>();
         blockFaction = GetComponent<BlockFaction>();
+        blockCollider = GetComponent<BlockCollider>();
         blockMaterialPropertyBlock = GetComponent<BlockMaterialPropertyBlock>();
         meshFilter = GetComponent<MeshFilter>();
     }

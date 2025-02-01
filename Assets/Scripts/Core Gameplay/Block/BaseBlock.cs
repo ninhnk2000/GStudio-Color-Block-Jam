@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 using PrimeTween;
 using Saferio.Util.SaferioTween;
@@ -47,7 +48,6 @@ public class BaseBlock : MonoBehaviour
     public static event Action disintegrateBlockEvent;
     public static event Action blockCompletedEvent;
 
-
     #region LIFE CYCLE
     private void Awake()
     {
@@ -91,6 +91,38 @@ public class BaseBlock : MonoBehaviour
             if (Vector3.Distance(transform.position, _snapPosition) < GameConstants.TINY_FLOAT_VALUE)
             {
                 // _blockRigidBody.isKinematic = false;
+
+                Vector3 direction;
+                float maxDistance;
+
+                if (transform.position.x > 0)
+                {
+                    direction = Vector3.right;
+                }
+                else
+                {
+                    direction = -Vector3.right;
+                }
+
+                maxDistance = 0.8f * blockProperty.NumTileX * _tileSize;
+
+                bool IsDisintegrate = blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
+
+                if (!IsDisintegrate)
+                {
+                    if (transform.position.z > 0)
+                    {
+                        direction = Vector3.forward;
+                    }
+                    else
+                    {
+                        direction = -Vector3.forward;
+                    }
+
+                    maxDistance = 0.8f * blockProperty.NumTileZ * _tileSize;
+
+                    blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
+                }
 
                 _isSnapping = false;
             }
@@ -245,7 +277,10 @@ public class BaseBlock : MonoBehaviour
         blockProperty.IsMoving = false;
         blockProperty.IsDisintegrating = true;
 
-        await Task.Delay(200);
+        while (_isSnapping)
+        {
+            await Task.Delay(20);
+        }
 
         // if (blockProperty.IsPreventDisintegrating)
         // {
