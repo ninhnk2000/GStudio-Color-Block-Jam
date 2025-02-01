@@ -62,6 +62,8 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.isKinematic = true;
 
         speedMultiplier = 25;
+
+        ScaleOnLevelStarted();
     }
 
     private void OnValidate()
@@ -104,6 +106,18 @@ public class BaseBlock : MonoBehaviour
     }
     #endregion
 
+    #region FOR BETTER GAME FEEL
+    private void ScaleOnLevelStarted()
+    {
+        Vector3 _prevScale = transform.localScale;
+
+        transform.localScale = Vector3.zero;
+
+        _tweens.Add(Tween.Scale(transform, _prevScale, duration: 0.5f));
+    }
+    #endregion 
+
+    #region MOVEMENT
     public void Move(Vector3 targetPosition)
     {
         if (blockProperty.IsDisintegrating)
@@ -145,16 +159,6 @@ public class BaseBlock : MonoBehaviour
         blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
 
         blockProperty.IsMoving = false;
-    }
-
-    private float GetTileDistance()
-    {
-        return 1.05f * tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(transform.position, 5 * Vector3.down);
     }
 
     private void Snap()
@@ -222,7 +226,9 @@ public class BaseBlock : MonoBehaviour
 
         // _isSnapping = true;
     }
+    #endregion
 
+    #region DISINTEGRATE
     public async Task Disintegrate(Direction direction)
     {
         if (blockProperty.IsDisintegrating)
@@ -280,7 +286,9 @@ public class BaseBlock : MonoBehaviour
 
         blockProperty.IsDisintegrating = false;
     }
+    #endregion
 
+    #region BOOSTER
     public void Break()
     {
         Tween.ShakeScale(transform, 1.5f * Vector3.one, duration: 0.3f).OnComplete(() =>
@@ -321,9 +329,15 @@ public class BaseBlock : MonoBehaviour
             Vacumn();
         }
     }
+    #endregion
 
     public void InvokeBlockCompletedEvent()
     {
         blockCompletedEvent?.Invoke();
+    }
+
+    private float GetTileDistance()
+    {
+        return 1.05f * tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
     }
 }
