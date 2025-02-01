@@ -21,6 +21,9 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     private void Awake()
     {
+        LevelLoader.updateRightBoundEvent += SetMaskingRightBound;
+        LevelLoader.updateTopBoundEvent += SetMaskingTopBound;
+
         _tweens = new List<Tween>();
 
         Init();
@@ -35,6 +38,9 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     void OnDestroy()
     {
+        LevelLoader.updateRightBoundEvent -= SetMaskingRightBound;
+        LevelLoader.updateTopBoundEvent -= SetMaskingTopBound;
+
         CommonUtil.StopAllTweens(_tweens);
     }
 
@@ -77,6 +83,18 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(blockServiceLocator.block.BlockProperty.Faction));
 
         _renderer.SetPropertyBlock(_propertyBlock);
+    }
+
+    private void SetMaskingRightBound(float rightBound)
+    {
+        _propertyBlock.SetFloat("_BoundLeft", -rightBound);
+        _propertyBlock.SetFloat("_BoundRight", rightBound);
+    }
+
+    private void SetMaskingTopBound(float topBound)
+    {
+        _propertyBlock.SetFloat("_BoundTop", topBound);
+        _propertyBlock.SetFloat("_BoundBottom", -topBound);
     }
 
     public void Disintegrate(Direction direction)

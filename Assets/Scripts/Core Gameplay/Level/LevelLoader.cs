@@ -21,6 +21,8 @@ public class LevelLoader : MonoBehaviour
     public static event Action<int> setMultiPhaseLevelScrewNumberEvent;
     public static event Action showSceneTransitionEvent;
     public static event Action<BaseBlock[]> sendLevelBaseBlocksDataEvent;
+    public static event Action<float> updateRightBoundEvent;
+    public static event Action<float> updateTopBoundEvent;
 
     private void Awake()
     {
@@ -141,5 +143,28 @@ public class LevelLoader : MonoBehaviour
         BaseBlock[] blocks = TransformUtil.GetComponentsFromAllChildren<BaseBlock>(level).ToArray();
 
         sendLevelBaseBlocksDataEvent?.Invoke(blocks);
+
+        BoardTile[] boardTiles = TransformUtil.GetComponentsFromAllChildren<BoardTile>(level).ToArray();
+
+        float rightBound = 0;
+        float topBound = 0;
+
+        for (int i = 0; i < boardTiles.Length; i++)
+        {
+            Vector3 position = boardTiles[i].transform.position;
+
+            if (position.x > rightBound)
+            {
+                rightBound = position.x;
+            }
+
+            if (position.z > topBound)
+            {
+                topBound = position.z;
+            }
+
+            updateRightBoundEvent(1.2f * rightBound);
+            updateTopBoundEvent(1.2f * topBound);
+        }
     }
 }

@@ -8,6 +8,7 @@ public class BlockProperty
     [SerializeField] private GameFaction faction;
     [SerializeField] private int numTileX;
     [SerializeField] private int numTileZ;
+    [SerializeField] private int[] emptyTileIndexes;
 
     private bool _isMoving;
     private bool _isDisintegrating;
@@ -66,5 +67,10 @@ public class BlockProperty
     public int NumTileZ
     {
         get => numTileZ;
+    }
+
+    public int[] EmptyTileIndexes
+    {
+        get => emptyTileIndexes;
     }
 }

@@ -91,7 +91,11 @@ public class BoardGeneratorTool : EditorWindow
 
         if (GUILayout.Button("Generate Blocks"))
         {
-            // GenerateBlocks();
+            GenerateBlocks();
+        }
+
+        if (GUILayout.Button("Generate Barricades"))
+        {
             GenerateBarricades();
         }
     }
@@ -105,7 +109,7 @@ public class BoardGeneratorTool : EditorWindow
 
         for (int i = 0; i < numTile; i++)
         {
-            tiles[i] = Instantiate(tilePrefab, Selection.activeTransform);
+            tiles[i] = (GameObject)PrefabUtility.InstantiatePrefab(tilePrefab, Selection.activeTransform);
         }
 
         Vector3 position = new Vector3();
@@ -280,7 +284,12 @@ public class BoardGeneratorTool : EditorWindow
             {
                 for (int j = coordinator.x; j <= coordinator.x + sizeX - 1; j++)
                 {
-                    isTileFull[j + numColumn * i] = true;
+                    int indexInBlockSpace = (j - coordinator.x) + (i - coordinator.y) * numColumn;
+
+                    if (!IsBlockTileEmpty(indexInBlockSpace, block))
+                    {
+                        isTileFull[j + numColumn * i] = true;
+                    }
                 }
             }
 
@@ -291,6 +300,19 @@ public class BoardGeneratorTool : EditorWindow
         }
 
         EditorUtility.SetDirty(Selection.activeGameObject);
+
+        bool IsBlockTileEmpty(int index, BaseBlock block)
+        {
+            for (int i = 0; i < block.BlockProperty.EmptyTileIndexes.Length; i++)
+            {
+                if (index == block.BlockProperty.EmptyTileIndexes[i])
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
     private void GenerateBarricades()
@@ -452,7 +474,7 @@ public class BoardGeneratorTool : EditorWindow
                         Vector3 placedPosition = new Vector3();
 
                         placedPosition.x = (-(expandedNumColumn - 1) / 2f + (coordinator.x + (sizeX - 1) / 2f)) * GetTileDistance();
-                        placedPosition.y = 0;
+                        placedPosition.y = -1.5f;
                         placedPosition.z = ((expandedNumRow - 1) / 2f - (coordinator.y + (sizeZ - 1) / 2f)) * GetTileDistance();
 
                         barricade.transform.position = placedPosition;
@@ -468,18 +490,26 @@ public class BoardGeneratorTool : EditorWindow
                         if (coordinator.x == 0)
                         {
                             barricade.Direction = Direction.Left;
+
+                            barricade.transform.position += new Vector3(1.1f, 0, 0);
                         }
                         else if (coordinator.x == expandedNumColumn - 1)
                         {
                             barricade.Direction = Direction.Right;
+
+                            barricade.transform.position -= new Vector3(1.1f, 0, 0);
                         }
                         else if (coordinator.y == 0)
                         {
                             barricade.Direction = Direction.Up;
+
+                            barricade.transform.position -= new Vector3(0, 0, 1.1f);
                         }
                         else if (coordinator.y == expandedNumRow - 1)
                         {
                             barricade.Direction = Direction.Down;
+
+                            barricade.transform.position += new Vector3(0, 0, 1.1f);
                         }
 
                         remainingBarricadeTiles -= sizeX * sizeZ;
