@@ -23,6 +23,7 @@ public class BaseBlock : MonoBehaviour
     [SerializeField] private LayerMask layerMaskCheckTile;
 
     #region PRIVATE FIELD
+    private Vector3 _initialPosition;
     private Vector3 _snapPosition;
     private bool _isSnapping;
     private float _tileSize;
@@ -62,6 +63,7 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.isKinematic = true;
 
         speedMultiplier = 25;
+        _initialPosition = transform.position;
 
         ScaleOnLevelStarted();
     }
@@ -140,7 +142,7 @@ public class BaseBlock : MonoBehaviour
             blockProperty.IsMoving = true;
         }
 
-        _targetPosition = targetPosition.ChangeY(transform.position.y);
+        _targetPosition = targetPosition.ChangeY(1.2f * _initialPosition.y);
 
         // _blockRigidBody.linearVelocity = speedMultiplier * new Vector3(inputDirection.x, 0, inputDirection.y);
     }
@@ -213,7 +215,7 @@ public class BaseBlock : MonoBehaviour
             // _snapPosition.x -= (BlockProperty.NumTileX - 1) / 2f * tileDistance;
             // _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
 
-            _snapPosition.y = transform.position.y;
+            _snapPosition.y = _initialPosition.y;
 
             _blockRigidBody.isKinematic = true;
 

@@ -135,7 +135,9 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     public void ShowOutline(bool isShow)
     {
-        Color outlineColor = _propertyBlock.GetColor("_OutlineColor");
+        // Color outlineColor = _propertyBlock.GetColor("_OutlineColor");
+
+        Color outlineColor = FactionUtility.GetColorForFaction(blockServiceLocator.block.BlockProperty.Faction) * 3f;
 
         float startValue = outlineColor.a;
         float endValue = 1;
