@@ -244,6 +244,16 @@ public class BaseBlock : MonoBehaviour
                 _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
             }
 
+            if (BlockProperty.NumTileX % 2 == 1)
+            {
+                _snapPosition.x = hit.collider.transform.position.x;
+            }
+
+            if (BlockProperty.NumTileZ % 2 == 1)
+            {
+                _snapPosition.z = hit.collider.transform.position.z;
+            }
+
             // _snapPosition.x -= (BlockProperty.NumTileX - 1) / 2f * tileDistance;
             // _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
 
