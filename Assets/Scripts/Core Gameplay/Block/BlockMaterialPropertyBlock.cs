@@ -8,6 +8,9 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
     [SerializeField] private BlockServiceLocator blockServiceLocator;
     [SerializeField] private MeshFilter meshFilter;
 
+    [Header("OUTLINE")]
+    [SerializeField] private Outline outlineComponent;
+
     [Header("CUSTOMIZE")]
     [SerializeField] private string alphaValueReference;
 
@@ -29,6 +32,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         Init();
 
         SetFaction(blockServiceLocator.block.BlockProperty.Faction);
+
+        outlineComponent.OutlineColor = ColorUtil.WithAlpha(outlineComponent.OutlineColor, 0);
     }
 
     private void Start()
@@ -57,6 +62,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         }
 
         blockServiceLocator = GetComponent<BlockServiceLocator>();
+        outlineComponent = GetComponent<Outline>();
     }
 
     public void SetFaction(GameFaction faction)
@@ -169,8 +175,10 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
         _tweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
         {
-            _propertyBlock.SetColor("_OutlineColor", ColorUtil.WithAlpha(outlineColor, newVal));
-            _renderer.SetPropertyBlock(_propertyBlock);
+            outlineComponent.OutlineColor = ColorUtil.WithAlpha(outlineColor, newVal);
+
+            // _propertyBlock.SetColor("_OutlineColor", ColorUtil.WithAlpha(outlineColor, newVal));
+            // _renderer.SetPropertyBlock(_propertyBlock);
         })
             .OnComplete(() =>
             {

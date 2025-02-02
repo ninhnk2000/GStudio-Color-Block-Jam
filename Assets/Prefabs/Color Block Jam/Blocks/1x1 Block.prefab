@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 934061906453731607}
   - component: {fileID: 2386924390249173386}
   - component: {fileID: 2121025156034165055}
+  - component: {fileID: 8901332503281927777}
   - component: {fileID: 126730976145045635}
   - component: {fileID: 3551684709301917145}
   - component: {fileID: 5589559259589497264}
@@ -57,6 +58,7 @@ MonoBehaviour:
     faction: 2
     numTileX: 1
     numTileZ: 1
+    emptyTileIndexes: 
   tilePrefab: {fileID: 2683738924053683454, guid: 2afd069626cabf34fbc47ab08308b3db, type: 3}
   speedMultiplier: 15
   snappingLerpRatio: 0.2
@@ -77,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   block: {fileID: 2083783530978609660}
   blockFaction: {fileID: 0}
+  blockCollider: {fileID: 2386924390249173386}
   blockMaterialPropertyBlock: {fileID: 2121025156034165055}
   meshFilter: {fileID: 126730976145045635}
 --- !u!114 &2386924390249173386
@@ -93,7 +96,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockServiceLocator: {fileID: 934061906453731607}
   boxCastDirection: {x: -0, y: -0, z: -1}
-  gizmoColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &2121025156034165055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,8 +110,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockServiceLocator: {fileID: 934061906453731607}
   meshFilter: {fileID: 126730976145045635}
+  outlineComponent: {fileID: 8901332503281927777}
   alphaValueReference: 
   _renderer: {fileID: 3551684709301917145}
+--- !u!114 &8901332503281927777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2527625118108238081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!33 &126730976145045635
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -142,7 +163,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: fcb632d8e36baeb4c955c2d0b63eda48, type: 2}
-  - {fileID: 2100000, guid: 04103f884bf7c9c49be1c03509aa315f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
