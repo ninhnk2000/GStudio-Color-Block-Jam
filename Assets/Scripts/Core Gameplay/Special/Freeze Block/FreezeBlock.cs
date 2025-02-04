@@ -7,7 +7,9 @@ public class FreezeBlockProperty : BaseBlock
     private bool _isFreeze;
     [SerializeField] private int remainingBlockToMelt;
 
+    [SerializeField] private GameObject ice;
     [SerializeField] private TMP_Text remainingBlockToMeltText;
+    [SerializeField] private ParticleSystem breakIceFx;
 
     protected override void MoreLogicInAwake()
     {
@@ -45,6 +47,11 @@ public class FreezeBlockProperty : BaseBlock
         if (remainingBlockToMelt == 0)
         {
             _isFreeze = false;
+
+            remainingBlockToMeltText.gameObject.SetActive(false);
+            ice.SetActive(false);
+
+            breakIceFx.Play();
         }
 
         remainingBlockToMeltText.text = $"{remainingBlockToMelt}";
