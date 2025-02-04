@@ -30,6 +30,8 @@ public class GameStateLose : BaseGameState
 
     public override void Enter()
     {
+        loseLevelEvent?.Invoke();
+
         // if (_gameStateMachine.ScrewBoxesObserver.NumLockedScrewBoxes == 0)
         // {
         //     // loseLevelEvent?.Invoke();

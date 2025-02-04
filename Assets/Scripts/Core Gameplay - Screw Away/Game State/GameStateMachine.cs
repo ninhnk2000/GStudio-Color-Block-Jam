@@ -28,6 +28,7 @@ public class GameStateMachine : MonoBehaviour
         LevelLoader.startLevelEvent += EnterPlayingState;
         BlockManager.winLevelEvent += EnterWinState;
         ScrewBoxManager.loseLevelEvent += EnterLoseState;
+        TimingBomb.loseLevelEvent += EnterLoseState;
         RevivePopup.reviveEvent += OnRevived;
 
         ChangeState(new GameStatePlaying());
@@ -38,6 +39,7 @@ public class GameStateMachine : MonoBehaviour
         LevelLoader.startLevelEvent -= EnterPlayingState;
         BlockManager.winLevelEvent -= EnterWinState;
         ScrewBoxManager.loseLevelEvent -= EnterLoseState;
+        TimingBomb.loseLevelEvent -= EnterLoseState;
         RevivePopup.reviveEvent -= OnRevived;
     }
 
