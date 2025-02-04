@@ -108,6 +108,13 @@ public class BlockCollider : MonoBehaviour
         {
             if (hits[i].collider != null)
             {
+                GateBarrier gateBarrier = hits[i].collider.GetComponent<GateBarrier>();
+
+                if (gateBarrier != null)
+                {
+                    return false;
+                }
+
                 BarricadeTile barricadeTile = hits[i].collider.GetComponent<BarricadeTile>();
 
                 if (barricadeTile != null)
