@@ -66,6 +66,8 @@ public class BaseBlock : MonoBehaviour
         _initialPosition = transform.position;
 
         ScaleOnLevelStarted();
+
+        InitInsideBlock();
     }
 
     private void OnValidate()
@@ -199,27 +201,6 @@ public class BaseBlock : MonoBehaviour
     {
         float tileDistance = GetTileDistance();
 
-        // Vector3 position = transform.position;
-
-        // Vector2 coordinator;
-
-        // // covert to bottom-right position
-        // Vector3 bottomRightPosition = new Vector3();
-
-        // bottomRightPosition.x = transform.position.x + (BlockProperty.NumTileX - 1) / 2f * tileDistance;
-        // bottomRightPosition.z = transform.position.z - (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
-
-        // coordinator.x = Mathf.Round(bottomRightPosition.x / tileDistance);
-        // coordinator.y = Mathf.Round(bottomRightPosition.z / tileDistance);
-
-        // Vector3 finalPosition = new Vector3(0, 2, 0);
-
-        // finalPosition.x = coordinator.x * tileDistance - (BlockProperty.NumTileX - 1) / 2f * tileDistance;
-        // finalPosition.z = coordinator.y * tileDistance + (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
-
-        // // finalPosition.x += 0.5f * tileDistance;
-        // finalPosition.z += 0.5f * tileDistance;
-
         Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5, layerMaskCheckTile);
 
         if (hit.collider != null)
@@ -323,6 +304,9 @@ public class BaseBlock : MonoBehaviour
         }
 
         blockServiceLocator.blockMaterialPropertyBlock.Disintegrate(direction);
+
+        // DOUBLE BLOCK
+        EnableInsideBlock();
     }
 
     public void StopDisintegrating()
@@ -378,6 +362,7 @@ public class BaseBlock : MonoBehaviour
     }
     #endregion
 
+    #region UTIL
     public void InvokeBlockCompletedEvent()
     {
         blockCompletedEvent?.Invoke();
@@ -387,4 +372,43 @@ public class BaseBlock : MonoBehaviour
     {
         return 1.05f * tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
     }
+    #endregion
+
+    #region DOUBLE BLOCK
+    private void InitInsideBlock()
+    {
+        if (transform.childCount > 0)
+        {
+            Transform insideBlock = transform.GetChild(0);
+
+            Collider[] colliders = insideBlock.GetComponents<Collider>();
+
+            foreach (var collider in colliders)
+            {
+                collider.enabled = false;
+            }
+        }
+    }
+
+    private void EnableInsideBlock()
+    {
+        if (transform.childCount > 0)
+        {
+            Transform insideBlock = transform.GetChild(0);
+
+            insideBlock.SetParent(transform.parent);
+
+            Tween.Scale(insideBlock, transform.localScale, duration: 0.3f)
+            .OnComplete(() =>
+            {
+                Collider[] colliders = insideBlock.GetComponents<Collider>();
+
+                foreach (var collider in colliders)
+                {
+                    collider.enabled = true;
+                }
+            });
+        }
+    }
+    #endregion
 }
