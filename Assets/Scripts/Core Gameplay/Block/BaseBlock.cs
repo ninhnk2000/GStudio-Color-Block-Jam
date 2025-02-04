@@ -74,6 +74,13 @@ public class BaseBlock : MonoBehaviour
         ScaleOnLevelStarted();
 
         InitInsideBlock();
+
+        MoreLogicInAwake();
+    }
+
+    protected virtual void MoreLogicInAwake()
+    {
+
     }
 
     private void OnValidate()
@@ -88,6 +95,13 @@ public class BaseBlock : MonoBehaviour
         BlockSelectionInput.vacumnEvent -= Vacumn;
 
         CommonUtil.StopAllTweens(_tweens);
+
+        MoreLogicOnDestroy();
+    }
+
+    protected virtual void MoreLogicOnDestroy()
+    {
+
     }
 
     private void Update()
@@ -158,18 +172,14 @@ public class BaseBlock : MonoBehaviour
     #endregion 
 
     #region MOVEMENT
-    public void Move(Vector3 targetPosition)
+    public virtual void Move(Vector3 targetPosition)
     {
         if (blockProperty.IsDisintegrating)
         {
             return;
         }
 
-        if (blockProperty.IsMoving)
-        {
-            // return;
-        }
-        else
+        if (!blockProperty.IsMoving)
         {
             blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(true);
 

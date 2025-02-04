@@ -193,9 +193,9 @@ MonoBehaviour:
   barricadeServiceLocator: {fileID: 6009796535730344415}
   barricadeProperty:
     faction: 0
+    direction: 0
     numTileX: 2
     numTileZ: 1
-  direction: 1
   disintegrationDuration: 0.6
 --- !u!114 &6009796535730344415
 MonoBehaviour:
@@ -404,6 +404,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.14431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.1945098
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.76862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0.18039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0.24313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
+      value: 0.9607843
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -470,6 +498,34 @@ PrefabInstance:
     - target: {fileID: 7016484640182509209, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.14431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.1945098
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.76862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0.18039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0.24313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 7995219862611928859, guid: 4885cea462175514eaae8a8091d50ee3, type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
+      value: 0.9607843
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

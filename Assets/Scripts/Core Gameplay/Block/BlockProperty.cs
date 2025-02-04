@@ -73,4 +73,14 @@ public class BlockProperty
     {
         get => emptyTileIndexes;
     }
+
+    public virtual bool IsMovable()
+    {
+        if (_isDisintegrating)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

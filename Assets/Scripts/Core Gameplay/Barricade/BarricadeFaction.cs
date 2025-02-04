@@ -52,7 +52,9 @@ public class BarricadeFaction : MonoBehaviour
             Init();
         }
 
-        _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(faction));
+        Color factionColor = FactionUtility.GetColorForFaction(faction);
+
+        _propertyBlock.SetColor("_Color", factionColor);
 
         _renderer.SetPropertyBlock(_propertyBlock);
 
@@ -65,7 +67,11 @@ public class BarricadeFaction : MonoBehaviour
                 continue;
             }
 
-            barricadeTile.DisintegrationFx.GetComponent<ParticleSystemRenderer>().SetPropertyBlock(_propertyBlock);
+            ParticleSystem.MainModule mainModule = barricadeTile.DisintegrationFx.main;
+
+            mainModule.startColor = new ParticleSystem.MinMaxGradient(factionColor, factionColor * 0.8f);
+
+            // barricadeTile.DisintegrationFx.GetComponent<ParticleSystemRenderer>().SetPropertyBlock(_propertyBlock);
         }
 
         barricadeServiceLocator.BarricadeProperty.Faction = faction;
