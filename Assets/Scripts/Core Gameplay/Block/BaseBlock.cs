@@ -323,6 +323,9 @@ public class BaseBlock : MonoBehaviour
 
         // DOUBLE BLOCK
         EnableInsideBlock();
+
+        // KEY
+        UnlockKey();
     }
 
     public void StopDisintegrating()
@@ -412,6 +415,11 @@ public class BaseBlock : MonoBehaviour
         {
             Transform insideBlock = transform.GetChild(0);
 
+            if (insideBlock.GetComponent<BaseBlock>() == null)
+            {
+                return;
+            }
+
             insideBlock.SetParent(transform.parent);
 
             Tween.Scale(insideBlock, transform.localScale, duration: 0.3f)
@@ -424,6 +432,26 @@ public class BaseBlock : MonoBehaviour
                     collider.enabled = true;
                 }
             });
+        }
+    }
+    #endregion
+
+    #region KEY
+    private void UnlockKey()
+    {
+        if (transform.childCount > 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                Key key = transform.GetChild(i).GetComponent<Key>();
+
+                if (key != null)
+                {
+                    key.transform.SetParent(transform.parent);
+
+                    key.Unlock();
+                }
+            }
         }
     }
     #endregion
