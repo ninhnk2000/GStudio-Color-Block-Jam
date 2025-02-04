@@ -163,8 +163,8 @@ public class LevelLoader : MonoBehaviour
                 topBound = position.z;
             }
 
-            updateRightBoundEvent(1.2f * rightBound);
-            updateTopBoundEvent(1.2f * topBound);
+            updateRightBoundEvent(1.4f * rightBound);
+            updateTopBoundEvent(1.4f * topBound);
         }
     }
 }

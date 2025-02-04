@@ -40,6 +40,11 @@ public class BaseBlock : MonoBehaviour
         get => blockProperty;
     }
 
+    public Rigidbody BlockRigidbody
+    {
+        get => _blockRigidBody;
+    }
+
     public GameFaction Faction
     {
         get => blockProperty.Faction;
@@ -47,6 +52,7 @@ public class BaseBlock : MonoBehaviour
 
     public static event Action disintegrateBlockEvent;
     public static event Action blockCompletedEvent;
+    public static event Action<int, bool> movePairedBlock;
 
     #region LIFE CYCLE
     private void Awake()
@@ -92,8 +98,6 @@ public class BaseBlock : MonoBehaviour
 
             if (Vector3.Distance(transform.position, _snapPosition) < GameConstants.TINY_FLOAT_VALUE)
             {
-                // _blockRigidBody.isKinematic = false;
-
                 Vector3 direction;
                 float maxDistance;
 
@@ -171,14 +175,14 @@ public class BaseBlock : MonoBehaviour
 
             _blockRigidBody.isKinematic = false;
 
+            movePairedBlock?.Invoke(gameObject.GetInstanceID(), true);
+
             _isSnapping = false;
 
             blockProperty.IsMoving = true;
         }
 
         _targetPosition = targetPosition.ChangeY(1.2f * _initialPosition.y);
-
-        // _blockRigidBody.linearVelocity = speedMultiplier * new Vector3(inputDirection.x, 0, inputDirection.y);
     }
 
     public void Stop()
@@ -190,6 +194,8 @@ public class BaseBlock : MonoBehaviour
 
         _blockRigidBody.isKinematic = true;
 
+        movePairedBlock?.Invoke(gameObject.GetInstanceID(), false);
+
         Snap();
 
         blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
@@ -197,7 +203,7 @@ public class BaseBlock : MonoBehaviour
         blockProperty.IsMoving = false;
     }
 
-    private void Snap()
+    public void Snap()
     {
         float tileDistance = GetTileDistance();
 
