@@ -154,4 +154,8 @@ public static class GameConstants
     #region COLOR BLOCK JAM
     public static float TINY_FLOAT_VALUE = 0.001f;
     #endregion
+
+    #region SHADER
+    public static string ADDITION_POSITION_X = "_AdditionPositionX";
+    #endregion
 }
