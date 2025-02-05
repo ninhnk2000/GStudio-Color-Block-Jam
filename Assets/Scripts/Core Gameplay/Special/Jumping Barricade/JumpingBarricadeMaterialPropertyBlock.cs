@@ -36,6 +36,11 @@ public class JumpingBarricadeMaterialPropertyBlock : MonoBehaviour
         }
     }
 
+    public float GetPositionXAddition()
+    {
+        return _renderer.material.GetFloat(GameConstants.ADDITION_POSITION_X);
+    }
+
     public void SetPositionXAddition(float value)
     {
         _propertyBlock.SetFloat(GameConstants.ADDITION_POSITION_X, value);

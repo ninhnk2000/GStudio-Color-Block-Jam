@@ -115,6 +115,13 @@ public class BlockCollider : MonoBehaviour
                     return false;
                 }
 
+                JumpingBarricade jumpingBarricade = hits[i].collider.GetComponent<JumpingBarricade>();
+
+                if (jumpingBarricade != null)
+                {
+                    return false;
+                }
+
                 BarricadeTile barricadeTile = hits[i].collider.GetComponent<BarricadeTile>();
 
                 if (barricadeTile != null)

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7421668434509656881}
   - component: {fileID: 783071738781914054}
   - component: {fileID: 2947189359574383772}
+  - component: {fileID: 5200054624517109431}
   m_Layer: 0
   m_Name: Jumping Barricade
   m_TagString: Untagged
@@ -116,3 +117,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5200054624517109431
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8706884573306731668}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.3, y: 1, z: 2}
+  m_Center: {x: 0.0051414967, y: -0.0000018477444, z: -0.13502413}
