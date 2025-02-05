@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class FreezeBlockProperty : BaseBlock
+public class FreezeBlock : BaseBlock
 {
     [Header("FREEZE BLOCK")]
     private bool _isFreeze;
@@ -33,6 +33,16 @@ public class FreezeBlockProperty : BaseBlock
         }
 
         base.Move(targetPosition);
+    }
+
+    public override void Stop()
+    {
+        if (_isFreeze)
+        {
+            return;
+        }
+
+        base.Stop();
     }
 
     private void OnBlockDisintegrated()

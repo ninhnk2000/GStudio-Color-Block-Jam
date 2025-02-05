@@ -195,7 +195,7 @@ public class BaseBlock : MonoBehaviour
         _targetPosition = targetPosition.ChangeY(1.2f * _initialPosition.y);
     }
 
-    public void Stop()
+    public virtual void Stop()
     {
         if (blockProperty.IsDisintegrating)
         {
@@ -326,6 +326,9 @@ public class BaseBlock : MonoBehaviour
 
         // KEY
         UnlockKey();
+
+        // ELEMENT
+        UseElement();
     }
 
     public void StopDisintegrating()
@@ -450,6 +453,26 @@ public class BaseBlock : MonoBehaviour
                     key.transform.SetParent(transform.parent);
 
                     key.Unlock();
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region ELEMENTS
+    private void UseElement()
+    {
+        if (transform.childCount > 0)
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                BaseElement element = transform.GetChild(i).GetComponent<BaseElement>();
+
+                if (element != null)
+                {
+                    element.transform.SetParent(transform.parent);
+
+                    element.Use();
                 }
             }
         }
