@@ -79,28 +79,70 @@ public class BoardGeneratorTool : EditorWindow
 
         blockContainer = (Transform)EditorGUILayout.ObjectField("Block Container", blockContainer, typeof(Transform));
 
-        if (GUILayout.Button("Generate Board"))
-        {
-            Generate();
-        }
-
         if (GUILayout.Button("Snap"))
         {
             Snap();
         }
 
+        if (GUILayout.Button("Generate Board"))
+        {
+            GenerateBoard(Selection.activeTransform);
+        }
+
         if (GUILayout.Button("Generate Blocks"))
         {
-            GenerateBlocks();
+            GenerateBlocks(Selection.activeTransform);
         }
 
         if (GUILayout.Button("Generate Barricades"))
         {
-            GenerateBarricades();
+            GenerateBarricades(Selection.activeTransform, blockContainer);
+        }
+
+        GUIStyle buttonStyle = new GUIStyle(GUI.skin.button);
+        buttonStyle.fontSize = 16;
+        buttonStyle.padding = new RectOffset(20, 20, 20, 20);
+        buttonStyle.fixedHeight = 60;
+
+        if (GUILayout.Button("Generate Full Level", buttonStyle))
+        {
+            GenerateFullLevel();
         }
     }
 
-    private void Generate()
+    private void GenerateFullLevel()
+    {
+        Transform level = Selection.activeTransform;
+
+        tilePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Color Block Jam/Board/Tile.prefab");
+
+        GameObject TileContainerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Color Block Jam/Containers/Tile Container.prefab");
+        GameObject BlockContainerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Color Block Jam/Containers/Block Container.prefab");
+        GameObject BarricadeContainerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Color Block Jam/Containers/Barricade Container.prefab");
+
+        // Remove all existing blocks
+        List<GameObject> toRemoveList = new List<GameObject>();
+
+        for (int i = 0; i < level.childCount; i++)
+        {
+            toRemoveList.Add(level.GetChild(i).gameObject);
+        }
+
+        foreach (var item in toRemoveList)
+        {
+            DestroyImmediate(item);
+        }
+
+        Transform tileContainer = ((GameObject)PrefabUtility.InstantiatePrefab(TileContainerPrefab, level)).transform;
+        Transform blockContainer = ((GameObject)PrefabUtility.InstantiatePrefab(BlockContainerPrefab, level)).transform;
+        Transform barricadeContainer = ((GameObject)PrefabUtility.InstantiatePrefab(BarricadeContainerPrefab, level)).transform;
+
+        GenerateBoard(tileContainer);
+        GenerateBlocks(blockContainer);
+        GenerateBarricades(barricadeContainer, blockContainer);
+    }
+
+    private void GenerateBoard(Transform container)
     {
         int numTile = numRow * numColumn;
         Vector3 tileSize = tilePrefab.GetComponent<MeshRenderer>().bounds.size;
@@ -109,7 +151,7 @@ public class BoardGeneratorTool : EditorWindow
 
         for (int i = 0; i < numTile; i++)
         {
-            tiles[i] = (GameObject)PrefabUtility.InstantiatePrefab(tilePrefab, Selection.activeTransform);
+            tiles[i] = (GameObject)PrefabUtility.InstantiatePrefab(tilePrefab, container);
         }
 
         Vector3 position = new Vector3();
@@ -127,7 +169,7 @@ public class BoardGeneratorTool : EditorWindow
             }
         }
 
-        EditorUtility.SetDirty(Selection.activeTransform);
+        EditorUtility.SetDirty(container);
     }
 
     private void Snap()
@@ -157,7 +199,7 @@ public class BoardGeneratorTool : EditorWindow
         block.transform.position = finalPosition;
     }
 
-    private void GenerateBlocks()
+    private void GenerateBlocks(Transform container)
     {
         int totalTile = numRow * numColumn;
         int remainingTile = totalTile;
@@ -170,14 +212,12 @@ public class BoardGeneratorTool : EditorWindow
 
         BaseBlock selectedPrefab;
 
-        Transform selected = Selection.activeTransform;
-
         // Remove all existing blocks
         List<GameObject> toRemoveList = new List<GameObject>();
 
-        for (int i = 0; i < selected.childCount; i++)
+        for (int i = 0; i < container.childCount; i++)
         {
-            toRemoveList.Add(selected.GetChild(i).gameObject);
+            toRemoveList.Add(container.GetChild(i).gameObject);
         }
 
         foreach (var item in toRemoveList)
@@ -270,7 +310,7 @@ public class BoardGeneratorTool : EditorWindow
                 continue;
             }
 
-            BaseBlock block = PrefabUtility.InstantiatePrefab(selectedPrefab, selected).GetComponent<BaseBlock>();
+            BaseBlock block = PrefabUtility.InstantiatePrefab(selectedPrefab, container).GetComponent<BaseBlock>();
 
             Vector3 placedPosition = new Vector3();
 
@@ -315,10 +355,8 @@ public class BoardGeneratorTool : EditorWindow
         }
     }
 
-    private void GenerateBarricades()
+    private void GenerateBarricades(Transform container, Transform blockContainer)
     {
-        Transform selected = Selection.activeTransform;
-
         int totalBarricadeTiles = 2 * (numRow + numColumn);
         int remainingBarricadeTiles = totalBarricadeTiles;
 
@@ -375,9 +413,9 @@ public class BoardGeneratorTool : EditorWindow
         // Remove all existing blocks
         List<GameObject> toRemoveList = new List<GameObject>();
 
-        for (int i = 0; i < selected.childCount; i++)
+        for (int i = 0; i < container.childCount; i++)
         {
-            toRemoveList.Add(selected.GetChild(i).gameObject);
+            toRemoveList.Add(container.GetChild(i).gameObject);
         }
 
         foreach (var item in toRemoveList)
@@ -467,7 +505,7 @@ public class BoardGeneratorTool : EditorWindow
                             }
                         }
 
-                        BaseBarricade barricade = PrefabUtility.InstantiatePrefab(selectedPrefab, selected).GetComponent<BaseBarricade>(); ;
+                        BaseBarricade barricade = PrefabUtility.InstantiatePrefab(selectedPrefab, container).GetComponent<BaseBarricade>(); ;
 
                         generatedBarricades.Add(barricade);
 
@@ -536,14 +574,14 @@ public class BoardGeneratorTool : EditorWindow
             }
         }
 
-        GenerateBarricadeFactions(generatedBarricades);
+        GenerateBarricadeFactions(generatedBarricades, blockContainer);
 
-        EditorUtility.SetDirty(selected);
+        EditorUtility.SetDirty(container);
     }
 
-    private void GenerateBarricadeFactions(List<BaseBarricade> barricades)
+    private void GenerateBarricadeFactions(List<BaseBarricade> barricades, Transform blockContainer)
     {
-        Dictionary<GameFaction, int> factionsWithMaxSize = GetFactionFromAllBlocks();
+        Dictionary<GameFaction, int> factionsWithMaxSize = GetFactionFromAllBlocks(blockContainer);
 
         int barricadeIndex = 0;
 
@@ -588,7 +626,7 @@ public class BoardGeneratorTool : EditorWindow
         // }
     }
 
-    private Dictionary<GameFaction, int> GetFactionFromAllBlocks()
+    private Dictionary<GameFaction, int> GetFactionFromAllBlocks(Transform blockContainer)
     {
         List<BaseBlock> blockList = TransformUtil.GetComponentsFromAllChildren<BaseBlock>(blockContainer);
 
@@ -616,6 +654,7 @@ public class BoardGeneratorTool : EditorWindow
         return factionsWithMaxSize;
     }
 
+    #region UTIL
     bool IsValidArea(bool[] isTileFull, int startX, int startZ, int sizeX, int sizeZ)
     {
         for (int i = startZ; i <= startZ + sizeZ - 1; i++)
@@ -698,5 +737,6 @@ public class BoardGeneratorTool : EditorWindow
 
         return prefabs.ToArray();
     }
+    #endregion
 }
 #endif
