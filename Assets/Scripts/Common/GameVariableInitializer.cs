@@ -17,7 +17,11 @@ public class GameVariableInitializer : MonoBehaviour
     [SerializeField] private UserResourcesObserver userResourcesObserver;
     [SerializeField] private GameSetting gameSetting;
 
+    [SerializeField] private GameObject tilePrefab;
+
+    #region PRIVATE FIELD
     private Vector2 _cachedCanvasSize;
+    #endregion
 
     public static event Action currentLevelFetchedEvent;
     public static event Action gameSettingLoadedEvent;
@@ -29,6 +33,8 @@ public class GameVariableInitializer : MonoBehaviour
         canvasSize.Value = canvas.sizeDelta;
 
         GamePersistentVariable.canvasSize = canvas.sizeDelta;
+        GamePersistentVariable.tileSize = tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
+        GamePersistentVariable.tileDistance = 1.02f * GamePersistentVariable.tileSize;
 
         // canvasSize.Save();
 

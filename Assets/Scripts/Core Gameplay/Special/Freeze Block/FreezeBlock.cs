@@ -4,12 +4,12 @@ using UnityEngine;
 public class FreezeBlock : BaseBlock
 {
     [Header("FREEZE BLOCK")]
-    private bool _isFreeze;
     [SerializeField] private int remainingBlockToMelt;
-
     [SerializeField] private GameObject ice;
     [SerializeField] private TMP_Text remainingBlockToMeltText;
     [SerializeField] private ParticleSystem breakIceFx;
+
+    private bool _isFreeze;
 
     protected override void MoreLogicInAwake()
     {

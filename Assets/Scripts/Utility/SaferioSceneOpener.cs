@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class SaferioSceneOpener : EditorWindow
 {
+    [MenuItem("Tools/Open Scene/Loading")]
+    public static void OpenLoadingScene()
+    {
+        EditorSceneManager.OpenScene("Assets/Scenes/Loading.unity");
+    }
+
     [MenuItem("Tools/Open Scene/Menu")]
     public static void OpenMenuScene()
     {
@@ -16,12 +22,6 @@ public class SaferioSceneOpener : EditorWindow
     public static void OpenGameplayScene()
     {
         EditorSceneManager.OpenScene("Assets/Scenes/Gameplay - Screw Away.unity");
-    }
-
-    [MenuItem("Tools/Open Scene/Level Difficulty Calculator")]
-    public static void OpenLevelDifficultyCalculatorScene()
-    {
-        EditorSceneManager.OpenScene("Assets/Scenes/Level Difficulty Calculator.unity");
     }
 
     [MenuItem("Tools/Open Persistent Save Path")]

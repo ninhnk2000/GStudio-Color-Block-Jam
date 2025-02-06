@@ -9,9 +9,8 @@ using static GameEnum;
 
 public class BaseBlock : MonoBehaviour
 {
-    [SerializeField] private BlockServiceLocator blockServiceLocator;
+    private BlockServiceLocator blockServiceLocator;
     [SerializeField] private BlockProperty blockProperty;
-    [SerializeField] private GameObject tilePrefab;
 
     private List<Tween> _tweens;
     private Rigidbody _blockRigidBody;
@@ -19,8 +18,8 @@ public class BaseBlock : MonoBehaviour
     private Vector3 _targetPosition;
 
     [Header("CUSTOMIZE")]
-    [SerializeField] private float speedMultiplier;
-    [SerializeField] private float snappingLerpRatio;
+    [SerializeField] private float speedMultiplier = 15f;
+    [SerializeField] private float snappingLerpRatio = 0.2f;
     [SerializeField] private LayerMask layerMaskCheckTile;
 
     #region PRIVATE FIELD
@@ -61,8 +60,9 @@ public class BaseBlock : MonoBehaviour
 
         _tweens = new List<Tween>();
 
-        _tileSize = tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
+        _tileSize = GamePersistentVariable.tileSize;
 
+        blockServiceLocator = GetComponent<BlockServiceLocator>();
         _blockRigidBody = GetComponent<Rigidbody>();
         _blockCollider = GetComponent<MeshCollider>();
 
@@ -85,6 +85,11 @@ public class BaseBlock : MonoBehaviour
 
     private void OnValidate()
     {
+        if (blockServiceLocator == null)
+        {
+            blockServiceLocator = GetComponent<BlockServiceLocator>();
+        }
+
         blockServiceLocator.Init();
 
         blockServiceLocator.blockMaterialPropertyBlock.SetFaction(blockProperty.Faction);
@@ -215,7 +220,7 @@ public class BaseBlock : MonoBehaviour
 
     public void Snap()
     {
-        float tileDistance = GetTileDistance();
+        float tileDistance = GamePersistentVariable.tileDistance;
 
         Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5, layerMaskCheckTile);
 
@@ -388,11 +393,6 @@ public class BaseBlock : MonoBehaviour
     public void InvokeBlockCompletedEvent()
     {
         blockCompletedEvent?.Invoke();
-    }
-
-    private float GetTileDistance()
-    {
-        return 1.05f * tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
     }
     #endregion
 
