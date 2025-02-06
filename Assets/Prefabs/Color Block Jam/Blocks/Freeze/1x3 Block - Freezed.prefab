@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8568976481017106406}
   - component: {fileID: 2105626026600303145}
-  - component: {fileID: 4975987105274206830}
   - component: {fileID: 6642622664062634367}
   - component: {fileID: 2417150356683403513}
   - component: {fileID: 486238614362821397}
@@ -71,28 +70,6 @@ MonoBehaviour:
   ice: {fileID: 3007118322793852498}
   remainingBlockToMeltText: {fileID: 1037553035622081911}
   breakIceFx: {fileID: 6552937971050573026}
---- !u!114 &4975987105274206830
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 686300764607653596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8a4838058f211d4991624a8e0f96445, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blockProperty:
-    faction: 2
-    numTileX: 1
-    numTileZ: 3
-    emptyTileIndexes: 
-  speedMultiplier: 15
-  snappingLerpRatio: 0.2
-  layerMaskCheckTile:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!114 &6642622664062634367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,8 +287,8 @@ Transform:
   m_GameObject: {fileID: 3007118322793852498}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.25000045}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8568976481017106406}

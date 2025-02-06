@@ -60,8 +60,6 @@ public class BaseBlock : MonoBehaviour
 
         _tweens = new List<Tween>();
 
-        _tileSize = GamePersistentVariable.tileSize;
-
         blockServiceLocator = GetComponent<BlockServiceLocator>();
         _blockRigidBody = GetComponent<Rigidbody>();
         _blockCollider = GetComponent<MeshCollider>();
@@ -69,6 +67,9 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.isKinematic = true;
 
         speedMultiplier = 25;
+        snappingLerpRatio = 1f / 3;
+
+        _tileSize = GamePersistentVariable.tileSize;
         _initialPosition = transform.position;
 
         ScaleOnLevelStarted();

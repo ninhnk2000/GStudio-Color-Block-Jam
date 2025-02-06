@@ -4,7 +4,7 @@ using UnityEngine;
 public class FreezeBlock : BaseBlock
 {
     [Header("FREEZE BLOCK")]
-    [SerializeField] private int remainingBlockToMelt;
+    [SerializeField] private int remainingBlockToMelt = 3;
     [SerializeField] private GameObject ice;
     [SerializeField] private TMP_Text remainingBlockToMeltText;
     [SerializeField] private ParticleSystem breakIceFx;
