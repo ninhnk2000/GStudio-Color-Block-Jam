@@ -55,13 +55,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8a4838058f211d4991624a8e0f96445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockServiceLocator: {fileID: 3592351878883119323}
   blockProperty:
     faction: 2
     numTileX: 3
     numTileZ: 2
     emptyTileIndexes: 0000000002000000
-  tilePrefab: {fileID: 2683738924053683454, guid: 2afd069626cabf34fbc47ab08308b3db, type: 3}
   speedMultiplier: 15
   snappingLerpRatio: 0.2
   layerMaskCheckTile:
@@ -140,7 +138,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4639692322683281694}
-  m_Mesh: {fileID: 4300000, guid: df5bdcadaeb692a42830f3dcae8b0abf, type: 2}
+  m_Mesh: {fileID: 3960169072276652937, guid: 6ab51856bfb478b458f096c9276382b2, type: 3}
 --- !u!23 &4704720686873483474
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -234,7 +232,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: df5bdcadaeb692a42830f3dcae8b0abf, type: 2}
+  m_Mesh: {fileID: 3960169072276652937, guid: 6ab51856bfb478b458f096c9276382b2, type: 3}
 --- !u!65 &5562843552010765634
 BoxCollider:
   m_ObjectHideFlags: 0

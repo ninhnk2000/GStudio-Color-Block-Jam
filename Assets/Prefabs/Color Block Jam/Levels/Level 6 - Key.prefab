@@ -5446,6 +5446,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1108905300035058039, guid: cd8df6944ec35cd44ae0f939c3e3eec8, type: 3}
+      propertyPath: _currentBarricade
+      value: 
+      objectReference: {fileID: 1529907305879781909}
     - target: {fileID: 8706884573306731668, guid: cd8df6944ec35cd44ae0f939c3e3eec8, type: 3}
       propertyPath: m_Name
       value: Jumping Barricade
@@ -6273,6 +6277,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2aea00a0c23d8cd41b4c333e22900a3e, type: 3}
+--- !u!114 &1529907305879781909 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6957159284723066609, guid: 2aea00a0c23d8cd41b4c333e22900a3e, type: 3}
+  m_PrefabInstance: {fileID: 8482416736527181028}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 938baf3e18beea844aa148f7b5775c49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6053552273084180638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2428865907707546746, guid: 2aea00a0c23d8cd41b4c333e22900a3e, type: 3}
