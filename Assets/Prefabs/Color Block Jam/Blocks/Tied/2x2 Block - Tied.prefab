@@ -57,18 +57,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e37dbb2ade62cc4fb5da64f550c800c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockServiceLocator: {fileID: 7203218427689646724}
   blockProperty:
     faction: 0
     numTileX: 2
     numTileZ: 2
     emptyTileIndexes: 
-  tilePrefab: {fileID: 2683738924053683454, guid: 2afd069626cabf34fbc47ab08308b3db, type: 3}
   speedMultiplier: 15
   snappingLerpRatio: 0.2
   layerMaskCheckTile:
     serializedVersion: 2
     m_Bits: 256
+  remainingRopeTag: {fileID: 0}
   remainingRope: 2
   remainingRopeText: {fileID: 4386309093154655275}
   breakIceFx: {fileID: 2165099668640588382}
@@ -89,6 +88,7 @@ MonoBehaviour:
   blockCollider: {fileID: 742663626257498922}
   blockMaterialPropertyBlock: {fileID: 2096888643128807287}
   meshFilter: {fileID: 5976955341243685823}
+  meshRenderer: {fileID: 5631381371741433927}
 --- !u!114 &742663626257498922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,6 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockServiceLocator: {fileID: 7203218427689646724}
   meshFilter: {fileID: 5976955341243685823}
+  blockMaterialsContainer: {fileID: 11400000, guid: 5d63c8b6c8e7bb641a27edac3003f076, type: 2}
   outlineComponent: {fileID: 6746039091692903379}
   alphaValueReference: 
   _renderer: {fileID: 5631381371741433927}
@@ -169,7 +170,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fcb632d8e36baeb4c955c2d0b63eda48, type: 2}
+  - {fileID: 2100000, guid: 801b39ac8ac564749b8fcab6211acc26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

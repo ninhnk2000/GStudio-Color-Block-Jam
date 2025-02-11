@@ -192,6 +192,7 @@ MonoBehaviour:
   blockCollider: {fileID: 7458168901953773411}
   blockMaterialPropertyBlock: {fileID: 7759181952103181239}
   meshFilter: {fileID: 258631498673087334}
+  meshRenderer: {fileID: 811379342617961274}
 --- !u!114 &7458168901953773411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockServiceLocator: {fileID: 2187685271929917880}
   meshFilter: {fileID: 258631498673087334}
+  blockMaterialsContainer: {fileID: 11400000, guid: 5d63c8b6c8e7bb641a27edac3003f076, type: 2}
   outlineComponent: {fileID: 5965303214584806684}
   alphaValueReference: 
   _renderer: {fileID: 811379342617961274}
@@ -272,7 +274,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fcb632d8e36baeb4c955c2d0b63eda48, type: 2}
+  - {fileID: 2100000, guid: 541b5f6f0df6d0d4c908b87feb84b9e7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

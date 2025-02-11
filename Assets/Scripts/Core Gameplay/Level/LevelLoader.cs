@@ -21,8 +21,7 @@ public class LevelLoader : MonoBehaviour
     public static event Action<int> setMultiPhaseLevelScrewNumberEvent;
     public static event Action showSceneTransitionEvent;
     public static event Action<BaseBlock[]> sendLevelBaseBlocksDataEvent;
-    public static event Action<float> updateRightBoundEvent;
-    public static event Action<float> updateTopBoundEvent;
+    public static event Action<float, float, float, float> updateBoundEvent;
 
     private void Awake()
     {
@@ -146,8 +145,12 @@ public class LevelLoader : MonoBehaviour
 
         BoardTile[] boardTiles = TransformUtil.GetComponentsFromAllChildren<BoardTile>(level).ToArray();
 
+        float tileSize = boardTiles[0].GetComponent<MeshRenderer>().bounds.size.x;
+
         float rightBound = 0;
+        float leftBound = float.MaxValue;
         float topBound = 0;
+        float bottomBound = float.MaxValue;
 
         for (int i = 0; i < boardTiles.Length; i++)
         {
@@ -158,13 +161,27 @@ public class LevelLoader : MonoBehaviour
                 rightBound = position.x;
             }
 
+            if (position.x < leftBound)
+            {
+                leftBound = position.x;
+            }
+
             if (position.z > topBound)
             {
                 topBound = position.z;
             }
 
-            updateRightBoundEvent(1.4f * rightBound);
-            updateTopBoundEvent(1.4f * topBound);
+            if (position.z < bottomBound)
+            {
+                bottomBound = position.z;
+            }
         }
+
+        rightBound += 0.5f * tileSize;
+        leftBound -= 0.5f * tileSize;
+        topBound += 0.5f * tileSize;
+        bottomBound -= 0.5f * tileSize;
+
+        updateBoundEvent?.Invoke(rightBound, leftBound, topBound, bottomBound);
     }
 }

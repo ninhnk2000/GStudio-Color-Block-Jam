@@ -8,6 +8,7 @@ public class BlockServiceLocator : MonoBehaviour
     public BlockMaterialPropertyBlock blockMaterialPropertyBlock;
 
     public MeshFilter meshFilter;
+    public MeshRenderer meshRenderer;
 
     public Vector3 MeshSize
     {
@@ -16,7 +17,7 @@ public class BlockServiceLocator : MonoBehaviour
 
     public Vector3 Size
     {
-        get => meshFilter.mesh.bounds.size * transform.localScale.x;
+        get => meshRenderer.bounds.size;
     }
 
     private void Awake()
@@ -31,5 +32,6 @@ public class BlockServiceLocator : MonoBehaviour
         blockCollider = GetComponent<BlockCollider>();
         blockMaterialPropertyBlock = GetComponent<BlockMaterialPropertyBlock>();
         meshFilter = GetComponent<MeshFilter>();
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 }

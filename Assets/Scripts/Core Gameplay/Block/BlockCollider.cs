@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using PrimeTween;
+using Saferio.Util.SaferioTween;
 using UnityEngine;
 
 public class BlockCollider : MonoBehaviour
@@ -108,6 +109,11 @@ public class BlockCollider : MonoBehaviour
         {
             if (hits[i].collider != null)
             {
+                if (hits[i].collider.transform == transform)
+                {
+                    continue;
+                }
+
                 GateBarrier gateBarrier = hits[i].collider.GetComponent<GateBarrier>();
 
                 if (gateBarrier != null)

@@ -8,6 +8,9 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
     [SerializeField] private BlockServiceLocator blockServiceLocator;
     [SerializeField] private MeshFilter meshFilter;
 
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private BlockMaterialsContainer blockMaterialsContainer;
+
     [Header("OUTLINE")]
     [SerializeField] private Outline outlineComponent;
 
@@ -24,8 +27,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     private void Awake()
     {
-        LevelLoader.updateRightBoundEvent += SetMaskingRightBound;
-        LevelLoader.updateTopBoundEvent += SetMaskingTopBound;
+        LevelLoader.updateBoundEvent += SetMaskingBound;
 
         _tweens = new List<Tween>();
 
@@ -43,8 +45,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     void OnDestroy()
     {
-        LevelLoader.updateRightBoundEvent -= SetMaskingRightBound;
-        LevelLoader.updateTopBoundEvent -= SetMaskingTopBound;
+        LevelLoader.updateBoundEvent -= SetMaskingBound;
 
         CommonUtil.StopAllTweens(_tweens);
     }
@@ -67,34 +68,40 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     public void SetFaction(GameFaction faction)
     {
-        if (_propertyBlock == null)
-        {
-            Init();
-        }
+        // if (_propertyBlock == null)
+        // {
+        //     Init();
+        // }
 
-        _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(faction));
+        // _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(faction));
 
-        _renderer.SetPropertyBlock(_propertyBlock);
+        // _renderer.SetPropertyBlock(_propertyBlock);
+
+        _renderer.sharedMaterial = blockMaterialsContainer.BlockMaterials[(int)faction];
 
         _cachedFaction = faction;
     }
 
     public void SetFaction()
     {
-        if (_propertyBlock == null)
-        {
-            Init();
-        }
+        // if (_propertyBlock == null)
+        // {
+        //     Init();
+        // }
 
-        _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(blockServiceLocator.block.BlockProperty.Faction));
+        // _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(blockServiceLocator.block.BlockProperty.Faction));
 
-        _renderer.SetPropertyBlock(_propertyBlock);
+        // _renderer.SetPropertyBlock(_propertyBlock);
+
+        _renderer.sharedMaterial = blockMaterialsContainer.BlockMaterials[(int)blockServiceLocator.block.BlockProperty.Faction];
     }
 
-    private void SetMaskingRightBound(float rightBound)
+    private void SetMaskingBound(float rightBound, float leftBound, float topBound, float bottomBound)
     {
-        _propertyBlock.SetFloat("_BoundLeft", -rightBound);
         _propertyBlock.SetFloat("_BoundRight", rightBound);
+        _propertyBlock.SetFloat("_BoundLeft", leftBound);
+        _propertyBlock.SetFloat("_BoundTop", topBound);
+        _propertyBlock.SetFloat("_BoundBottom", bottomBound);
     }
 
     private void SetMaskingTopBound(float topBound)
