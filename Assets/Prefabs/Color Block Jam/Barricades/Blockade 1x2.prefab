@@ -242,7 +242,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7760066131939131317}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -366,6 +366,10 @@ PrefabInstance:
       propertyPath: barricadeServiceLocator
       value: 
       objectReference: {fileID: 6009796535730344415}
+    - target: {fileID: 616322007503347764, guid: f3c3146454c976f488275109db18ca62, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3917328822391013276, guid: f3c3146454c976f488275109db18ca62, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -432,6 +436,10 @@ PrefabInstance:
       propertyPath: barricadeServiceLocator
       value: 
       objectReference: {fileID: 6009796535730344415}
+    - target: {fileID: 616322007503347764, guid: f3c3146454c976f488275109db18ca62, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3917328822391013276, guid: f3c3146454c976f488275109db18ca62, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1

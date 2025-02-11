@@ -86,7 +86,7 @@ public class BarricadeFaction : MonoBehaviour
         }
         else
         {
-            meshRenderer.enabled = false;
+            meshRenderer.enabled = true;
         }
 
         BarricadeTile[] barricadeTiles = TransformUtil.GetComponentsFromAllChildren<BarricadeTile>(transform).ToArray();
@@ -101,6 +101,8 @@ public class BarricadeFaction : MonoBehaviour
         {
             isEnable = true;
         }
+
+        isEnable = false;
 
         foreach (var barricadeTile in barricadeTiles)
         {
