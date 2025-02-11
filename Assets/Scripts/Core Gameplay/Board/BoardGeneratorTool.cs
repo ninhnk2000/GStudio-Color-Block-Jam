@@ -5,13 +5,14 @@ using Unity.VisualScripting;
 using System.Collections.Generic;
 using static GameEnum;
 using Dreamteck.Utilities;
+using UnityEngine.SceneManagement;
 
 public class BoardGeneratorTool : EditorWindow
 {
     private GameObject tilePrefab;
     private int numRow = 8;
     private int numColumn = 5;
-    private float distanceRatio = 0.05f;
+    private float distanceRatio = 0f;
 
     private BaseBlock[] blocks;
     private BaseBarricade[] barricades;
@@ -81,7 +82,7 @@ public class BoardGeneratorTool : EditorWindow
 
         if (GUILayout.Button("Snap"))
         {
-            Snap();
+            SnapUsingRaycast();
         }
 
         if (GUILayout.Button("Generate Board"))
@@ -170,6 +171,53 @@ public class BoardGeneratorTool : EditorWindow
         }
 
         EditorUtility.SetDirty(container);
+    }
+
+    private void SnapUsingRaycast()
+    {
+        float tileDistance = GetTileDistance();
+
+        Transform selected = Selection.activeTransform;
+        BaseBlock block = selected.GetComponent<BaseBlock>();
+
+        SceneManager.GetActiveScene().GetPhysicsScene().Raycast(selected.position, Vector3.down, out RaycastHit hit, 5);
+
+        if (hit.collider != null)
+        {
+            Vector3 _snapPosition = hit.collider.transform.position;
+
+            if (_snapPosition.x > selected.position.x)
+            {
+                _snapPosition.x -= (block.BlockProperty.NumTileX - 1) / 2f * tileDistance;
+            }
+            else
+            {
+                _snapPosition.x += (block.BlockProperty.NumTileX - 1) / 2f * tileDistance;
+            }
+
+            if (_snapPosition.z > selected.position.z)
+            {
+                _snapPosition.z -= (block.BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+            }
+            else
+            {
+                _snapPosition.z += (block.BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+            }
+
+            if (block.BlockProperty.NumTileX % 2 == 1)
+            {
+                _snapPosition.x = hit.collider.transform.position.x;
+            }
+
+            if (block.BlockProperty.NumTileZ % 2 == 1)
+            {
+                _snapPosition.z = hit.collider.transform.position.z;
+            }
+
+            _snapPosition.y = selected.transform.position.y;
+
+            selected.transform.position = _snapPosition;
+        }
     }
 
     private void Snap()
