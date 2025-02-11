@@ -37,6 +37,10 @@ public static class FactionUtility
         {
             return GameConstants.SAFERIO_WHITE;
         }
+        else if (faction == GameFaction.Brown)
+        {
+            return GameConstants.SAFERIO_BROWN;
+        }
         else if (faction == GameFaction.Disabled)
         {
             return GameConstants.SAFERIO_DISABLED;

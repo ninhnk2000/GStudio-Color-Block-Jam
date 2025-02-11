@@ -75,6 +75,42 @@ public class BarricadeFaction : MonoBehaviour
         }
 
         barricadeServiceLocator.BarricadeProperty.Faction = faction;
+
+
+
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+
+        if (faction == GameFaction.Disabled)
+        {
+            meshRenderer.enabled = true;
+        }
+        else
+        {
+            meshRenderer.enabled = false;
+        }
+
+        BarricadeTile[] barricadeTiles = TransformUtil.GetComponentsFromAllChildren<BarricadeTile>(transform).ToArray();
+
+        bool isEnable = false;
+
+        if (faction == GameFaction.Disabled)
+        {
+            isEnable = false;
+        }
+        else
+        {
+            isEnable = true;
+        }
+
+        foreach (var barricadeTile in barricadeTiles)
+        {
+            MeshRenderer[] meshRenderers = TransformUtil.GetComponentsFromAllChildren<MeshRenderer>(barricadeTile.transform).ToArray();
+
+            for (int i = 0; i < meshRenderers.Length; i++)
+            {
+                meshRenderers[i].enabled = isEnable;
+            }
+        }
     }
 
     public void SetFaction()
