@@ -82,7 +82,12 @@ public class BoardGeneratorTool : EditorWindow
 
         if (GUILayout.Button("Snap"))
         {
-            SnapUsingRaycast();
+            SnapUsingRaycast(Selection.activeTransform);
+        }
+
+        if (GUILayout.Button("Snap All"))
+        {
+            SnapAll();
         }
 
         if (GUILayout.Button("Generate Board"))
@@ -173,20 +178,29 @@ public class BoardGeneratorTool : EditorWindow
         EditorUtility.SetDirty(container);
     }
 
-    private void SnapUsingRaycast()
+    private void SnapAll()
+    {
+        BaseBlock[] blocks = TransformUtil.GetComponentsFromAllChildren<BaseBlock>(Selection.activeTransform).ToArray();
+
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            SnapUsingRaycast(blocks[i].transform);
+        }
+    }
+
+    private void SnapUsingRaycast(Transform target)
     {
         float tileDistance = GetTileDistance();
 
-        Transform selected = Selection.activeTransform;
-        BaseBlock block = selected.GetComponent<BaseBlock>();
+        BaseBlock block = target.GetComponent<BaseBlock>();
 
-        SceneManager.GetActiveScene().GetPhysicsScene().Raycast(selected.position, Vector3.down, out RaycastHit hit, 5);
+        SceneManager.GetActiveScene().GetPhysicsScene().Raycast(target.position, Vector3.down, out RaycastHit hit, 5);
 
         if (hit.collider != null)
         {
             Vector3 _snapPosition = hit.collider.transform.position;
 
-            if (_snapPosition.x > selected.position.x)
+            if (_snapPosition.x > target.position.x)
             {
                 _snapPosition.x -= (block.BlockProperty.NumTileX - 1) / 2f * tileDistance;
             }
@@ -195,7 +209,7 @@ public class BoardGeneratorTool : EditorWindow
                 _snapPosition.x += (block.BlockProperty.NumTileX - 1) / 2f * tileDistance;
             }
 
-            if (_snapPosition.z > selected.position.z)
+            if (_snapPosition.z > target.position.z)
             {
                 _snapPosition.z -= (block.BlockProperty.NumTileZ - 1) / 2f * tileDistance;
             }
@@ -214,9 +228,9 @@ public class BoardGeneratorTool : EditorWindow
                 _snapPosition.z = hit.collider.transform.position.z;
             }
 
-            _snapPosition.y = selected.transform.position.y;
+            _snapPosition.y = target.transform.position.y;
 
-            selected.transform.position = _snapPosition;
+            target.transform.position = _snapPosition;
         }
     }
 
