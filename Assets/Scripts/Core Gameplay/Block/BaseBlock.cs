@@ -426,6 +426,8 @@ public class BaseBlock : MonoBehaviour
 
             insideBlock.SetParent(transform.parent);
 
+            insideBlock.GetComponent<MeshFilter>().mesh = blockServiceLocator.meshFilter.mesh;
+
             Tween.Scale(insideBlock, transform.localScale, duration: 0.3f)
             .OnComplete(() =>
             {
