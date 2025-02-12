@@ -144,6 +144,7 @@ public class LevelLoader : MonoBehaviour
         sendLevelBaseBlocksDataEvent?.Invoke(blocks);
 
         BoardTile[] boardTiles = TransformUtil.GetComponentsFromAllChildren<BoardTile>(level).ToArray();
+        BaseBarricade[] barricades = TransformUtil.GetComponentsFromAllChildren<BaseBarricade>(level).ToArray();
 
         float tileSize = boardTiles[0].GetComponent<MeshRenderer>().bounds.size.x;
 
@@ -183,5 +184,25 @@ public class LevelLoader : MonoBehaviour
         bottomBound -= 0.5f * tileSize;
 
         updateBoundEvent?.Invoke(rightBound, leftBound, topBound, bottomBound);
+
+        for (int i = 0; i < barricades.Length; i++)
+        {
+            if (barricades[i].transform.position.x <= leftBound)
+            {
+                barricades[i].Direction = Direction.Left;
+            }
+            else if (barricades[i].transform.position.x >= rightBound)
+            {
+                barricades[i].Direction = Direction.Right;
+            }
+            else if (barricades[i].transform.position.z >= topBound)
+            {
+                barricades[i].Direction = Direction.Up;
+            }
+            else if (barricades[i].transform.position.z <= bottomBound)
+            {
+                barricades[i].Direction = Direction.Down;
+            }
+        }
     }
 }

@@ -198,7 +198,7 @@ public class BaseBlock : MonoBehaviour
             blockProperty.IsMoving = true;
         }
 
-        _targetPosition = targetPosition.ChangeY(1.2f * _initialPosition.y);
+        _targetPosition = targetPosition.ChangeY(1.1f * _initialPosition.y);
     }
 
     public virtual void Stop()

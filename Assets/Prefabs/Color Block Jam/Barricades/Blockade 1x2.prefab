@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barricadeServiceLocator: {fileID: 6009796535730344415}
+  barricadeMaterialsContainer: {fileID: 11400000, guid: ba1c9d90b6c453a428bcd231a768bed0, type: 2}
   _renderer: {fileID: 1491862154851190768}
 --- !u!33 &7561789924032189543
 MeshFilter:
@@ -242,7 +243,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7760066131939131317}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -368,7 +369,7 @@ PrefabInstance:
       objectReference: {fileID: 6009796535730344415}
     - target: {fileID: 616322007503347764, guid: f3c3146454c976f488275109db18ca62, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917328822391013276, guid: f3c3146454c976f488275109db18ca62, type: 3}
       propertyPath: m_LocalPosition.x
@@ -438,7 +439,7 @@ PrefabInstance:
       objectReference: {fileID: 6009796535730344415}
     - target: {fileID: 616322007503347764, guid: f3c3146454c976f488275109db18ca62, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3917328822391013276, guid: f3c3146454c976f488275109db18ca62, type: 3}
       propertyPath: m_LocalPosition.x

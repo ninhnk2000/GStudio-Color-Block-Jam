@@ -9,6 +9,8 @@ public class BarricadeFaction : MonoBehaviour
     // [SerializeField] private GameFaction faction;
     [SerializeField] private BarricadeServiceLocator barricadeServiceLocator;
 
+    [SerializeField] private BarricadeMaterialsContainer barricadeMaterialsContainer;
+
     #region PRIVATE FIELD
     [SerializeField] private List<Tween> _tweens;
     [SerializeField] private Renderer _renderer;
@@ -86,7 +88,7 @@ public class BarricadeFaction : MonoBehaviour
         }
         else
         {
-            meshRenderer.enabled = true;
+            meshRenderer.enabled = false;
         }
 
         BarricadeTile[] barricadeTiles = TransformUtil.GetComponentsFromAllChildren<BarricadeTile>(transform).ToArray();
@@ -102,8 +104,6 @@ public class BarricadeFaction : MonoBehaviour
             isEnable = true;
         }
 
-        isEnable = false;
-
         foreach (var barricadeTile in barricadeTiles)
         {
             MeshRenderer[] meshRenderers = TransformUtil.GetComponentsFromAllChildren<MeshRenderer>(barricadeTile.transform).ToArray();
@@ -111,6 +111,11 @@ public class BarricadeFaction : MonoBehaviour
             for (int i = 0; i < meshRenderers.Length; i++)
             {
                 meshRenderers[i].enabled = isEnable;
+
+                if (isEnable)
+                {
+                    meshRenderers[i].sharedMaterial = barricadeMaterialsContainer.BarricadeMaterials[(int)faction];
+                }
             }
         }
     }
