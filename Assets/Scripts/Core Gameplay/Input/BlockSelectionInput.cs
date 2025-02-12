@@ -13,12 +13,14 @@ public class BlockSelectionInput : MonoBehaviour
     [SerializeField] private LayerMask layerMaskCheck;
     [SerializeField] private float maxSwipeDistance;
     [SerializeField] private float timeToConfirmSelectObjectPart;
+    [SerializeField] private float thresholdMove;
 
     #region PRIVATE FIELD
     [SerializeField] private InputMode _inputMode;
     private List<Vector3> twoTouchPoints;
     private Vector3 _prevTouchPosition;
     private BaseBlock _selectedBlock;
+    private bool _isSelectedLastFrame;
     #endregion
 
     #region EVENT
@@ -77,6 +79,8 @@ public class BlockSelectionInput : MonoBehaviour
                 _selectedBlock.Stop();
 
                 _selectedBlock = null;
+
+                _isSelectedLastFrame = false;
             }
         }
     }
@@ -143,7 +147,21 @@ public class BlockSelectionInput : MonoBehaviour
     {
         if (_selectedBlock != null)
         {
+            if (!_isSelectedLastFrame)
+            {
+                _isSelectedLastFrame = true;
+
+                return;
+            }
+
             Vector2 direction = Input.mousePosition - _prevTouchPosition;
+
+            _prevTouchPosition = Input.mousePosition;
+
+            if (direction.magnitude < thresholdMove)
+            {
+                return;
+            }
 
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -153,8 +171,6 @@ public class BlockSelectionInput : MonoBehaviour
             {
                 _selectedBlock.Move(hit.point);
             }
-
-            _prevTouchPosition = Input.mousePosition;
         }
     }
 
