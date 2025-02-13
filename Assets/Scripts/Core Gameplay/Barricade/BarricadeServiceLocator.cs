@@ -8,4 +8,8 @@ public class BarricadeServiceLocator : MonoBehaviour
     {
         get => barricade.BarricadeProperty;
     }
+    public MeshRenderer BlockSmasherRenderer
+    {
+        get => barricade.BlockSmasherRenderer;
+    }
 }

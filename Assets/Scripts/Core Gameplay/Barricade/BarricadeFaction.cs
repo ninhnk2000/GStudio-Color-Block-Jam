@@ -104,20 +104,31 @@ public class BarricadeFaction : MonoBehaviour
             isEnable = true;
         }
 
-        foreach (var barricadeTile in barricadeTiles)
+        if (isEnable)
         {
-            MeshRenderer[] meshRenderers = TransformUtil.GetComponentsFromAllChildren<MeshRenderer>(barricadeTile.transform).ToArray();
+            barricadeServiceLocator.BlockSmasherRenderer.gameObject.SetActive(true);
 
-            for (int i = 0; i < meshRenderers.Length; i++)
-            {
-                meshRenderers[i].enabled = isEnable;
-
-                if (isEnable)
-                {
-                    meshRenderers[i].sharedMaterial = barricadeMaterialsContainer.BarricadeMaterials[(int)faction];
-                }
-            }
+            barricadeServiceLocator.BlockSmasherRenderer.sharedMaterial = barricadeMaterialsContainer.BarricadeMaterials[(int)faction];
         }
+        else
+        {
+            barricadeServiceLocator.BlockSmasherRenderer.gameObject.SetActive(false);
+        }
+
+        // foreach (var barricadeTile in barricadeTiles)
+        // {
+        //     MeshRenderer[] meshRenderers = TransformUtil.GetComponentsFromAllChildren<MeshRenderer>(barricadeTile.transform).ToArray();
+
+        //     for (int i = 0; i < meshRenderers.Length; i++)
+        //     {
+        //         meshRenderers[i].enabled = isEnable;
+
+        //         if (isEnable)
+        //         {
+        //             meshRenderers[i].sharedMaterial = barricadeMaterialsContainer.BarricadeMaterials[(int)faction];
+        //         }
+        //     }
+        // }
     }
 
     public void SetFaction()

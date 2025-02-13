@@ -103,7 +103,7 @@ public class AdmobAdsMax : MonoBehaviour
         // //#if !UNITY_EDITOR
         List<string> testDeviceIds = new List<string>();
 
-        testDeviceIds.Add("EFC077ABD1A90039A1AA9986094B4F5C");
+        testDeviceIds.Add("07276CEBDF187D3173080B9D8CF4FAB4");
 
         MobileAds.SetRequestConfiguration(new RequestConfiguration
         {

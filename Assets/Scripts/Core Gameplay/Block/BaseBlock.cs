@@ -130,7 +130,7 @@ public class BaseBlock : MonoBehaviour
                     direction = -Vector3.right;
                 }
 
-                maxDistance = 0.8f * blockProperty.NumTileX * _tileSize;
+                maxDistance = 0.5f * blockProperty.NumTileX * _tileSize;
 
                 bool IsDisintegrate = blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
 
@@ -145,7 +145,7 @@ public class BaseBlock : MonoBehaviour
                         direction = -Vector3.forward;
                     }
 
-                    maxDistance = 0.8f * blockProperty.NumTileZ * _tileSize;
+                    maxDistance = 0.5f * blockProperty.NumTileZ * _tileSize;
 
                     blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
                 }
@@ -161,7 +161,9 @@ public class BaseBlock : MonoBehaviour
 
         if (blockProperty.IsMoving)
         {
-            _blockRigidBody.linearVelocity = speedMultiplier * (_targetPosition - transform.position);
+            Vector3 direction = (_targetPosition - transform.position).normalized;
+
+            _blockRigidBody.linearVelocity = speedMultiplier * direction;
         }
     }
     #endregion
