@@ -185,8 +185,6 @@ public class LevelLoader : MonoBehaviour
 
         updateBoundEvent?.Invoke(rightBound, leftBound, topBound, bottomBound);
 
-        Debug.Log("SAFERIO " + leftBound + "/" + rightBound + "/" + topBound);
-
         for (int i = 0; i < barricades.Length; i++)
         {
             if (barricades[i].transform.position.x <= leftBound)

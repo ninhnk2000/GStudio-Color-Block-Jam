@@ -184,6 +184,13 @@ public class BoardGeneratorTool : EditorWindow
 
         for (int i = 0; i < blocks.Length; i++)
         {
+            BaseBlock parentBlock = blocks[i].transform.parent.GetComponent<BaseBlock>();
+
+            if (parentBlock != null)
+            {
+                continue;
+            }
+
             SnapUsingRaycast(blocks[i].transform);
         }
     }
