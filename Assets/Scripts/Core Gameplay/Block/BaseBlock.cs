@@ -68,7 +68,7 @@ public class BaseBlock : MonoBehaviour
 
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 35;
+        speedMultiplier = 25;
         snappingLerpRatio = 1f / 3;
 
         _tileSize = GamePersistentVariable.tileSize;
@@ -132,7 +132,7 @@ public class BaseBlock : MonoBehaviour
                     direction = -Vector3.right;
                 }
 
-                maxDistance = 0.5f * blockProperty.NumTileX * _tileSize;
+                maxDistance = 0.5f * blockServiceLocator.Size.x;
 
                 bool IsDisintegrate = blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
 
@@ -147,7 +147,7 @@ public class BaseBlock : MonoBehaviour
                         direction = -Vector3.forward;
                     }
 
-                    maxDistance = 0.5f * blockProperty.NumTileZ * _tileSize;
+                    maxDistance = 0.5f * blockServiceLocator.Size.z;
 
                     blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
                 }
@@ -170,7 +170,31 @@ public class BaseBlock : MonoBehaviour
                 return;
             }
 
-            Vector3 direction = (_targetPosition - transform.position).normalized;
+            float tileSize = GamePersistentVariable.tileSize;
+
+            if (Mathf.Abs(_targetPosition.x - transform.position.x) < 0.03f * tileSize)
+            {
+                _targetPosition = _targetPosition.ChangeX(transform.position.x);
+            }
+
+            if (Mathf.Abs(_targetPosition.z - transform.position.z) < 0.03f * tileSize)
+            {
+                _targetPosition = _targetPosition.ChangeZ(transform.position.z);
+            }
+
+            Vector3 direction = (_targetPosition - transform.position);
+
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            {
+                direction.z = 0;
+            }
+            else
+            {
+                direction.x = 0;
+            }
+
+            direction.x = Mathf.Clamp(direction.x, -tileSize, tileSize);
+            direction.z = Mathf.Clamp(direction.z, -tileSize, tileSize);
 
             _blockRigidBody.linearVelocity = speedMultiplier * direction;
 
@@ -199,6 +223,11 @@ public class BaseBlock : MonoBehaviour
     public virtual void Move(Vector3 targetPosition)
     {
         if (blockProperty.IsDisintegrating)
+        {
+            return;
+        }
+
+        if (_isSnapping)
         {
             return;
         }
@@ -237,7 +266,7 @@ public class BaseBlock : MonoBehaviour
         blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
 
         blockProperty.IsMoving = false;
-        
+
         _isMovingLastFrame = false;
     }
 
@@ -314,7 +343,7 @@ public class BaseBlock : MonoBehaviour
 
         while (_isSnapping)
         {
-            await Task.Delay(20);
+            await Task.Delay(2);
         }
 
         // if (blockProperty.IsPreventDisintegrating)
@@ -329,6 +358,8 @@ public class BaseBlock : MonoBehaviour
         disintegrateBlockEvent?.Invoke();
 
         // _blockCollider.enabled = false;
+
+        CandyCoded.HapticFeedback.HapticFeedback.MediumFeedback();
 
         if (direction == Direction.Right)
         {

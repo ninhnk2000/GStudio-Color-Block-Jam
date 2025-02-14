@@ -231,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5725749310651749508}
-  - component: {fileID: 1451395366422370572}
+  - component: {fileID: 2366278814434657395}
   - component: {fileID: 5049590216877690795}
   - component: {fileID: 3434909305954629125}
   - component: {fileID: 4106405926432094808}
@@ -267,7 +267,7 @@ Transform:
   - {fileID: 4313433431543889295}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &1451395366422370572
+--- !u!114 &2366278814434657395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -276,11 +276,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2153469464826749080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8a4838058f211d4991624a8e0f96445, type: 3}
+  m_Script: {fileID: 11500000, guid: c0e294a6e455ae34e858191b41bbef93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blockProperty:
-    faction: 4
+    faction: 0
     numTileX: 2
     numTileZ: 2
     emptyTileIndexes: 
@@ -289,6 +289,10 @@ MonoBehaviour:
   layerMaskCheckTile:
     serializedVersion: 2
     m_Bits: 256
+  blockLock: {fileID: 2557445604129531796}
+  remainingKeyToUnlock: 3
+  remainingKeyToUnlockText: {fileID: 4152626716228897713}
+  breakIceFx: {fileID: 0}
 --- !u!114 &5049590216877690795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,7 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b663cc6166b0c9c4e9a9be7f3a63b78b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block: {fileID: 1451395366422370572}
+  block: {fileID: 2366278814434657395}
   blockFaction: {fileID: 0}
   blockCollider: {fileID: 3434909305954629125}
   blockMaterialPropertyBlock: {fileID: 4106405926432094808}
@@ -388,7 +392,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 69a4b32775731444ebd0d43e7c050b34, type: 2}
+  - {fileID: 2100000, guid: 801b39ac8ac564749b8fcab6211acc26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -677,7 +681,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2557445604129531796}
-  - component: {fileID: 4540993722891421226}
   - component: {fileID: 1970935318557828329}
   - component: {fileID: 8993312236710682806}
   m_Layer: 0
@@ -702,20 +705,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5725749310651749508}
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: -90}
---- !u!114 &4540993722891421226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7652175209030433057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13a53b185ba489b4b8410f0b889b0d35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  remainingKeyToUnlockText: {fileID: 4152626716228897713}
-  remainingKeyToUnlock: 3
 --- !u!33 &1970935318557828329
 MeshFilter:
   m_ObjectHideFlags: 0

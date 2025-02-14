@@ -8,10 +8,13 @@ public class BlockCollider : MonoBehaviour
     [SerializeField] private BlockServiceLocator blockServiceLocator;
 
     private List<Tween> _tweens;
+    private Rigidbody _blockRigidbody;
 
     private void Awake()
     {
         _tweens = new List<Tween>();
+
+        _blockRigidbody = GetComponent<Rigidbody>();
     }
 
     private void OnDestroy()
@@ -20,6 +23,11 @@ public class BlockCollider : MonoBehaviour
     }
 
     public Vector3 boxCastDirection = -Vector3.forward;
+
+    // void OnCollisionEnter(Collision other)
+    // {
+    //     _blockRigidbody.linearVelocity = Vector3.zero;
+    // }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -101,7 +109,7 @@ public class BlockCollider : MonoBehaviour
 
     public bool CheckDisintegration(Vector3 direction, float maxDistance)
     {
-        RaycastHit[] hits = Physics.BoxCastAll(transform.position, 0.5f * blockServiceLocator.Size, direction, Quaternion.identity, maxDistance);
+        RaycastHit[] hits = Physics.BoxCastAll(transform.position, 0.45f * blockServiceLocator.Size, direction, Quaternion.identity, maxDistance);
 
         BaseBarricade matchBarricade = null;
 
@@ -117,6 +125,13 @@ public class BlockCollider : MonoBehaviour
                 GateBarrier gateBarrier = hits[i].collider.GetComponent<GateBarrier>();
 
                 if (gateBarrier != null)
+                {
+                    return false;
+                }
+
+                BaseBlock block = hits[i].collider.GetComponent<BaseBlock>();
+
+                if (block != null)
                 {
                     return false;
                 }
