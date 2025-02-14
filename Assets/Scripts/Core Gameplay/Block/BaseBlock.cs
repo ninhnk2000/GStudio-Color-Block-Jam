@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Threading.Tasks;
 using PrimeTween;
 using Saferio.Util.SaferioTween;
@@ -18,6 +17,7 @@ public class BaseBlock : MonoBehaviour
     private Vector3 _targetPosition;
     private bool _isMovingLastFrame;
     private Vector3 _prevTargetPosition;
+    private Direction _prevDirection;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float speedMultiplier = 15f;
@@ -66,10 +66,11 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody = GetComponent<Rigidbody>();
         _blockCollider = GetComponent<MeshCollider>();
 
+        _blockRigidBody.constraints |= RigidbodyConstraints.FreezePositionY;
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 25;
-        snappingLerpRatio = 1f / 3;
+        speedMultiplier = 90;
+        snappingLerpRatio = 1f / 2;
 
         _tileSize = GamePersistentVariable.tileSize;
         _initialPosition = transform.position;
@@ -172,19 +173,53 @@ public class BaseBlock : MonoBehaviour
 
             float tileSize = GamePersistentVariable.tileSize;
 
-            if (Mathf.Abs(_targetPosition.x - transform.position.x) < 0.03f * tileSize)
+            // if (Mathf.Abs(_targetPosition.x - transform.position.x) < 0.03f * tileSize)
+            // {
+            //     _targetPosition = _targetPosition.ChangeX(transform.position.x);
+            // }
+
+            // if (Mathf.Abs(_targetPosition.z - transform.position.z) < 0.03f * tileSize)
+            // {
+            //     _targetPosition = _targetPosition.ChangeZ(transform.position.z);
+            // }
+
+            if (!_isMovingLastFrame)
             {
-                _targetPosition = _targetPosition.ChangeX(transform.position.x);
+                _prevTargetPosition = _targetPosition;
             }
 
-            if (Mathf.Abs(_targetPosition.z - transform.position.z) < 0.03f * tileSize)
+            Vector3 direction = (_targetPosition - _prevTargetPosition);
+
+            if (!_isMovingLastFrame)
             {
-                _targetPosition = _targetPosition.ChangeZ(transform.position.z);
+                if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+                {
+                    _prevDirection = Direction.Right;
+                }
+                else
+                {
+                    _prevDirection = Direction.Up;
+                }
+            }
+            else
+            {
+                if (_prevDirection == Direction.Right)
+                {
+                    if (Mathf.Abs(direction.z) > Mathf.Abs(direction.x))
+                    {
+                        _prevDirection = Direction.Up;
+                    }
+                }
+                else
+                {
+                    if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+                    {
+                        _prevDirection = Direction.Right;
+                    }
+                }
             }
 
-            Vector3 direction = (_targetPosition - transform.position);
-
-            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            if (_prevDirection == Direction.Right)
             {
                 direction.z = 0;
             }
@@ -193,10 +228,15 @@ public class BaseBlock : MonoBehaviour
                 direction.x = 0;
             }
 
-            direction.x = Mathf.Clamp(direction.x, -tileSize, tileSize);
-            direction.z = Mathf.Clamp(direction.z, -tileSize, tileSize);
+            float maxDistance = 0.5f * tileSize;
+            float maxVelocity = 45 * 0.5f * tileSize;
 
-            _blockRigidBody.linearVelocity = speedMultiplier * direction;
+            Vector3 velocity = speedMultiplier * direction;
+
+            velocity.x = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
+            velocity.z = Mathf.Clamp(velocity.z, -maxVelocity, maxVelocity);
+
+            _blockRigidBody.linearVelocity = velocity;
 
             if (!_isMovingLastFrame)
             {

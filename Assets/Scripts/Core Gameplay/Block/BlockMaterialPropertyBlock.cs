@@ -36,6 +36,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         SetFaction(blockServiceLocator.block.BlockProperty.Faction);
 
         outlineComponent.OutlineColor = ColorUtil.WithAlpha(outlineComponent.OutlineColor, 0);
+        outlineComponent.OutlineWidth = 6;
     }
 
     private void Start()
@@ -182,7 +183,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
         _tweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
         {
-            outlineComponent.OutlineColor = ColorUtil.WithAlpha(outlineColor, newVal);
+            outlineComponent.OutlineColor = ColorUtil.WithAlpha(Color.white, newVal);
 
             // _propertyBlock.SetColor("_OutlineColor", ColorUtil.WithAlpha(outlineColor, newVal));
             // _renderer.SetPropertyBlock(_propertyBlock);

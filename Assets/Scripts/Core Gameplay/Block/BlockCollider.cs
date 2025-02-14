@@ -24,10 +24,10 @@ public class BlockCollider : MonoBehaviour
 
     public Vector3 boxCastDirection = -Vector3.forward;
 
-    // void OnCollisionEnter(Collision other)
-    // {
-    //     _blockRigidbody.linearVelocity = Vector3.zero;
-    // }
+    void OnCollisionEnter(Collision other)
+    {
+        _blockRigidbody.linearVelocity = Vector3.zero;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
