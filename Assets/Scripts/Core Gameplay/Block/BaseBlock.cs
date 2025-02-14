@@ -16,6 +16,8 @@ public class BaseBlock : MonoBehaviour
     private Rigidbody _blockRigidBody;
     private MeshCollider _blockCollider;
     private Vector3 _targetPosition;
+    private bool _isMovingLastFrame;
+    private Vector3 _prevTargetPosition;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float speedMultiplier = 15f;
@@ -66,7 +68,7 @@ public class BaseBlock : MonoBehaviour
 
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 25;
+        speedMultiplier = 35;
         snappingLerpRatio = 1f / 3;
 
         _tileSize = GamePersistentVariable.tileSize;
@@ -161,9 +163,23 @@ public class BaseBlock : MonoBehaviour
 
         if (blockProperty.IsMoving)
         {
+            if (_isMovingLastFrame && (_targetPosition - _prevTargetPosition).magnitude < 0.02f)
+            {
+                _blockRigidBody.linearVelocity = Vector3.zero;
+
+                return;
+            }
+
             Vector3 direction = (_targetPosition - transform.position).normalized;
 
             _blockRigidBody.linearVelocity = speedMultiplier * direction;
+
+            if (!_isMovingLastFrame)
+            {
+                _isMovingLastFrame = true;
+            }
+
+            _prevTargetPosition = _targetPosition;
         }
     }
     #endregion
@@ -221,6 +237,8 @@ public class BaseBlock : MonoBehaviour
         blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
 
         blockProperty.IsMoving = false;
+        
+        _isMovingLastFrame = false;
     }
 
     public void Snap()

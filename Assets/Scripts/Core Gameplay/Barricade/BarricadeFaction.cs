@@ -71,7 +71,7 @@ public class BarricadeFaction : MonoBehaviour
 
             ParticleSystem.MainModule mainModule = barricadeTile.DisintegrationFx.main;
 
-            mainModule.startColor = new ParticleSystem.MinMaxGradient(factionColor, factionColor * 0.8f);
+            mainModule.startColor = new ParticleSystem.MinMaxGradient(factionColor, ColorUtil.WithAlpha(factionColor * 0.8f, 1));
 
             // barricadeTile.DisintegrationFx.GetComponent<ParticleSystemRenderer>().SetPropertyBlock(_propertyBlock);
         }

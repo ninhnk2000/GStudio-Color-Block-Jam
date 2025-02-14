@@ -185,23 +185,33 @@ public class LevelLoader : MonoBehaviour
 
         updateBoundEvent?.Invoke(rightBound, leftBound, topBound, bottomBound);
 
+        Debug.Log("SAFERIO " + leftBound + "/" + rightBound + "/" + topBound);
+
         for (int i = 0; i < barricades.Length; i++)
         {
             if (barricades[i].transform.position.x <= leftBound)
             {
                 barricades[i].Direction = Direction.Left;
+
+                barricades[i].transform.eulerAngles = new Vector3(0, 90, 0);
             }
             else if (barricades[i].transform.position.x >= rightBound)
             {
                 barricades[i].Direction = Direction.Right;
+
+                barricades[i].transform.eulerAngles = new Vector3(0, 270, 0);
             }
             else if (barricades[i].transform.position.z >= topBound)
             {
                 barricades[i].Direction = Direction.Up;
+
+                barricades[i].transform.eulerAngles = new Vector3(0, 180, 0);
             }
             else if (barricades[i].transform.position.z <= bottomBound)
             {
                 barricades[i].Direction = Direction.Down;
+
+                barricades[i].transform.eulerAngles = new Vector3(0, 0, 0);
             }
         }
     }

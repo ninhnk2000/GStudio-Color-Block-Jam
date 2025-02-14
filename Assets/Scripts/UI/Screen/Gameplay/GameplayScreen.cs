@@ -10,6 +10,7 @@ public class GameplayScreen : MonoBehaviour
 {
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button openDebugPopupButton;
+    [SerializeField] private LeanLocalizedTextMeshProUGUI localizedLevelText;
 
     [SerializeField] private IntVariable currentLevel;
     [SerializeField] private GameSetting gameSetting;
@@ -20,6 +21,9 @@ public class GameplayScreen : MonoBehaviour
 
     void Awake()
     {
+        localizedLevelText.textTranslatedEvent += OnLevelTextTranslated;
+        LevelLoader.setLevelNumberEvent += SetLevelText;
+
         pauseButton.onClick.AddListener(Pause);
         openDebugPopupButton.onClick.AddListener(OpenDebugPopupButton);
 
@@ -31,10 +35,11 @@ public class GameplayScreen : MonoBehaviour
 
     void OnDestroy()
     {
-
+        localizedLevelText.textTranslatedEvent -= OnLevelTextTranslated;
+        LevelLoader.setLevelNumberEvent -= SetLevelText;
     }
 
-    private void Pause()
+    private async void Pause()
     {
         switchRouteEvent?.Invoke(ScreenRoute.Pause);
     }
@@ -42,6 +47,16 @@ public class GameplayScreen : MonoBehaviour
     private void OpenDebugPopupButton()
     {
         switchRouteEvent?.Invoke(ScreenRoute.Debug);
+    }
+
+    private void OnLevelTextTranslated()
+    {
+        localizedLevelText.UpdateTranslationWithParameter(GameConstants.LEVEL_PARAMETER, $"{GetDisplayedLevel()}");
+    }
+
+    private void SetLevelText()
+    {
+        localizedLevelText.UpdateTranslationWithParameter(GameConstants.LEVEL_PARAMETER, $"{GetDisplayedLevel()}");
     }
 
     private int GetDisplayedLevel()
