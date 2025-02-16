@@ -102,6 +102,7 @@ public static class GameConstants
     public static string USER_RESOURCES = "User Resources";
     public static string IS_REMOVE_ADS = "Is Remove Ads";
     public static string GAME_SETTING = "GAME_SETTING";
+    public static string USER_LIVES_DATA = "USER_LIVES_DATA";
     #endregion
 
     #region TRACKING
