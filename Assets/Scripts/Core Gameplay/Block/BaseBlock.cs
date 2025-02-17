@@ -242,11 +242,6 @@ public class BaseBlock : MonoBehaviour
             float maxDistance = 0.5f * tileSize;
             float maxVelocity = 45 * 0.5f * tileSize;
 
-            if (_isLimitMovingSpeedOnNearObstacles)
-            {
-                maxVelocity /= 3;
-            }
-
             Vector3 velocity = speedMultiplier * direction;
 
             velocity.x = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
