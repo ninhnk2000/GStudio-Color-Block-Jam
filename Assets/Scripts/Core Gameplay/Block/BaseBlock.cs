@@ -29,6 +29,7 @@ public class BaseBlock : MonoBehaviour
     private Vector3 _snapPosition;
     private bool _isSnapping;
     private float _tileSize;
+    private bool _isLimitMovingSpeedOnNearObstacles;
     #endregion
 
     public BlockServiceLocator BlockServiceLocator
@@ -113,7 +114,17 @@ public class BaseBlock : MonoBehaviour
 
     }
 
-    private void Update()
+    public void TempDisableMovement()
+    {
+        _isLimitMovingSpeedOnNearObstacles = true;
+
+        _tweens.Add(Tween.Delay(1f).OnComplete(() =>
+        {
+            _isLimitMovingSpeedOnNearObstacles = false;
+        }));
+    }
+
+    private void FixedUpdate()
     {
         if (_isSnapping)
         {
@@ -230,6 +241,11 @@ public class BaseBlock : MonoBehaviour
 
             float maxDistance = 0.5f * tileSize;
             float maxVelocity = 45 * 0.5f * tileSize;
+
+            if (_isLimitMovingSpeedOnNearObstacles)
+            {
+                maxVelocity /= 3;
+            }
 
             Vector3 velocity = speedMultiplier * direction;
 
