@@ -28,6 +28,7 @@ public class IAPShopPopup : BasePopup
         BuyBoosterPopup.openIAPShopPopupEvent += ShowAndScrollToCoinPack;
         RevivePopup.openIAPShopPopupEvent += ShowAndScrollToCoinPack;
         ResourceEarnPopup.showResourcesEarnPopupEvent += OnResourcesEarnPopupShown;
+        CoinContainerUI.goToIAPShopEvent += Show;
     }
 
     protected override void UnregisterMoreEvent()
@@ -35,6 +36,7 @@ public class IAPShopPopup : BasePopup
         BuyBoosterPopup.openIAPShopPopupEvent -= ShowAndScrollToCoinPack;
         RevivePopup.openIAPShopPopupEvent -= ShowAndScrollToCoinPack;
         ResourceEarnPopup.showResourcesEarnPopupEvent -= OnResourcesEarnPopupShown;
+        CoinContainerUI.goToIAPShopEvent -= Show;
     }
 
     protected override void Show(Action onCompletedAction = null)
