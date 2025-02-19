@@ -329,7 +329,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -316.00027}
+  m_AnchoredPosition: {x: 0, y: -316}
   m_SizeDelta: {x: 100, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1493299853964855454
@@ -401,7 +401,7 @@ MonoBehaviour:
   m_text: New Text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: d4bdcb50a821c66469622e29c402db4d, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: c6751e3c42b2990438c0764e5bd011f8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SETTING
+  m_text: Setting
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: d4bdcb50a821c66469622e29c402db4d, type: 2}
@@ -1202,7 +1202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -109.4, y: 13.6}
+  m_AnchoredPosition: {x: -80, y: 13.6}
   m_SizeDelta: {x: 240, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6098804616983151952
@@ -1645,7 +1645,7 @@ MonoBehaviour:
   m_text: Language
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: d4bdcb50a821c66469622e29c402db4d, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 4dfd4878ed341d54ebe9df314690d6b9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1848,8 +1848,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8415006568010257479}
   m_HandleRect: {fileID: 837088418714778944}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.4148148
+  m_Value: 1
+  m_Size: 0.4148138
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2520,7 +2520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -121.6, y: 14.6}
+  m_AnchoredPosition: {x: -80, y: 14.6}
   m_SizeDelta: {x: 240, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1784624185561638599
@@ -2718,7 +2718,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -84.2, y: 13.5}
+  m_AnchoredPosition: {x: -80, y: 13.5}
   m_SizeDelta: {x: 240, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8373929907353452938
@@ -2832,7 +2832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  translationName: Sound
+  translationName: Vibration
   parameter: 
   FallbackText: Sound
 --- !u!1 &6610410187484525174
@@ -3609,7 +3609,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 7.9}
+  m_AnchoredPosition: {x: 0, y: 7.899994}
   m_SizeDelta: {x: 24, y: 4.737}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1495204229135648934
@@ -3708,6 +3708,7 @@ MonoBehaviour:
   isAbleToHideOnClickOutside: 1
   turnMusicToggle: {fileID: 5583926186628533101}
   turnSoundToggle: {fileID: 3864493013397585400}
+  vibrationToggle: {fileID: 6879251254210046277}
   chooseLanguageContainer: {fileID: 3210983027986731742}
   chooseLanguageContainerCanvasGroup: {fileID: 3240277023014633906}
   openLanguageDropdownButton: {fileID: 3424207579929107998}
@@ -4228,6 +4229,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4551132761330278508, guid: 2b3abeefc989ec444a44acdefd8e0c79, type: 3}
   m_PrefabInstance: {fileID: 3702961114080625098}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6879251254210046277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7789975092171499663, guid: 2b3abeefc989ec444a44acdefd8e0c79, type: 3}
+  m_PrefabInstance: {fileID: 3702961114080625098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 898e500f0d4d823458f856be464ef876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6456601609720011455
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class PausePopup : BasePopup
     [SerializeField] private Button replayLevelButton;
     [SerializeField] private SaferioToggle turnMusicToggle;
     [SerializeField] private SaferioToggle turnSoundToggle;
+    [SerializeField] private SaferioToggle vibrationToggle;
 
     [SerializeField] private IntVariable currentLevel;
     [SerializeField] private GameSetting gameSetting;
@@ -24,6 +25,7 @@ public class PausePopup : BasePopup
     {
         turnMusicToggle.SetState(gameSetting.IsTurnOnBackgroundMusic);
         turnSoundToggle.SetState(gameSetting.IsTurnOnSound);
+        vibrationToggle.SetState(gameSetting.IsVibrate);
     }
 
     protected override void RegisterMoreEvent()
@@ -34,6 +36,7 @@ public class PausePopup : BasePopup
         replayLevelButton.onClick.AddListener(Replay);
         turnMusicToggle.RegisterOnSwitchedEvent(EnableGameMusic);
         turnSoundToggle.RegisterOnSwitchedEvent(EnableGameSound);
+        vibrationToggle.RegisterOnSwitchedEvent(EnableVibration);
     }
 
     protected override void UnregisterMoreEvent()
@@ -41,14 +44,11 @@ public class PausePopup : BasePopup
         ScriptableObjectInitializer.gameSettingLoadedEvent -= OnGameSettingLoaded;
     }
 
-    // protected override void AfterHide()
-    // {
-    //     Time.timeScale = 1;
-    // }
-
     private void ReturnHome()
     {
-        // Time.timeScale = 1;
+        // avoid spamming
+        returnHomeButton.interactable = false;
+        replayLevelButton.interactable = false;
 
         SaferioTracking.TrackLevelLose(currentLevel.Value, levelObserver.Progress, levelBoosterObserver, EndLevelReason.ReturnHome.ToString());
 
@@ -57,11 +57,34 @@ public class PausePopup : BasePopup
 
     private void Replay()
     {
+        // bool isShowInterReplayLevel = RemoteConfigController.GetBoolConfig(FirebaseConfig.IS_SHOW_INTER_REPLAY_LEVEL, false);
+
+        // if (isShowInterReplayLevel)
+        // {
+        //     AdmobAdsMax.Instance.ShowInterstitial(actionIniterClose: OnInterstitialAdToReplayCompleted);
+        // }
+        // else
+        // {
+        //     ActualReplay();
+        // }
+
+        // Hide();
+    }
+
+    private void ActualReplay()
+    {
         SaferioTracking.TrackLevelLose(currentLevel.Value, levelObserver.Progress, levelBoosterObserver, EndLevelReason.Replay.ToString());
 
         replayLevelEvent?.Invoke();
 
-        Hide();
+        // Hide();
+    }
+
+    private void OnInterstitialAdToReplayCompleted()
+    {
+        // SaferioTracking.TrackInterstitialAdCompleted(currentLevel.Value, "replay");
+
+        ActualReplay();
     }
 
     private void EnableGameMusic(bool isTurnOn)
@@ -78,9 +101,17 @@ public class PausePopup : BasePopup
         enableGameSoundEvent?.Invoke(isTurnOn);
     }
 
+    private void EnableVibration(bool isTurnOn)
+    {
+        gameSetting.IsVibrate = isTurnOn;
+
+        GamePersistentVariable.IsVibrate = isTurnOn;
+    }
+
     private void OnGameSettingLoaded()
     {
         turnMusicToggle.SetState(gameSetting.IsTurnOnBackgroundMusic);
         turnSoundToggle.SetState(gameSetting.IsTurnOnSound);
+        vibrationToggle.SetState(gameSetting.IsVibrate);
     }
 }

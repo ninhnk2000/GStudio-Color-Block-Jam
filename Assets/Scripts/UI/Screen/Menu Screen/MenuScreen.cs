@@ -28,6 +28,7 @@ public class MenuScreen : MonoBehaviour
 
     public static event Action<ScreenRoute> switchRouteEvent;
     public static event Action<bool> showMenuBlackScreenEvent;
+    public static event Action<int> changeLivesNumberEvent;
 
     private void Awake()
     {
@@ -83,6 +84,8 @@ public class MenuScreen : MonoBehaviour
 
     private void StartGame()
     {
+        changeLivesNumberEvent?.Invoke(-1);
+        
         Addressables.LoadSceneAsync(GameConstants.GAMEPLAY_SCENE);
     }
 

@@ -7,6 +7,7 @@ public class GameSetting : ScriptableObject
     [SerializeField] private bool isDebug;
     [SerializeField] private bool isTurnOnBackgroundMusic = true;
     [SerializeField] private bool isTurnOnSound = true;
+    [SerializeField] private bool isVibrate = true;
     [SerializeField] private string currentLanguage;
 
     public bool IsDebug
@@ -30,6 +31,16 @@ public class GameSetting : ScriptableObject
         set
         {
             isTurnOnSound = value;
+            Save();
+        }
+    }
+
+    public bool IsVibrate
+    {
+        get => isVibrate;
+        set
+        {
+            isVibrate = value;
             Save();
         }
     }
@@ -62,6 +73,7 @@ public class GameSetting : ScriptableObject
 
         isTurnOnBackgroundMusic = savedGameSetting.isTurnOnBackgroundMusic;
         isTurnOnSound = savedGameSetting.IsTurnOnSound;
+        isVibrate = savedGameSetting.IsVibrate;
         currentLanguage = savedGameSetting.CurrentLanguage;
     }
 }

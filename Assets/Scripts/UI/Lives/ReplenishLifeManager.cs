@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Spine.Unity.Editor;
 using UnityEngine;
 
 public class ReplenishLifeManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class ReplenishLifeManager : MonoBehaviour
 
     void Awake()
     {
+        MenuScreen.changeLivesNumberEvent += ChangeLivesNumber;
+
         LivesData defaultLivesData = new LivesData();
 
         defaultLivesData.LastReplenishTime = DateTime.Now;
@@ -21,29 +24,43 @@ public class ReplenishLifeManager : MonoBehaviour
         _livesData = DataUtility.Load(GameConstants.USER_LIVES_DATA, new LivesData());
 
         StartCoroutine(Counting());
+
+        updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
+    }
+
+    void OnDestroy()
+    {
+        MenuScreen.changeLivesNumberEvent -= ChangeLivesNumber;
     }
 
     private IEnumerator Counting()
     {
         WaitForSeconds waitOneSecond = new WaitForSeconds(1);
 
-        while (_livesData.CurrentLives < MaxLives)
+        while (true)
         {
-            TimeSpan timeSinceLastReplenish = DateTime.Now - _livesData.LastReplenishTime;
-
-            double remainingTime = ReplenishTime - timeSinceLastReplenish.TotalSeconds;
-
-            updateLivesReplenishTimeEvent?.Invoke(ConvertTimeFormat(remainingTime));
-
-            if (remainingTime <= 0)
+            if (_livesData.CurrentLives < MaxLives)
             {
-                _livesData.CurrentLives++;
-                _livesData.LastReplenishTime = DateTime.Now;
+                TimeSpan timeSinceLastReplenish = DateTime.Now - _livesData.LastReplenishTime;
 
-                updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
+                double remainingTime = ReplenishTime - timeSinceLastReplenish.TotalSeconds;
+
+                updateLivesReplenishTimeEvent?.Invoke(ConvertTimeFormat(remainingTime));
+
+                if (remainingTime <= 0)
+                {
+                    _livesData.CurrentLives++;
+                    _livesData.LastReplenishTime = DateTime.Now;
+
+                    updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
+                }
+
+                DataUtility.Save(GameConstants.USER_LIVES_DATA, _livesData);
             }
+            else
+            {
 
-            DataUtility.Save(GameConstants.USER_LIVES_DATA, _livesData);
+            }
 
             yield return waitOneSecond;
         }
@@ -52,6 +69,15 @@ public class ReplenishLifeManager : MonoBehaviour
     private void Replenish(int numLives)
     {
 
+    }
+
+    private void ChangeLivesNumber(int value)
+    {
+        _livesData.CurrentLives += value;
+
+        Debug.Log("SAFERIO " + _livesData.CurrentLives);
+
+        DataUtility.Save(GameConstants.USER_LIVES_DATA, _livesData);
     }
 
     #region UTIL

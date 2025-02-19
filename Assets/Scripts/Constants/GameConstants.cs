@@ -155,6 +155,7 @@ public static class GameConstants
 
     #region COLOR BLOCK JAM
     public static float TINY_FLOAT_VALUE = 0.001f;
+    public static int DEFAULT_LIVES = 5;
     #endregion
 
     #region SHADER

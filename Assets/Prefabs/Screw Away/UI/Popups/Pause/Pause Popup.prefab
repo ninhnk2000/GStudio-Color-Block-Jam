@@ -134,6 +134,7 @@ MonoBehaviour:
   replayLevelButton: {fileID: 567183625658185888}
   turnMusicToggle: {fileID: 8888600745733736474}
   turnSoundToggle: {fileID: 8937419940322031197}
+  vibrationToggle: {fileID: 5007883951326980331}
   currentLevel: {fileID: 11400000, guid: dfc7835bc5f6fb64d9f4b1582f01db6e, type: 2}
   gameSetting: {fileID: 11400000, guid: a2c6756a77a053e48bc88637f241a4a1, type: 2}
   levelObserver: {fileID: 11400000, guid: d1d258141f78251439ab25819f9f78ba, type: 2}
@@ -507,7 +508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -108.7, y: 17.7}
+  m_AnchoredPosition: {x: -80, y: 17.7}
   m_SizeDelta: {x: 240, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2910248686220019590
@@ -851,7 +852,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -82, y: 15.1}
+  m_AnchoredPosition: {x: -80, y: 15.1}
   m_SizeDelta: {x: 240, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8927423853719395755
@@ -882,7 +883,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Vibration
+  m_text: Sound
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
   m_sharedMaterial: {fileID: 2327973666622027767, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
@@ -909,7 +910,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 58.85
+  m_fontSize: 72
   m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -965,7 +966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  translationName: Sound
+  translationName: Vibration
   parameter: 
   FallbackText: Sound
 --- !u!1 &3302206088525814660
@@ -1174,7 +1175,7 @@ MonoBehaviour:
   m_text: Home
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
-  m_sharedMaterial: {fileID: 2327973666622027767, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: c6751e3c42b2990438c0764e5bd011f8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1920,7 +1921,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120.2, y: 18.3}
+  m_AnchoredPosition: {x: -80, y: 18.3}
   m_SizeDelta: {x: 240, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7203814497096407662
@@ -2482,3 +2483,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4551132761330278508, guid: 2b3abeefc989ec444a44acdefd8e0c79, type: 3}
   m_PrefabInstance: {fileID: 2982542910055809124}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5007883951326980331 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7789975092171499663, guid: 2b3abeefc989ec444a44acdefd8e0c79, type: 3}
+  m_PrefabInstance: {fileID: 2982542910055809124}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 898e500f0d4d823458f856be464ef876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

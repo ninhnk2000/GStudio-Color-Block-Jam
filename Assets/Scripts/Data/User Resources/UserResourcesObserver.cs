@@ -79,6 +79,7 @@ public class UserResources
 {
     [SerializeField] private float coinQuantity;
     [SerializeField] private int[] boosterQuantities;
+    [SerializeField] private int lives;
 
     public float CoinQuantity
     {
@@ -98,8 +99,19 @@ public class UserResources
         }
     }
 
+    public int Lives
+    {
+        get => lives;
+        set
+        {
+            lives = value;
+        }
+    }
+
     public UserResources()
     {
         boosterQuantities = new int[3];
+
+        lives = GameConstants.DEFAULT_LIVES;
     }
 }
