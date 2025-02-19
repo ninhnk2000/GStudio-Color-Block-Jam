@@ -126,42 +126,58 @@ public class SaferioIAPManager : MonoBehaviour, IDetailedStoreListener
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e)
     {
-        if (e.purchasedProduct.definition.id == GameConstants.REMOVE_AD_ID)
-        {
-            removeAdPurchasedCompletedEvent?.Invoke();
+        bool validPurchase = true;
 
-            UserData.IsRemoveAds = true;
+#if (UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE_OSX) && !UNITY_EDITOR
+        var validator = new CrossPlatformValidator(GooglePlayTangle.Data(),
+            AppleTangle.Data(), Application.bundleIdentifier);
+
+        try 
+        {
+            validator.Validate(e.purchasedProduct.receipt);
+        } 
+        catch (IAPSecurityException) {
+            validPurchase = false;
         }
-        else
+#endif
+
+        if (validPurchase)
         {
-            foreach (var productData in IAPDataContainer.ProductsData)
+            if (e.purchasedProduct.definition.id == GameConstants.REMOVE_AD_ID)
             {
-                if (productData.ProductId == e.purchasedProduct.definition.id)
+                removeAdPurchasedCompletedEvent?.Invoke();
+
+                UserData.IsRemoveAds = true;
+            }
+            else
+            {
+                foreach (var productData in IAPDataContainer.ProductsData)
                 {
-                    // collectCoinEvent?.Invoke(productData.CoinQuantity);
-
-                    userResourcesObserver.ChangeBoosterQuantity(0, productData.AddHoleBoosterQuantity);
-                    userResourcesObserver.ChangeBoosterQuantity(1, productData.BreakObjectBoosterQuantity);
-                    userResourcesObserver.ChangeBoosterQuantity(2, productData.ClearHolesBoosterQuantity);
-
-                    if (productData.IsRemoveAd)
+                    if (productData.ProductId == e.purchasedProduct.definition.id)
                     {
-                        UserData.IsRemoveAds = true;
-                    }
+                        // collectCoinEvent?.Invoke(productData.CoinQuantity);
 
-                    int[] boosterQuantites = new int[3] {
+                        userResourcesObserver.ChangeBoosterQuantity(0, productData.AddHoleBoosterQuantity);
+                        userResourcesObserver.ChangeBoosterQuantity(1, productData.BreakObjectBoosterQuantity);
+                        userResourcesObserver.ChangeBoosterQuantity(2, productData.ClearHolesBoosterQuantity);
+
+                        if (productData.IsRemoveAd)
+                        {
+                            UserData.IsRemoveAds = true;
+                        }
+
+                        int[] boosterQuantites = new int[3] {
                         productData.AddHoleBoosterQuantity,
                         productData.BreakObjectBoosterQuantity,
                         productData.ClearHolesBoosterQuantity
                     };
 
-                    showResourcesEarnPopupEvent?.Invoke(productData.CoinQuantity, boosterQuantites, productData.IsRemoveAd);
+                        showResourcesEarnPopupEvent?.Invoke(productData.CoinQuantity, boosterQuantites, productData.IsRemoveAd);
 
-                    break;
+                        break;
+                    }
                 }
             }
-
-            // iapProductPurchasedCompletedEvent?.Invoke();
         }
 
         return PurchaseProcessingResult.Complete;

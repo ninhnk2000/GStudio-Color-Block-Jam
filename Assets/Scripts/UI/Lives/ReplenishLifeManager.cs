@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Spine.Unity.Editor;
 using UnityEngine;
 
 public class ReplenishLifeManager : MonoBehaviour
