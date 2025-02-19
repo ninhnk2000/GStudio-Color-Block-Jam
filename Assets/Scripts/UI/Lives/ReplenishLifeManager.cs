@@ -15,6 +15,8 @@ public class ReplenishLifeManager : MonoBehaviour
     void Awake()
     {
         MenuScreen.changeLivesNumberEvent += ChangeLivesNumber;
+        LivesShopPopup.changeLivesNumberEvent += ChangeLivesNumber;
+        ReplayPopup.changeLivesNumberEvent += ChangeLivesNumber;
 
         LivesData defaultLivesData = new LivesData();
 
@@ -30,6 +32,8 @@ public class ReplenishLifeManager : MonoBehaviour
     void OnDestroy()
     {
         MenuScreen.changeLivesNumberEvent -= ChangeLivesNumber;
+        LivesShopPopup.changeLivesNumberEvent -= ChangeLivesNumber;
+        ReplayPopup.changeLivesNumberEvent -= ChangeLivesNumber;
     }
 
     private IEnumerator Counting()
@@ -74,9 +78,9 @@ public class ReplenishLifeManager : MonoBehaviour
     {
         _livesData.CurrentLives += value;
 
-        Debug.Log("SAFERIO " + _livesData.CurrentLives);
-
         DataUtility.Save(GameConstants.USER_LIVES_DATA, _livesData);
+
+        updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
     }
 
     #region UTIL

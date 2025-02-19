@@ -29,7 +29,9 @@ public class GameEnum : MonoBehaviour
         IAPShopPopup,
         NoInternet,
         Notification,
-        ResourcesEarn
+        ResourcesEarn,
+        LivesShop,
+        Replay
     }
 
     public enum GameFaction

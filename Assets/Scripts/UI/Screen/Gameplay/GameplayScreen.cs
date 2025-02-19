@@ -9,6 +9,7 @@ using static GameEnum;
 public class GameplayScreen : MonoBehaviour
 {
     [SerializeField] private Button pauseButton;
+    [SerializeField] private Button replayButton;
     [SerializeField] private Button openDebugPopupButton;
     [SerializeField] private LeanLocalizedTextMeshProUGUI localizedLevelText;
 
@@ -25,6 +26,7 @@ public class GameplayScreen : MonoBehaviour
         LevelLoader.setLevelNumberEvent += SetLevelText;
 
         pauseButton.onClick.AddListener(Pause);
+        replayButton.onClick.AddListener(Replay);
         openDebugPopupButton.onClick.AddListener(OpenDebugPopupButton);
 
         if (!gameSetting.IsDebug)
@@ -42,6 +44,11 @@ public class GameplayScreen : MonoBehaviour
     private async void Pause()
     {
         switchRouteEvent?.Invoke(ScreenRoute.Pause);
+    }
+
+    private async void Replay()
+    {
+        switchRouteEvent?.Invoke(ScreenRoute.Replay);
     }
 
     private void OpenDebugPopupButton()
