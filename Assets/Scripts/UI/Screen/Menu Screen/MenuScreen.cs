@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Lean.Localization;
 using PrimeTween;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -10,12 +11,18 @@ using static GameEnum;
 public class MenuScreen : MonoBehaviour
 {
     [SerializeField] private Button startGameButton;
+    [SerializeField] private Image startGameButtonImage;
+    [SerializeField] private TMP_Text startGameButtonText;
     [SerializeField] private Button openRemoveAdPopupButton;
     [SerializeField] private RectTransform openRemoveAdPopupButtonRT;
+    [SerializeField] private Image openRemoveAdPopupButtonImage;
     [SerializeField] private Button luckyWheelButton;
     [SerializeField] private Button weeklyTaskButton;
     [SerializeField] private LeanLocalizedTextMeshProUGUI localizedLevelText;
     [SerializeField] private Image topBarDivider;
+
+    [SerializeField] private Sprite[] startButtonSprites;
+    [SerializeField] private Material[] textMaterials;
 
     [SerializeField] private IntVariable currentLevel;
     [SerializeField] private Vector2Variable canvasSize;
@@ -51,6 +58,29 @@ public class MenuScreen : MonoBehaviour
         {
             openRemoveAdPopupButton.gameObject.SetActive(false);
         }
+
+        currentLevel.Load();
+
+        // COLOR BASED ON DIFFICULTY
+        int modulusLevel = currentLevel.Value % 5;
+
+        int spriteIndex;
+
+        if (modulusLevel >= 1 && modulusLevel <= 3)
+        {
+            spriteIndex = 0;
+        }
+        else if (modulusLevel == 4)
+        {
+            spriteIndex = 2;
+        }
+        else
+        {
+            spriteIndex = 1;
+        }
+
+        startGameButtonImage.sprite = startButtonSprites[spriteIndex];
+        startGameButtonText.fontMaterial = textMaterials[spriteIndex];
     }
 
     private void Start()
@@ -85,7 +115,7 @@ public class MenuScreen : MonoBehaviour
     private void StartGame()
     {
         changeLivesNumberEvent?.Invoke(-1);
-        
+
         Addressables.LoadSceneAsync(GameConstants.GAMEPLAY_SCENE);
     }
 
@@ -138,11 +168,13 @@ public class MenuScreen : MonoBehaviour
 
         if (screenRoute != ScreenRoute.IAPShop)
         {
-            _openRemoveAdPopupButtonTween = Tween.LocalPositionY(openRemoveAdPopupButtonRT, _initialOpenRemoveAdPopupButtonPositionY, 0.3f);
+            _openRemoveAdPopupButtonTween = Tween.Alpha(openRemoveAdPopupButtonImage, 1, 0.3f);
+            // _openRemoveAdPopupButtonTween = Tween.LocalPositionY(openRemoveAdPopupButtonRT, _initialOpenRemoveAdPopupButtonPositionY, 0.3f);
         }
         else
         {
-            _openRemoveAdPopupButtonTween = Tween.LocalPositionY(openRemoveAdPopupButtonRT, openRemoveAdPopupButtonRT.localPosition.y + 0.3f * canvasSize.Value.y, 0.3f);
+            _openRemoveAdPopupButtonTween = Tween.Alpha(openRemoveAdPopupButtonImage, 0, 0.3f);
+            // _openRemoveAdPopupButtonTween = Tween.LocalPositionY(openRemoveAdPopupButtonRT, openRemoveAdPopupButtonRT.localPosition.y + 0.3f * canvasSize.Value.y, 0.3f);
         }
     }
 

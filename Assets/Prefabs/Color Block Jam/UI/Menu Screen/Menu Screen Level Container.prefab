@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8675270806745423603}
   - component: {fileID: 8918830342495802285}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Level Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -220,6 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5512856485871731176}
+  - component: {fileID: 2986036209044361310}
   - component: {fileID: 2498078581163578115}
   - component: {fileID: 3696192135450004521}
   m_Layer: 5
@@ -250,6 +251,32 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 272, y: 272}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2986036209044361310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7014134730359836000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3721325039b5e9d4ca1966aca6fafb56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  block: {fileID: 3696192135450004521}
+  levelText: {fileID: 8918830342495802285}
+  lockIcon: {fileID: 6608214515438714984}
+  activeSprites:
+  - {fileID: 21300000, guid: ad6f5bcb3dcf7214da934947a9e3988b, type: 3}
+  - {fileID: 21300000, guid: dd032f3617132374a90fc735399e5266, type: 3}
+  - {fileID: 21300000, guid: ab7224535303a7048b5eacd0bfba4f7b, type: 3}
+  disabledSprite: {fileID: 21300000, guid: b693110aaece4f64ab86009d27b1bf4d, type: 3}
+  textMaterials:
+  - {fileID: 2100000, guid: c6751e3c42b2990438c0764e5bd011f8, type: 2}
+  - {fileID: 2100000, guid: 06050a8d9be7d7c418b99d28b1fe7065, type: 2}
+  - {fileID: 2100000, guid: e88f1bf329083884b8057a13efbf43b3, type: 2}
+  index: 0
+  currentLevel: {fileID: 11400000, guid: dfc7835bc5f6fb64d9f4b1582f01db6e, type: 2}
 --- !u!222 &2498078581163578115
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -3457,11 +3457,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6397290014691165987, guid: d855d6df8bc266d45b2608f7c3885a83, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 104
+      value: 136
       objectReference: {fileID: 0}
     - target: {fileID: 6397290014691165987, guid: d855d6df8bc266d45b2608f7c3885a83, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 104
+      value: 136
       objectReference: {fileID: 0}
     - target: {fileID: 6435992977377931879, guid: d855d6df8bc266d45b2608f7c3885a83, type: 3}
       propertyPath: m_TargetGraphic
@@ -4068,12 +4068,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startGameButton: {fileID: 622630158}
+  startGameButtonImage: {fileID: 622630159}
+  startGameButtonText: {fileID: 746027520}
   openRemoveAdPopupButton: {fileID: 786987217}
   openRemoveAdPopupButtonRT: {fileID: 786987216}
+  openRemoveAdPopupButtonImage: {fileID: 786987218}
   luckyWheelButton: {fileID: 435159279}
   weeklyTaskButton: {fileID: 733359006}
   localizedLevelText: {fileID: 746027522}
   topBarDivider: {fileID: 848493327}
+  startButtonSprites:
+  - {fileID: 21300000, guid: 1e9c1ef0c0971f44d96f1d972582d78e, type: 3}
+  - {fileID: 21300000, guid: de9eb54d7ee080f4dbd8859ed8dab271, type: 3}
+  - {fileID: 21300000, guid: 2ab54b3bac153db4f9d9523958402887, type: 3}
+  textMaterials:
+  - {fileID: 2100000, guid: c6751e3c42b2990438c0764e5bd011f8, type: 2}
+  - {fileID: 2100000, guid: 06050a8d9be7d7c418b99d28b1fe7065, type: 2}
+  - {fileID: 2100000, guid: e88f1bf329083884b8057a13efbf43b3, type: 2}
   currentLevel: {fileID: 11400000, guid: dfc7835bc5f6fb64d9f4b1582f01db6e, type: 2}
   canvasSize: {fileID: 11400000, guid: cff3c506c9f63d645a923fa57c7a07c1, type: 2}
 --- !u!1 &815539594
@@ -4808,8 +4819,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b3eb90dacc2efe146b52b5202b060dd5, type: 3}
-  m_Resource: {fileID: 8300000, guid: b3eb90dacc2efe146b52b5202b060dd5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f0a1b95bd34467242a129253fd6997e0, type: 3}
+  m_Resource: {fileID: 8300000, guid: f0a1b95bd34467242a129253fd6997e0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.2
   m_Pitch: 1
@@ -5070,7 +5081,7 @@ GameObject:
   - component: {fileID: 1090934035}
   - component: {fileID: 1090934034}
   m_Layer: 5
-  m_Name: Scroll View
+  m_Name: Level Blocks Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6827,8 +6838,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Coming Soon
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5062faa7168378d4e8420feec1df7e73, type: 2}
-  m_sharedMaterial: {fileID: -9168932575074284778, guid: 5062faa7168378d4e8420feec1df7e73, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 06050a8d9be7d7c418b99d28b1fe7065, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7332,6 +7343,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1109118898}
     m_Modifications:
+    - target: {fileID: 2986036209044361310, guid: 202ab8804794fd54bb6e73d2af1fb3fd, type: 3}
+      propertyPath: index
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3696192135450004521, guid: 202ab8804794fd54bb6e73d2af1fb3fd, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -8399,7 +8414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ee68e79c860e9439a9f55c1eb8be02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userResourcesObserver: {fileID: 0}
 --- !u!1 &1636348100
 GameObject:
   m_ObjectHideFlags: 0
@@ -10625,11 +10639,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6282272966309245508, guid: 45d7c7129fab29a4ca3b0da1ee55b1ef, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.44444445
       objectReference: {fileID: 0}
     - target: {fileID: 6282272966309245508, guid: 45d7c7129fab29a4ca3b0da1ee55b1ef, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.96602565
+      value: 0.16216215
       objectReference: {fileID: 0}
     - target: {fileID: 7012652151622738283, guid: 45d7c7129fab29a4ca3b0da1ee55b1ef, type: 3}
       propertyPath: m_Pivot.x
@@ -11086,6 +11100,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1109118898}
     m_Modifications:
+    - target: {fileID: 2986036209044361310, guid: 202ab8804794fd54bb6e73d2af1fb3fd, type: 3}
+      propertyPath: index
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3696192135450004521, guid: 202ab8804794fd54bb6e73d2af1fb3fd, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -11471,11 +11489,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6397290014691165987, guid: d855d6df8bc266d45b2608f7c3885a83, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 108
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 6397290014691165987, guid: d855d6df8bc266d45b2608f7c3885a83, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 96
+      value: 124
       objectReference: {fileID: 0}
     - target: {fileID: 6435992977377931879, guid: d855d6df8bc266d45b2608f7c3885a83, type: 3}
       propertyPath: m_TargetGraphic
