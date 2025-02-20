@@ -1,15 +1,19 @@
 using System.Collections;
+using System.Collections.Generic;
 using PrimeTween;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static GameEnum;
 
 public class LevelTimeCounter : MonoBehaviour
 {
     [SerializeField] private TMP_Text timeText;
+    [SerializeField] private Image freezedBackground;
 
     [SerializeField] private int totalSecond;
 
+    private List<Tween> _tweens;
     private Coroutine _countingCoroutine;
     private bool _isFreeze;
 
@@ -17,12 +21,16 @@ public class LevelTimeCounter : MonoBehaviour
     {
         LevelLoader.startLevelEvent += OnLevelStarted;
         BoosterItemUI.useBoosterEvent += FreezeTime;
+
+        _tweens = new List<Tween>();
     }
 
     private void OnDestroy()
     {
         LevelLoader.startLevelEvent -= OnLevelStarted;
         BoosterItemUI.useBoosterEvent -= FreezeTime;
+
+        CommonUtil.StopAllTweens(_tweens);
     }
 
     private void OnLevelStarted()
@@ -60,10 +68,35 @@ public class LevelTimeCounter : MonoBehaviour
         {
             _isFreeze = true;
 
-            Tween.Delay(10).OnComplete(() =>
+            _tweens.Add(Tween.Delay(10).OnComplete(() =>
             {
+                FreezedEffect(isFreeze: false);
+
                 _isFreeze = false;
-            });
+            }));
+
+            FreezedEffect(isFreeze: true);
+        }
+    }
+
+    private void FreezedEffect(bool isFreeze)
+    {
+        if (isFreeze)
+        {
+            freezedBackground.gameObject.SetActive(true);
+
+            freezedBackground.color = ColorUtil.WithAlpha(freezedBackground.color, 0);
+
+            _tweens.Add(Tween.Alpha(freezedBackground, 1, duration: 0.3f));
+        }
+        else
+        {
+            _tweens.Add(Tween.Alpha(freezedBackground, 0, duration: 0.3f)
+                .OnComplete(() =>
+                {
+                    freezedBackground.gameObject.SetActive(false);
+                })
+            );
         }
     }
 

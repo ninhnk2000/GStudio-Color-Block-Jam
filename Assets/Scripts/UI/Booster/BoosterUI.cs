@@ -13,6 +13,7 @@ public class BoosterUI : MonoBehaviour
     [SerializeField] private RectTransform breakModeButtonRT;
     [SerializeField] private RectTransform clearAllScrewPortsButtonRT;
     [SerializeField] private RectTransform breakModeContainer;
+    [SerializeField] private Image freezedBackground;
 
     [SerializeField] private Button addMoreScrewPortButton;
     [SerializeField] private Button breakObjectButton;
@@ -151,7 +152,7 @@ public class BoosterUI : MonoBehaviour
 
     private void FreezeTime()
     {
-
+        
     }
 
     private void EnableBreakObjectMode()

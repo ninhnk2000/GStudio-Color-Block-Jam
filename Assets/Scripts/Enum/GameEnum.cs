@@ -58,9 +58,9 @@ public class GameEnum : MonoBehaviour
 
     public enum LevelDifficulty
     {
-        Easy,
         Normal,
-        Hard
+        Hard,
+        VeryHard
     }
 
     public enum InputMode

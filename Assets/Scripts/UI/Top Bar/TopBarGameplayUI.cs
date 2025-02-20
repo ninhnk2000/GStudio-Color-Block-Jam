@@ -3,9 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using static GameEnum;
 
-public class TopBar : MonoBehaviour
+public class TopBarGameplayUI : MonoBehaviour
 {
-    [SerializeField] private Button openSettingPopupButton;
     [SerializeField] private Image background;
 
     [SerializeField] private Sprite[] backgroundSprites;
@@ -18,18 +17,11 @@ public class TopBar : MonoBehaviour
     void Awake()
     {
         LevelLoader.startLevelEvent += OnLevelStarted;
-
-        openSettingPopupButton.onClick.AddListener(OpenSettingPopup);
     }
 
     void OnDestroy()
     {
         LevelLoader.startLevelEvent -= OnLevelStarted;
-    }
-
-    private void OpenSettingPopup()
-    {
-        showPopupEvent?.Invoke(ScreenRoute.Setting);
     }
 
     private void OnLevelStarted()

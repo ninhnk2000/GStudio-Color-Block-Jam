@@ -11,16 +11,20 @@ public class BoosterItemUI : MonoBehaviour
     [SerializeField] private RectTransform quantityTextContainer;
     [SerializeField] private RectTransform quantityTextRT;
     [SerializeField] private RectTransform addButtonRT;
+    [SerializeField] private Image boosterBackground;
 
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Button useBoosterButton;
     [SerializeField] private Button addButton;
+
+    [SerializeField] private Sprite[] boosterBackgroundSprites;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private int boosterIndex;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private UserResourcesObserver userResourcesObserver;
+    [SerializeField] private IntVariable currentLevel;
 
     public static event Action<BoosterType> showBuyBoosterPopupEvent;
     public static event Action<BoosterType> useBoosterEvent;
@@ -30,6 +34,7 @@ public class BoosterItemUI : MonoBehaviour
         BuyBoosterPopup.updateBoosterQuantityEvent += UpdateQuantityText;
         BoosterUI.updateBoosterQuantityEvent += UpdateQuantityText;
         ResourceEarnPopup.showResourcesEarnPopupEvent += OnResourceEarnPopupShow;
+        LevelLoader.startLevelEvent += OnLevelStarted;
 
         useBoosterButton.onClick.AddListener(UseBooster);
         addButton.onClick.AddListener(ShowBuyBoosterPopup);
@@ -42,6 +47,14 @@ public class BoosterItemUI : MonoBehaviour
         BuyBoosterPopup.updateBoosterQuantityEvent -= UpdateQuantityText;
         BoosterUI.updateBoosterQuantityEvent -= UpdateQuantityText;
         ResourceEarnPopup.showResourcesEarnPopupEvent -= OnResourceEarnPopupShow;
+        LevelLoader.startLevelEvent -= OnLevelStarted;
+    }
+
+    private void OnLevelStarted()
+    {
+        LevelDifficulty levelDifficulty = CommonUtil.GetLevelDifficulty(currentLevel.Value);
+
+        boosterBackground.sprite = boosterBackgroundSprites[(int)levelDifficulty];
     }
 
     private async void Setup()

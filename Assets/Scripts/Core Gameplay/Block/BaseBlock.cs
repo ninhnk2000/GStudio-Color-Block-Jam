@@ -454,13 +454,18 @@ public class BaseBlock : MonoBehaviour
     #region BOOSTER
     public void Break()
     {
-        Tween.ShakeScale(transform, 1.5f * Vector3.one, duration: 0.3f).OnComplete(() =>
+        BoosterHammer hammer = ObjectPoolingEverything.GetFromPool<BoosterHammer>(GameConstants.HAMMER);
+
+        hammer.HitTarget(transform, onCompletedAction: () =>
         {
-            gameObject.SetActive(false);
+            Tween.ShakeScale(transform, 1.5f * Vector3.one, duration: 0.3f).OnComplete(() =>
+            {
+                gameObject.SetActive(false);
 
-            blockProperty.IsDone = true;
+                blockProperty.IsDone = true;
 
-            blockCompletedEvent?.Invoke();
+                blockCompletedEvent?.Invoke();
+            });
         });
     }
 

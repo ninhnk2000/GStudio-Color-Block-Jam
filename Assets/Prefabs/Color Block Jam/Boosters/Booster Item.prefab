@@ -133,11 +133,17 @@ MonoBehaviour:
   quantityTextContainer: {fileID: 4193371676913079457}
   quantityTextRT: {fileID: 8404532143025637130}
   addButtonRT: {fileID: 736441633895710949}
+  boosterBackground: {fileID: 3309574826589396069}
   quantityText: {fileID: 8114924721609458948}
   useBoosterButton: {fileID: 7514876032806078328}
   addButton: {fileID: 8747861675039521787}
+  boosterBackgroundSprites:
+  - {fileID: 21300000, guid: 267b2b8c023d126408b6ab5cf10f05f7, type: 3}
+  - {fileID: 21300000, guid: d8bf8b50316a9f947aa7e7937c5a9657, type: 3}
+  - {fileID: 21300000, guid: 75ada24f819524a4a99dd893c1d08511, type: 3}
   boosterIndex: 0
   userResourcesObserver: {fileID: 11400000, guid: 9f7c1dbaae3ef634e8295c3cc55ef7cf, type: 2}
+  currentLevel: {fileID: 11400000, guid: dfc7835bc5f6fb64d9f4b1582f01db6e, type: 2}
 --- !u!222 &8454686082027895
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -267,8 +273,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 4}
-  m_SizeDelta: {x: 48, y: 48}
+  m_AnchoredPosition: {x: 0, y: 8}
+  m_SizeDelta: {x: 64, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3275821129498152789
 CanvasRenderer:
@@ -325,7 +331,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.05
+  m_fontSize: 57.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

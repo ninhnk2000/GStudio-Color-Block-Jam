@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using PrimeTween;
 using UnityEngine;
+using static GameEnum;
 
 public static class CommonUtil
 {
@@ -110,4 +111,24 @@ public static class CommonUtil
 
         return new Vector2(screenWidth, screenHeight);
     }
+
+    #region LEVEL
+    public static LevelDifficulty GetLevelDifficulty(int level)
+    {
+        int modulusLevel = level % 5;
+
+        if (modulusLevel >= 1 && modulusLevel <= 3)
+        {
+            return LevelDifficulty.Normal;
+        }
+        else if (modulusLevel == 4)
+        {
+            return LevelDifficulty.VeryHard;
+        }
+        else
+        {
+            return LevelDifficulty.Hard;
+        }
+    }
+    #endregion
 }
