@@ -36,7 +36,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         SetFaction(blockServiceLocator.block.BlockProperty.Faction);
 
         outlineComponent.OutlineColor = ColorUtil.WithAlpha(outlineComponent.OutlineColor, 0);
-        outlineComponent.OutlineWidth = 6;
+        outlineComponent.OutlineWidth = 4;
     }
 
     private void Start()

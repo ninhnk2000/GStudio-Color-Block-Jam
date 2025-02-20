@@ -3,6 +3,7 @@ using System.Collections;
 using Dreamteck.Splines;
 using Lean.Localization;
 using PrimeTween;
+using Saferio.Util.SaferioTween;
 using Spine.Unity;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ using UnityEngine.UI;
 public class LevelTutorial : MonoBehaviour
 {
     [SerializeField] private Transform tutorialHand;
+    [SerializeField] private SpriteRenderer ripple;
     [SerializeField] private SpriteRenderer tutorialHandRenderer;
     [SerializeField] private BlockMaterialPropertyBlock blockMaterialPropertyBlock;
 
@@ -19,6 +21,7 @@ public class LevelTutorial : MonoBehaviour
     #region PRIVATE FIELD
     private int _step;
     private Vector2 _screenSizeWorld;
+    private float _initialTutorialHandPosition;
     #endregion
 
     #region EVENT
@@ -33,6 +36,7 @@ public class LevelTutorial : MonoBehaviour
         StartCoroutine(TutorialStepOne());
 
         _screenSizeWorld = CommonUtil.GetScreenSizeWorld(Camera.main);
+        _initialTutorialHandPosition = tutorialHand.position.z;
     }
 
     void OnDestroy()
@@ -42,26 +46,49 @@ public class LevelTutorial : MonoBehaviour
 
     private IEnumerator TutorialStepOne()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(1);
+        WaitForSeconds waitForSeconds = new WaitForSeconds(0.3f);
 
         int phase = 0;
 
+        ripple.color = ColorUtil.WithAlpha(ripple.color, 0);
+        ripple.gameObject.SetActive(false);
+
         while (_step == 0)
         {
-            if (phase % 3 == 0)
+            if (phase == 0)
             {
                 blockMaterialPropertyBlock.ShowOutline(true);
+
+                // Tween.Alpha(ripple, 1, duration: 0.3f);
             }
-            else if (phase % 3 == 1)
+            else if (phase == 1)
             {
                 blockMaterialPropertyBlock.ShowOutline(false);
+
+                // Tween.Alpha(ripple, 0, duration: 0.3f);
             }
-            else if (phase % 3 == 2)
+            else if (phase == 3)
             {
-                Tween.PositionZ(tutorialHand, tutorialHand.position.z + 6, duration: 0.3f, cycles: 2, cycleMode: CycleMode.Yoyo);
+                Tween.PositionZ(tutorialHand, tutorialHand.position.z + 12, duration: 0.5f)
+                .OnComplete(() =>
+                {
+                    Tween.Alpha(tutorialHandRenderer, 0, duration: 0.2f)
+                    .OnComplete(() =>
+                    {
+                        tutorialHand.position = tutorialHand.position.ChangeZ(_initialTutorialHandPosition);
+
+                        Tween.Alpha(tutorialHandRenderer, 1, duration: 0.2f);
+                    });
+                }
+                );
             }
 
             phase++;
+
+            if (phase >= 4)
+            {
+                phase = 0;
+            }
 
             yield return waitForSeconds;
         }

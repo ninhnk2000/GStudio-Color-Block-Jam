@@ -44,8 +44,8 @@ public class BoardTileMaterialPropertyBlock : MonoBehaviour
     {
         float ratio = 1 - (transform.position.z - bottomBound) / (topBound - bottomBound);
 
-        Color firstColor = new Color(51 / 255f, 44 / 255f, 187 / 255f, 1);
-        Color secondColor = new Color(45 / 255f, 98 / 255f, 217 / 255f, 1);
+        Color firstColor = new Color(71 / 255f, 64 / 255f, 207 / 255f, 1);
+        Color secondColor = new Color(65 / 255f, 118 / 255f, 237 / 255f, 1);
 
         _propertyBlock.SetColor("_Color", firstColor + ratio * (secondColor - firstColor));
 

@@ -420,6 +420,7 @@ GameObject:
   - component: {fileID: 5565685846544413217}
   - component: {fileID: 1129438946356384641}
   - component: {fileID: 9134463812663440499}
+  - component: {fileID: 4631461158195875656}
   m_Layer: 5
   m_Name: Level Text
   m_TagString: Untagged
@@ -545,6 +546,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4631461158195875656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6424973917768493810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: Restart
+  parameter: 
+  FallbackText: Level 19
 --- !u!1 &7650109468021633184
 GameObject:
   m_ObjectHideFlags: 0

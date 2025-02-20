@@ -16,6 +16,8 @@ public class WinPopup : BasePopup
     [SerializeField] private TMP_Text coinText;
     [SerializeField] private LeanLocalizedTextMeshProUGUI localizedLevelCompleted;
 
+    [SerializeField] private ParticleSystem fireworkFx;
+
     [SerializeField] private IntVariable currentLevel;
     [SerializeField] private UserResourcesObserver userResourcesObserver;
     [SerializeField] private LevelBoosterObserver levelBoosterObserver;
@@ -50,6 +52,8 @@ public class WinPopup : BasePopup
         continueButton.transform.localScale = Vector3.zero;
 
         Show();
+
+        fireworkFx.Play();
 
         SoundManager.Instance.PlaySoundWin();
 
