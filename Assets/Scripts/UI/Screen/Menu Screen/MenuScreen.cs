@@ -114,9 +114,16 @@ public class MenuScreen : MonoBehaviour
 
     private void StartGame()
     {
-        changeLivesNumberEvent?.Invoke(-1);
+        if (DataUtility.Load<LivesData>(GameConstants.USER_LIVES_DATA, new LivesData()).CurrentLives > 0)
+        {
+            changeLivesNumberEvent?.Invoke(-1);
 
-        Addressables.LoadSceneAsync(GameConstants.GAMEPLAY_SCENE);
+            Addressables.LoadSceneAsync(GameConstants.GAMEPLAY_SCENE);
+        }
+        else
+        {
+            switchRouteEvent?.Invoke(ScreenRoute.LivesShop);
+        }
     }
 
     private void OpenRemoveAdPopup()

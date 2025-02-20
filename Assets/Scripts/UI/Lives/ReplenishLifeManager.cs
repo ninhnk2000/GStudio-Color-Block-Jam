@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static GameEnum;
 
 public class ReplenishLifeManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ReplenishLifeManager : MonoBehaviour
 
     public static event Action<string> updateLivesReplenishTimeEvent;
     public static event Action<int> updateLivesNumberEvent;
+    public static event Action<ScreenRoute> switchRouteEvent;
 
     void Awake()
     {

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Lean.Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,19 +9,32 @@ using static GameEnum;
 
 public class BoosterItemUI : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private RectTransform quantityTextContainer;
     [SerializeField] private RectTransform quantityTextRT;
     [SerializeField] private RectTransform addButtonRT;
     [SerializeField] private Image boosterBackground;
+    [SerializeField] private Image icon;
+
+    #region LOCK
+    [SerializeField] private GameObject lockIcon;
+    [SerializeField] private GameObject levelToUnlockContainer;
+    [SerializeField] private LeanLocalizedTextMeshProUGUI levelToUnlockText;
+    #endregion
 
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Button useBoosterButton;
     [SerializeField] private Button addButton;
 
     [SerializeField] private Sprite[] boosterBackgroundSprites;
+    [SerializeField] private Sprite disabledBoosterBackgroundSprites;
+    [SerializeField] private Sprite disabledIconSprites;
+    [SerializeField] private Sprite activeIconSprites;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private int boosterIndex;
+    [SerializeField] private int levelToUnlock;
+    [SerializeField] private bool isTutorial;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private UserResourcesObserver userResourcesObserver;
@@ -38,8 +52,6 @@ public class BoosterItemUI : MonoBehaviour
 
         useBoosterButton.onClick.AddListener(UseBooster);
         addButton.onClick.AddListener(ShowBuyBoosterPopup);
-
-        Setup();
     }
 
     void OnDestroy()
@@ -52,9 +64,7 @@ public class BoosterItemUI : MonoBehaviour
 
     private void OnLevelStarted()
     {
-        LevelDifficulty levelDifficulty = CommonUtil.GetLevelDifficulty(currentLevel.Value);
-
-        boosterBackground.sprite = boosterBackgroundSprites[(int)levelDifficulty];
+        Setup();
     }
 
     private async void Setup()
@@ -74,6 +84,48 @@ public class BoosterItemUI : MonoBehaviour
         {
             quantityTextContainer.gameObject.SetActive(false);
             addButtonRT.gameObject.SetActive(true);
+        }
+
+        currentLevel.Load();
+
+        if (currentLevel.Value < levelToUnlock)
+        {
+            Lock(isLocked: true);
+        }
+        else
+        {
+            Lock(isLocked: false);
+        }
+    }
+
+    private void Lock(bool isLocked)
+    {
+        if (isTutorial)
+        {
+            return;
+        }
+
+        lockIcon.SetActive(isLocked);
+        levelToUnlockContainer.SetActive(isLocked);
+
+        quantityTextContainer.gameObject.SetActive(!isLocked);
+        addButton.gameObject.SetActive(!isLocked);
+
+        canvasGroup.interactable = !isLocked;
+
+        if (isLocked)
+        {
+            levelToUnlockText.UpdateTranslationWithParameter(GameConstants.LEVEL_PARAMETER, $"{levelToUnlock}");
+
+            boosterBackground.sprite = disabledBoosterBackgroundSprites;
+            icon.sprite = disabledIconSprites;
+        }
+        else
+        {
+            LevelDifficulty levelDifficulty = CommonUtil.GetLevelDifficulty(currentLevel.Value);
+
+            boosterBackground.sprite = boosterBackgroundSprites[(int)levelDifficulty];
+            icon.sprite = activeIconSprites;
         }
     }
 
