@@ -128,19 +128,6 @@ public class SaferioIAPManager : MonoBehaviour, IDetailedStoreListener
     {
         bool validPurchase = true;
 
-#if (UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE_OSX) && !UNITY_EDITOR
-        var validator = new CrossPlatformValidator(GooglePlayTangle.Data(),
-            AppleTangle.Data(), Application.bundleIdentifier);
-
-        try 
-        {
-            validator.Validate(e.purchasedProduct.receipt);
-        } 
-        catch (IAPSecurityException) {
-            validPurchase = false;
-        }
-#endif
-
         if (validPurchase)
         {
             if (e.purchasedProduct.definition.id == GameConstants.REMOVE_AD_ID)

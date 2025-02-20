@@ -118,7 +118,7 @@ public class BlockSelectionInput : MonoBehaviour
     {
         if (_selectedBlock != null)
         {
-            return null;
+            return _selectedBlock;
         }
 
         if (IsClickedOnUI())
