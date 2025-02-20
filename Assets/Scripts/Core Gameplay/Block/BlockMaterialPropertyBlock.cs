@@ -19,6 +19,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     #region PRIVATE FIELD
     [SerializeField] private List<Tween> _tweens;
+    [SerializeField] private List<Tween> _outlineTweens;
     [SerializeField] private Renderer _renderer;
     private MaterialPropertyBlock _propertyBlock;
     private GameFaction _cachedFaction;
@@ -30,6 +31,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         LevelLoader.updateBoundEvent += SetMaskingBound;
 
         _tweens = new List<Tween>();
+        _outlineTweens = new List<Tween>();
 
         Init();
 
@@ -48,6 +50,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         LevelLoader.updateBoundEvent -= SetMaskingBound;
 
         CommonUtil.StopAllTweens(_tweens);
+        CommonUtil.StopAllTweens(_outlineTweens);
     }
 
     private void Init()
@@ -186,9 +189,9 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
             endValue = ColorUtil.WithAlpha(0.1f * Color.white, 1);
         }
 
-        CommonUtil.StopAllTweens(_tweens);
+        CommonUtil.StopAllTweens(_outlineTweens);
 
-        _tweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
+        _outlineTweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
         {
             outlineComponent.OutlineColor = newVal;
 
@@ -209,7 +212,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
             endWidthValue = 1.5f;
         }
 
-        _tweens.Add(Tween.Custom(startWidthValue, endWidthValue, duration: 0.3f, onValueChange: newVal =>
+        _outlineTweens.Add(Tween.Custom(startWidthValue, endWidthValue, duration: 0.3f, onValueChange: newVal =>
         {
             outlineComponent.OutlineWidth = newVal;
         }));
@@ -217,7 +220,10 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     public void HideOutlineCompletely()
     {
-        outlineComponent.OutlineColor = ColorUtil.WithAlpha(0.1f * Color.white, 0);
+        CommonUtil.StopAllTweens(_outlineTweens);
+        
+        // outlineComponent.OutlineColor = ColorUtil.WithAlpha(0.1f * Color.white, 0);
+        outlineComponent.OutlineWidth = 0;
         
         // _tweens.Add(Tween.Custom(outlineComponent.OutlineColor, ColorUtil.WithAlpha(0.1f * Color.white, 0), duration: 0.1f, onValueChange: newVal =>
         // {

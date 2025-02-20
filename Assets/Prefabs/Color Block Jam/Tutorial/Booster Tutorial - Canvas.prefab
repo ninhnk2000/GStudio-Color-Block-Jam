@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Freezes time for 10 seconds
+  m_text: Freezes time for 10 senconds
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
   m_sharedMaterial: {fileID: 2327973666622027767, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 52.9
+  m_fontSize: 50.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You have unlocked the Freeze Timer!
+  m_text: You have unlocked the Freeze Time
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
   m_sharedMaterial: {fileID: 2327973666622027767, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
@@ -574,7 +574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1194,7 +1194,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Booster Unlocked
+  m_text: BOOSTER UNLOCK
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: d4bdcb50a821c66469622e29c402db4d, type: 2}
@@ -1221,7 +1221,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 117.6
+  m_fontSize: 117.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1426,6 +1426,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3943366113159554593}
     m_Modifications:
+    - target: {fileID: 1449792656101516350, guid: 7d9b9d6ba328b6a48bab2d8b3a7ab757, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2103355143883814215, guid: 7d9b9d6ba328b6a48bab2d8b3a7ab757, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1511,6 +1515,14 @@ PrefabInstance:
       value: Booster Item
       objectReference: {fileID: 0}
     - target: {fileID: 4581820110954466269, guid: 7d9b9d6ba328b6a48bab2d8b3a7ab757, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795747372758310491, guid: 7d9b9d6ba328b6a48bab2d8b3a7ab757, type: 3}
+      propertyPath: isTutorial
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8526167964111186065, guid: 7d9b9d6ba328b6a48bab2d8b3a7ab757, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

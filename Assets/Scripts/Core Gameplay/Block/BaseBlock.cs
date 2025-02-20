@@ -385,7 +385,8 @@ public class BaseBlock : MonoBehaviour
             return;
         }
 
-        blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
+        // blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
+        blockServiceLocator.blockMaterialPropertyBlock.HideOutlineCompletely();
 
         Snap();
 
