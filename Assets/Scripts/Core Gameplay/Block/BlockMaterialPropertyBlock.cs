@@ -35,8 +35,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
         SetFaction(blockServiceLocator.block.BlockProperty.Faction);
 
-        outlineComponent.OutlineColor = ColorUtil.WithAlpha(outlineComponent.OutlineColor, 0);
-        outlineComponent.OutlineWidth = 4;
+        SetDefaultOutline();
     }
 
     private void Start()
@@ -158,11 +157,19 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
                 blockServiceLocator.block.InvokeBlockCompletedEvent();
             })
         );
+
+        HideOutlineCompletely();
     }
 
     public void StopDisintegrating()
     {
         CommonUtil.StopAllTweens(_tweens);
+    }
+
+    private void SetDefaultOutline()
+    {
+        outlineComponent.OutlineColor = ColorUtil.WithAlpha(0.1f * Color.white, 1);
+        outlineComponent.OutlineWidth = 1.5f;
     }
 
     public void ShowOutline(bool isShow)
@@ -171,19 +178,19 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
         Color outlineColor = FactionUtility.GetColorForFaction(blockServiceLocator.block.BlockProperty.Faction) * 3f;
 
-        float startValue = outlineColor.a;
-        float endValue = 1;
+        Color startValue = ColorUtil.WithAlpha(0.1f * Color.white, 1);
+        Color endValue = Color.white;
 
         if (!isShow)
         {
-            endValue = 0;
+            endValue = ColorUtil.WithAlpha(0.1f * Color.white, 1);
         }
 
         CommonUtil.StopAllTweens(_tweens);
 
         _tweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
         {
-            outlineComponent.OutlineColor = ColorUtil.WithAlpha(Color.white, newVal);
+            outlineComponent.OutlineColor = newVal;
 
             // _propertyBlock.SetColor("_OutlineColor", ColorUtil.WithAlpha(outlineColor, newVal));
             // _renderer.SetPropertyBlock(_propertyBlock);
@@ -193,5 +200,26 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
                 _isInTransition = false;
             })
         );
+
+        float startWidthValue = 1.5f;
+        float endWidthValue = 4;
+
+        if (!isShow)
+        {
+            endWidthValue = 1.5f;
+        }
+
+        _tweens.Add(Tween.Custom(startWidthValue, endWidthValue, duration: 0.3f, onValueChange: newVal =>
+        {
+            outlineComponent.OutlineWidth = newVal;
+        }));
+    }
+
+    public void HideOutlineCompletely()
+    {
+        _tweens.Add(Tween.Custom(outlineComponent.OutlineColor, ColorUtil.WithAlpha(0.1f * Color.white, 0), duration: 0.1f, onValueChange: newVal =>
+        {
+            outlineComponent.OutlineColor = newVal;
+        }));
     }
 }
