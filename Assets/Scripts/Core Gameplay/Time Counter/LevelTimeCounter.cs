@@ -20,7 +20,7 @@ public class LevelTimeCounter : MonoBehaviour
     private void Awake()
     {
         LevelLoader.startLevelEvent += OnLevelStarted;
-        BoosterItemUI.useBoosterEvent += FreezeTime;
+        BoosterUI.freezeTimeEvent += FreezeTime;
 
         _tweens = new List<Tween>();
     }
@@ -28,7 +28,7 @@ public class LevelTimeCounter : MonoBehaviour
     private void OnDestroy()
     {
         LevelLoader.startLevelEvent -= OnLevelStarted;
-        BoosterItemUI.useBoosterEvent -= FreezeTime;
+        BoosterUI.freezeTimeEvent -= FreezeTime;
 
         CommonUtil.StopAllTweens(_tweens);
     }
@@ -62,21 +62,18 @@ public class LevelTimeCounter : MonoBehaviour
         }
     }
 
-    private void FreezeTime(BoosterType boosterType)
+    private void FreezeTime()
     {
-        if (boosterType == BoosterType.FreezeTime)
+        _isFreeze = true;
+
+        _tweens.Add(Tween.Delay(10).OnComplete(() =>
         {
-            _isFreeze = true;
+            FreezedEffect(isFreeze: false);
 
-            _tweens.Add(Tween.Delay(10).OnComplete(() =>
-            {
-                FreezedEffect(isFreeze: false);
+            _isFreeze = false;
+        }));
 
-                _isFreeze = false;
-            }));
-
-            FreezedEffect(isFreeze: true);
-        }
+        FreezedEffect(isFreeze: true);
     }
 
     private void FreezedEffect(bool isFreeze)

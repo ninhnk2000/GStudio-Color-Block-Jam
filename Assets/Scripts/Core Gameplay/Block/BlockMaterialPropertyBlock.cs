@@ -217,9 +217,11 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     public void HideOutlineCompletely()
     {
-        _tweens.Add(Tween.Custom(outlineComponent.OutlineColor, ColorUtil.WithAlpha(0.1f * Color.white, 0), duration: 0.1f, onValueChange: newVal =>
-        {
-            outlineComponent.OutlineColor = newVal;
-        }));
+        outlineComponent.OutlineColor = ColorUtil.WithAlpha(0.1f * Color.white, 0);
+        
+        // _tweens.Add(Tween.Custom(outlineComponent.OutlineColor, ColorUtil.WithAlpha(0.1f * Color.white, 0), duration: 0.1f, onValueChange: newVal =>
+        // {
+        //     outlineComponent.OutlineColor = newVal;
+        // }));
     }
 }

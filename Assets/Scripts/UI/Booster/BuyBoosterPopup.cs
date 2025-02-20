@@ -60,7 +60,7 @@ public class BuyBoosterPopup : BasePopup
 
         icon.sprite = boosterSprites[(int)_boosterType];
 
-        UIUtil.SetSizeKeepRatioY(icon, 0.25f * container.sizeDelta.x);
+        UIUtil.SetSizeKeepRatioY(icon, 0.35f * container.sizeDelta.x);
 
         costText.text = $"{boosterDataObserver.BoosterCosts[(int)_boosterType]}";
         title.TranslationName = leanTranslationTitle[(int)_boosterType];

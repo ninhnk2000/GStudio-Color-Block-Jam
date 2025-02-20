@@ -1901,6 +1901,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 465165977}
   m_CullTransparentMesh: 1
+--- !u!1 &467624461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 467624462}
+  - component: {fileID: 467624463}
+  m_Layer: 0
+  m_Name: Booster Unlocked
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &467624462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467624461}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &467624463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467624461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: Booster Unlocked
+    Object: {fileID: 0}
+  - Language: French
+    Text: "Booster d\xE9verrouill\xE9"
+    Object: {fileID: 0}
+  - Language: German
+    Text: Booster freigeschaltet
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: Booster sbloccato
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: "\u30D6\u30FC\u30B9\u30BF\u30FC\u30ED\u30C3\u30AF\u304C\u89E3\u9664\u3055\u308C\u307E\u3057\u305F"
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uBD80\uC2A4\uD130 \uC7A0\uAE08 \uD574\uC81C"
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: Booster desbloqueado
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0411\u0443\u0441\u0442\u0435\u0440 \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D"
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: Refuerzo desbloqueado
+    Object: {fileID: 0}
 --- !u!1 &475565280
 GameObject:
   m_ObjectHideFlags: 0
@@ -6608,6 +6681,9 @@ Transform:
   - {fileID: 1422880123}
   - {fileID: 149225968}
   - {fileID: 1681016669}
+  - {fileID: 1954917449}
+  - {fileID: 1601414279}
+  - {fileID: 467624462}
   m_Father: {fileID: 619569312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1353185547
@@ -8440,6 +8516,80 @@ MonoBehaviour:
   - Language: Spanish
     Text: tienes
     Object: {fileID: 0}
+--- !u!1 &1601414278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1601414279}
+  - component: {fileID: 1601414280}
+  m_Layer: 0
+  m_Name: Freezes time for 10 seconds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1601414279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601414278}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1601414280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601414278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: Freezes time for 10 seconds
+    Object: {fileID: 0}
+  - Language: French
+    Text: "G\xE8le le temps pendant 10 secondes"
+    Object: {fileID: 0}
+  - Language: German
+    Text: "Friert die Zeit f\xFCr 10 Sekunden ein"
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: Congela il tempo per 10 secondi
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: "\u6642\u9593\u309210\u79D2\u9593\u30D5\u30EA\u30FC\u30BA\u3057\u307E\u3059"
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uC2DC\uAC04\uC744 10 \uCD08 \uB3D9\uC548 \uC5BC\uB9BD\uB2C8\uB2E4"
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: Congela tempo por 10 segundos
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0417\u0430\u043C\u043E\u0440\u0430\u0436\u0438\u0432\u0430\u0435\u0442
+      \u0432\u0440\u0435\u043C\u044F \u043D\u0430 10 \u0441\u0435\u043A\u0443\u043D\u0434"
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: Congela el tiempo durante 10 segundos
+    Object: {fileID: 0}
 --- !u!1 &1604703620
 GameObject:
   m_ObjectHideFlags: 0
@@ -10158,6 +10308,80 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1527055450098318974, guid: 971ef8207f535194faf411d40b27fb77, type: 3}
   m_PrefabInstance: {fileID: 1936686868}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1954917448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1954917449}
+  - component: {fileID: 1954917450}
+  m_Layer: 0
+  m_Name: You have unlocked the Freeze Timer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1954917449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954917448}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1954917450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954917448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: You have unlocked the Freeze Timer!
+    Object: {fileID: 0}
+  - Language: French
+    Text: "Vous avez d\xE9verrouill\xE9 la minuterie de gel!"
+    Object: {fileID: 0}
+  - Language: German
+    Text: Sie haben den Gefrier -Timer freigeschaltet!
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: Hai sbloccato il timer di congelamento!
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: "\u30D5\u30EA\u30FC\u30BA\u30BF\u30A4\u30DE\u30FC\u306E\u30ED\u30C3\u30AF\u3092\u89E3\u9664\u3057\u307E\u3057\u305F\uFF01"
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uB3D9\uACB0 \uD0C0\uC774\uBA38\uB97C \uC7A0\uAE08 \uD574\uC81C\uD588\uC2B5\uB2C8\uB2E4!"
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: "Voc\xEA desbloqueou o cron\xF4metro de congelamento!"
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0412\u044B \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043B\u0438
+      \u0442\u0430\u0439\u043C\u0435\u0440 \u0437\u0430\u043C\u043E\u0440\u0430\u0436\u0438\u0432\u0430\u043D\u0438\u044F!"
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: "\xA1Has desbloqueado el temporizador de congelaci\xF3n!"
+    Object: {fileID: 0}
 --- !u!1 &1972218271
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,10 +50,13 @@ public class BoosterUI : MonoBehaviour
     private Vector2 _initialbreakObjectButtonPosition;
     private Vector2 _initialClearAllScrewPortsButtonPosition;
 
+    public static event Action freezeTimeEvent;
+
     private void Awake()
     {
         LevelLoader.startLevelEvent += Reset;
         BuyBoosterPopup.useBoosterEvent += UseBooster;
+        BoosterTutorial.useBoosterType += UseBooster;
         ScrewBoxManager.enableBoosterEvent += EnableBooster;
         ScrewManager.enableBoosterEvent += EnableBoosterWithoutWarningPopup;
         RevivePopup.reviveEvent += OnRevived;
@@ -82,6 +85,7 @@ public class BoosterUI : MonoBehaviour
     {
         LevelLoader.startLevelEvent -= Reset;
         BuyBoosterPopup.useBoosterEvent -= UseBooster;
+        BoosterTutorial.useBoosterType -= UseBooster;
         ScrewBoxManager.enableBoosterEvent -= EnableBooster;
         ScrewManager.enableBoosterEvent -= EnableBoosterWithoutWarningPopup;
         RevivePopup.reviveEvent -= OnRevived;
@@ -134,7 +138,7 @@ public class BoosterUI : MonoBehaviour
 
         if (boosterType == BoosterType.FreezeTime)
         {
-
+            FreezeTime();
         }
         else if (boosterType == BoosterType.BreakObject)
         {
@@ -152,7 +156,16 @@ public class BoosterUI : MonoBehaviour
 
     private void FreezeTime()
     {
-        
+        if (!IsBoosterAvailable(boosterIndex: 0))
+        {
+            showBuyBoosterPopupEvent?.Invoke(BoosterType.FreezeTime);
+
+            return;
+        }
+
+        freezeTimeEvent?.Invoke();
+
+        ConsumeBooster(0);
     }
 
     private void EnableBreakObjectMode()
