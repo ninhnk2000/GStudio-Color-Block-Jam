@@ -12,6 +12,7 @@ public class ObjectPoolingEverythingInitializer : MonoBehaviour
     [SerializeField] private GameObject screwPortPrefab;
     [SerializeField] private GameObject fakeScrewPrefab;
     [SerializeField] private GameObject hammerPrefab;
+    [SerializeField] private GameObject vacumnPrefab;
     [SerializeField] private GameObject loosenScrewSoundPrefab;
     [SerializeField] private GameObject tightenScrewSoundPrefab;
     [SerializeField] private GameObject loosenScrewFailSoundPrefab;
@@ -57,6 +58,7 @@ public class ObjectPoolingEverythingInitializer : MonoBehaviour
         RegisterPool<ScrewBoxSlot>(GameConstants.SCREW_PORT_SLOT, screwPortPrefab, 3);
         RegisterPool<FakeScrew>(GameConstants.FAKE_SCREW, fakeScrewPrefab, 3);
         RegisterPool<BoosterHammer>(GameConstants.HAMMER, hammerPrefab, 3);
+        RegisterPool<BoosterVacumn>(GameConstants.VACUMN, vacumnPrefab, 3);
         RegisterPool<AudioSource>(GameConstants.LOOSEN_SCREW_SOUND, loosenScrewSoundPrefab, 3);
         RegisterPool<AudioSource>(GameConstants.TIGHTEN_SCREW_SOUND, tightenScrewSoundPrefab, 3);
         RegisterPool<AudioSource>(GameConstants.LOOSEN_SCREW_FAIL_SOUND, loosenScrewFailSoundPrefab, 3);

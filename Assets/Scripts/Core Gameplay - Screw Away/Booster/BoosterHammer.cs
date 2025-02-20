@@ -15,7 +15,7 @@ public class BoosterHammer : MonoBehaviour
         gameObject.SetActive(true);
 
         transform.localPosition = new Vector3(20, 0, -2);
-        transform.localScale *= 6 / transform.lossyScale.x; 
+        transform.localScale *= 6 / transform.lossyScale.x;
         transform.localRotation = Quaternion.Euler(new Vector3(-90, 90, 0));
 
         Tween.LocalPositionX(transform, 0, duration: 0.5f)
@@ -27,8 +27,11 @@ public class BoosterHammer : MonoBehaviour
                 Tween.LocalRotation(transform, new Vector3(-90, 120, 0), duration: 0.1f)
                 .OnComplete(() =>
                 {
-                    Tween.ShakeCamera(Camera.main, 1, duration: 0.1f).OnComplete(() => {
-                        Dissolve();
+                    PlayHitFx();
+
+                    Tween.ShakeCamera(Camera.main, 1, duration: 0.1f).OnComplete(() =>
+                    {
+                        Tween.Delay(0.3f).OnComplete(() => Dissolve());
                     });
 
                     onCompletedAction?.Invoke();

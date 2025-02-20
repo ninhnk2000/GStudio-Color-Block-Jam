@@ -27,7 +27,7 @@ public class BlockSelectionInput : MonoBehaviour
     public static event Action mouseUpEvent;
     public static event Action selectScrewEvent;
     public static event Action breakObjectEvent;
-    public static event Action<GameFaction> vacumnEvent;
+    public static event Action<GameFaction, Vector3> vacumnEvent;
     #endregion
 
     void Awake()
@@ -190,16 +190,23 @@ public class BlockSelectionInput : MonoBehaviour
 
     private void VacumnBlock()
     {
-        BaseBlock block = GetBlock();
+        BoosterVacumn vacumn = ObjectPoolingEverything.GetFromPool<BoosterVacumn>(GameConstants.VACUMN);
 
-        if (block != null)
+        vacumn.Vacumn(onCompletedAction: (vacumnPosition) =>
         {
-            block.Vacumn();
+            BaseBlock block = GetBlock();
 
-            vacumnEvent?.Invoke(block.BlockProperty.Faction);
+            if (block != null)
+            {
+                Vector3 vacumnHead = vacumnPosition + new Vector3(0, 0, 8);
 
-            _inputMode = InputMode.Select;
-        }
+                block.Vacumn(vacumnHead);
+
+                vacumnEvent?.Invoke(block.BlockProperty.Faction, vacumnHead);
+
+                _inputMode = InputMode.Select;
+            }
+        });
     }
 
     private void EnableInput(bool isEnable)

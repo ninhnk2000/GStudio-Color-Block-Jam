@@ -225,7 +225,7 @@ public class BoosterUI : MonoBehaviour
         });
     }
 
-    private void DisableVacumnMode(GameFaction faction)
+    private void DisableVacumnMode(GameFaction faction, Vector3 vacumnPosition)
     {
         Tween.LocalPositionY(boosterContainer, _initialBoosterContainerPosition.y, duration: transitionTime);
         Tween.LocalPositionY(breakModeContainer, -canvasSizeOfReferenceDevice.Value.y, duration: transitionTime)

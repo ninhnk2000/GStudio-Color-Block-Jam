@@ -469,10 +469,10 @@ public class BaseBlock : MonoBehaviour
         });
     }
 
-    public void Vacumn()
+    public void Vacumn(Vector3 vacumnPosition)
     {
         Tween.Scale(transform, 0, duration: 0.6f);
-        Tween.LocalPositionY(transform, transform.position.y + 20, duration: 0.6f)
+        Tween.Position(transform, vacumnPosition, duration: 0.6f)
         .OnComplete(() =>
         {
             gameObject.SetActive(false);
@@ -485,7 +485,7 @@ public class BaseBlock : MonoBehaviour
         blockProperty.IsRotating = true;
     }
 
-    public void Vacumn(GameFaction faction)
+    public void Vacumn(GameFaction faction, Vector3 vacumnPosition)
     {
         if (blockProperty.IsRotating)
         {
@@ -494,7 +494,7 @@ public class BaseBlock : MonoBehaviour
 
         if (faction == Faction)
         {
-            Vacumn();
+            Vacumn(vacumnPosition);
         }
     }
     #endregion

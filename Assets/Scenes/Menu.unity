@@ -10413,6 +10413,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openSettingPopupButton: {fileID: 626605300}
+  background: {fileID: 0}
+  backgroundSprites: []
+  currentLevel: {fileID: 0}
 --- !u!114 &2016661297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10561,6 +10564,7 @@ MonoBehaviour:
   screwPortPrefab: {fileID: 1624755046582764907, guid: a8f542764ca926e4394f230d1143fc91, type: 3}
   fakeScrewPrefab: {fileID: 6710606468282035728, guid: 5c8555dd61afb2d4ca38da896b985fa3, type: 3}
   hammerPrefab: {fileID: 4433449578633393889, guid: 5d4598c11808c5149adb2188681c7d75, type: 3}
+  vacumnPrefab: {fileID: 4433449578633393889, guid: 369609a46e27aa54086973fc1e7a5de9, type: 3}
   loosenScrewSoundPrefab: {fileID: 7606835583939712495, guid: 417e3d5be33e2fc46a8408e8402f46d7, type: 3}
   tightenScrewSoundPrefab: {fileID: 7606835583939712495, guid: 833ec7a38e8f6bd4f86045a005629dfd, type: 3}
   loosenScrewFailSoundPrefab: {fileID: 7606835583939712495, guid: 7f34b7c9be49f164daab10167200312d, type: 3}
