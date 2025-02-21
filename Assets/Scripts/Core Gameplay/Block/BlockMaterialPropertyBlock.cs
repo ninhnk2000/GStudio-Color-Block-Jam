@@ -16,6 +16,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     [Header("CUSTOMIZE")]
     [SerializeField] private string alphaValueReference;
+    private const float DEFAULT_OUTLINE_WIDTH = 2f;
+    private Color DEFAULT_OUTLINE_COLOR = ColorUtil.WithAlpha(0.05f * Color.white, 1);
 
     #region PRIVATE FIELD
     [SerializeField] private List<Tween> _tweens;
@@ -107,6 +109,26 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         _propertyBlock.SetFloat("_BoundBottom", bottomBound);
     }
 
+    public void SetMaskingRight(float value)
+    {
+        _propertyBlock.SetFloat("_BoundRight", value);
+    }
+
+    public void SetMaskingLeft(float value)
+    {
+        _propertyBlock.SetFloat("_BoundLeft", value);
+    }
+
+    public void SetMaskingTop(float value)
+    {
+        _propertyBlock.SetFloat("_BoundTop", value);
+    }
+
+    public void SetMaskingBottom(float value)
+    {
+        _propertyBlock.SetFloat("_BoundBottom", value);
+    }
+
     private void SetMaskingTopBound(float topBound)
     {
         _propertyBlock.SetFloat("_BoundTop", topBound);
@@ -171,8 +193,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     private void SetDefaultOutline()
     {
-        outlineComponent.OutlineColor = ColorUtil.WithAlpha(0.1f * Color.white, 1);
-        outlineComponent.OutlineWidth = 1.5f;
+        outlineComponent.OutlineColor = DEFAULT_OUTLINE_COLOR;
+        outlineComponent.OutlineWidth = DEFAULT_OUTLINE_WIDTH;
     }
 
     public void ShowOutline(bool isShow)
@@ -181,12 +203,12 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
         Color outlineColor = FactionUtility.GetColorForFaction(blockServiceLocator.block.BlockProperty.Faction) * 3f;
 
-        Color startValue = ColorUtil.WithAlpha(0.1f * Color.white, 1);
+        Color startValue = DEFAULT_OUTLINE_COLOR;
         Color endValue = Color.white;
 
         if (!isShow)
         {
-            endValue = ColorUtil.WithAlpha(0.1f * Color.white, 1);
+            endValue = DEFAULT_OUTLINE_COLOR;
         }
 
         CommonUtil.StopAllTweens(_outlineTweens);
@@ -204,12 +226,12 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
             })
         );
 
-        float startWidthValue = 1.5f;
+        float startWidthValue = DEFAULT_OUTLINE_WIDTH;
         float endWidthValue = 4;
 
         if (!isShow)
         {
-            endWidthValue = 1.5f;
+            endWidthValue = DEFAULT_OUTLINE_WIDTH;
         }
 
         _outlineTweens.Add(Tween.Custom(startWidthValue, endWidthValue, duration: 0.3f, onValueChange: newVal =>

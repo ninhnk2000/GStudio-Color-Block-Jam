@@ -415,18 +415,26 @@ public class BaseBlock : MonoBehaviour
 
         if (direction == Direction.Right)
         {
+            blockServiceLocator.blockMaterialPropertyBlock.SetMaskingRight(transform.position.x + 0.5f * (blockProperty.NumTileX + 1) * _tileSize);
+
             _tweens.Add(Tween.PositionX(transform, transform.position.x + (blockProperty.NumTileX + 1) * _tileSize, duration: GameGeneralConfiguration.DISINTEGRATION_TIME));
         }
         if (direction == Direction.Left)
         {
+            blockServiceLocator.blockMaterialPropertyBlock.SetMaskingLeft(transform.position.x - 0.5f * (blockProperty.NumTileX + 1) * _tileSize);
+
             _tweens.Add(Tween.PositionX(transform, transform.position.x - (blockProperty.NumTileX + 1) * _tileSize, duration: GameGeneralConfiguration.DISINTEGRATION_TIME));
         }
         if (direction == Direction.Up)
         {
+            blockServiceLocator.blockMaterialPropertyBlock.SetMaskingTop(transform.position.z + 0.5f * (blockProperty.NumTileZ + 1) * _tileSize);
+
             _tweens.Add(Tween.PositionZ(transform, transform.position.z + (blockProperty.NumTileZ + 1) * _tileSize, duration: GameGeneralConfiguration.DISINTEGRATION_TIME));
         }
         else if (direction == Direction.Down)
         {
+            blockServiceLocator.blockMaterialPropertyBlock.SetMaskingBottom(transform.position.z - 0.5f * (blockProperty.NumTileZ + 1) * _tileSize);
+
             _tweens.Add(Tween.PositionZ(transform, transform.position.z - (blockProperty.NumTileZ + 1) * _tileSize, duration: GameGeneralConfiguration.DISINTEGRATION_TIME));
         }
 

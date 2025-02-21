@@ -19,7 +19,10 @@ public class ReplenishLifeManager : MonoBehaviour
         MenuScreen.changeLivesNumberEvent += ChangeLivesNumber;
         LivesShopPopup.changeLivesNumberEvent += ChangeLivesNumber;
         ReplayPopup.changeLivesNumberEvent += ChangeLivesNumber;
+    }
 
+    void Start()
+    {
         LivesData defaultLivesData = new LivesData();
 
         defaultLivesData.LastReplenishTime = DateTime.Now;

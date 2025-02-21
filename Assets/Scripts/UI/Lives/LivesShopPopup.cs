@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameEnum;
@@ -7,6 +8,7 @@ public class LivesShopPopup : BasePopup
 {
     [SerializeField] private Button refillByAdsButton;
     [SerializeField] private Button refillByCoinButton;
+    [SerializeField] private TMP_Text currentLivesText;
 
     private LivesData _livesData;
 
@@ -18,18 +20,29 @@ public class LivesShopPopup : BasePopup
         refillByCoinButton.onClick.AddListener(RefillByCoin);
     }
 
+    protected override void Show(Action onCompletedAction = null)
+    {
+        base.Show(onCompletedAction);
+
+        LivesData livesData = DataUtility.Load(GameConstants.USER_LIVES_DATA, new LivesData());
+
+        currentLivesText.text = $"{livesData.CurrentLives}";
+    }
+
     private void RefillByAds()
     {
         AdmobAdsMax.Instance.ShowVideoReward(
-            OnRewaredAdCompletedToUnlockBox, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: ActionWatchVideo.UnlockScrewBox);
+            OnRewaredAdCompletedToRefillLives, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: ActionWatchVideo.UnlockScrewBox);
 
     }
 
-    private void OnRewaredAdCompletedToUnlockBox()
+    private void OnRewaredAdCompletedToRefillLives()
     {
         Hide(onCompletedAction: () =>
         {
             changeLivesNumberEvent?.Invoke(1);
+
+            Hide();
         });
     }
 
@@ -41,5 +54,7 @@ public class LivesShopPopup : BasePopup
     private void RefillByCoin()
     {
         changeLivesNumberEvent?.Invoke(1);
+
+        Hide();
     }
 }
