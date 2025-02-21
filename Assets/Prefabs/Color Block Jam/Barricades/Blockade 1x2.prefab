@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &155968074908817439
 Transform:
   m_ObjectHideFlags: 0
@@ -313,7 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barricadeServiceLocator: {fileID: 6009796535730344415}
-  barricadeMaterialsContainer: {fileID: 11400000, guid: ba1c9d90b6c453a428bcd231a768bed0, type: 2}
+  barricadeMaterialsContainer: {fileID: 11400000, guid: 94f3cf926c562d74bbbeb4d85a6d33ce, type: 2}
   _renderer: {fileID: 1491862154851190768}
 --- !u!33 &7561789924032189543
 MeshFilter:
@@ -330,7 +330,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7760066131939131317}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -346,7 +346,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ba7791c3a1b460e42873221f64a6f654, type: 2}
+  - {fileID: 2100000, guid: e09b3a79e8d65b14ebca2a01f56a7f81, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

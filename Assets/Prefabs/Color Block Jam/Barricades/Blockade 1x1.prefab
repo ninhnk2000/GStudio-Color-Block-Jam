@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8484794580049916282
 Transform:
   m_ObjectHideFlags: 0
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barricadeServiceLocator: {fileID: 4623236987445485292}
-  barricadeMaterialsContainer: {fileID: 11400000, guid: ba1c9d90b6c453a428bcd231a768bed0, type: 2}
+  barricadeMaterialsContainer: {fileID: 11400000, guid: 94f3cf926c562d74bbbeb4d85a6d33ce, type: 2}
   _renderer: {fileID: 574832555576461507}
 --- !u!33 &8916775758205492052
 MeshFilter:
@@ -242,7 +242,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8718780417076064390}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

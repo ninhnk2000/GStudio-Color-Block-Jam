@@ -40,6 +40,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         SetFaction(blockServiceLocator.block.BlockProperty.Faction);
 
         SetDefaultOutline();
+
+        SetTextureRotation();
     }
 
     private void Start()
@@ -99,6 +101,13 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         // _renderer.SetPropertyBlock(_propertyBlock);
 
         _renderer.sharedMaterial = blockMaterialsContainer.BlockMaterials[(int)blockServiceLocator.block.BlockProperty.Faction];
+    }
+
+    public void SetTextureRotation()
+    {
+        _propertyBlock.SetFloat("_Rotation", -transform.eulerAngles.y);
+
+        _renderer.SetPropertyBlock(_propertyBlock);
     }
 
     private void SetMaskingBound(float rightBound, float leftBound, float topBound, float bottomBound)

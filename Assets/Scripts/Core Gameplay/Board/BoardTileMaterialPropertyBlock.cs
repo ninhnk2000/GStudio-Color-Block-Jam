@@ -42,13 +42,13 @@ public class BoardTileMaterialPropertyBlock : MonoBehaviour
 
     private void SetColorByBoardBounds(float rightBound, float leftBound, float topBound, float bottomBound)
     {
-        float ratio = 1 - (transform.position.z - bottomBound) / (topBound - bottomBound);
+        // float ratio = 1 - (transform.position.z - bottomBound) / (topBound - bottomBound);
 
-        Color firstColor = new Color(71 / 255f, 64 / 255f, 207 / 255f, 1);
-        Color secondColor = new Color(65 / 255f, 118 / 255f, 237 / 255f, 1);
+        // Color firstColor = new Color(71 / 255f, 64 / 255f, 207 / 255f, 1);
+        // Color secondColor = new Color(65 / 255f, 118 / 255f, 237 / 255f, 1);
 
-        _propertyBlock.SetColor("_Color", firstColor + ratio * (secondColor - firstColor));
+        // _propertyBlock.SetColor("_Color", firstColor + ratio * (secondColor - firstColor));
 
-        _renderer.SetPropertyBlock(_propertyBlock);
+        // _renderer.SetPropertyBlock(_propertyBlock);
     }
 }

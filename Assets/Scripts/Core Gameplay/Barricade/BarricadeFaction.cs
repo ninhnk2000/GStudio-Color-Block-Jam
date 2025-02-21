@@ -91,6 +91,13 @@ public class BarricadeFaction : MonoBehaviour
             meshRenderer.enabled = false;
         }
 
+        meshRenderer.enabled = true;
+        meshRenderer.sharedMaterial = barricadeMaterialsContainer.BarricadeMaterials[(int)faction];
+
+        barricadeServiceLocator.BlockSmasherRenderer.gameObject.SetActive(false);
+
+        return;
+
         BarricadeTile[] barricadeTiles = TransformUtil.GetComponentsFromAllChildren<BarricadeTile>(transform).ToArray();
 
         bool isEnable = false;
