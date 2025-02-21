@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9136147284694308917}
   - component: {fileID: 8634544662728473934}
   m_Layer: 5
-  m_Name: Home Button
+  m_Name: Close Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,11 +151,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5565685846544413217}
   - {fileID: 4880727879958094811}
   - {fileID: 8771718270258700209}
   - {fileID: 3821505701577670759}
   - {fileID: 1669730427125925955}
-  - {fileID: 5565685846544413217}
   m_Father: {fileID: 2910405276075193773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -375,7 +375,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 8880542877064857529}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -420,8 +420,9 @@ GameObject:
   - component: {fileID: 5565685846544413217}
   - component: {fileID: 1129438946356384641}
   - component: {fileID: 9134463812663440499}
+  - component: {fileID: 8543530814592540868}
   m_Layer: 5
-  m_Name: Level Text
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -443,7 +444,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 421}
+  m_AnchoredPosition: {x: 0, y: 413}
   m_SizeDelta: {x: 400, y: 103.6782}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1129438946356384641
@@ -477,7 +478,7 @@ MonoBehaviour:
   m_text: Level 19
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
-  m_sharedMaterial: {fileID: 2327973666622027767, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: d4bdcb50a821c66469622e29c402db4d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -545,6 +546,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8543530814592540868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6424973917768493810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: Level Lose
+  parameter: 
+  FallbackText: Level 19
 --- !u!1 &7650109468021633184
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +630,7 @@ MonoBehaviour:
   m_text: home
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
-  m_sharedMaterial: {fileID: 2327973666622027767, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: c6751e3c42b2990438c0764e5bd011f8, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -708,6 +724,7 @@ GameObject:
   - component: {fileID: 1669730427125925955}
   - component: {fileID: 8703458158358336312}
   - component: {fileID: 8151773495604651578}
+  - component: {fileID: 7128794665886761341}
   m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
@@ -732,7 +749,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -289.99854}
-  m_SizeDelta: {x: 581.0356, y: 103.6782}
+  m_SizeDelta: {x: 680, y: 103.6782}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8703458158358336312
 CanvasRenderer:
@@ -833,6 +850,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7128794665886761341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7764237000487869335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf51be86e70d7941bd40914206e4ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: Failed
+  parameter: 
+  FallbackText: You will lose 1 life!
 --- !u!1 &8537682210056250526
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,15 +915,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104b695b42a2bfa47ba619403f7bc63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  closeButton: {fileID: 0}
+  container: {fileID: 8533945126017366661}
+  closeButton: {fileID: 8634544662728473934}
   route: 16
   isRouteActiveFromStart: 0
   isAbleToHideOnClickOutside: 0
   replayButton: {fileID: 6146185231532924177}
   returnHomeButton: {fileID: 8634544662728473934}
-  levelProgress: {fileID: 0}
-  progressText: {fileID: 0}
   currentLevel: {fileID: 11400000, guid: dfc7835bc5f6fb64d9f4b1582f01db6e, type: 2}
   levelObserver: {fileID: 11400000, guid: d1d258141f78251439ab25819f9f78ba, type: 2}
   levelBoosterObserver: {fileID: 11400000, guid: 9296786de3965404da0e4202bc991a64, type: 2}

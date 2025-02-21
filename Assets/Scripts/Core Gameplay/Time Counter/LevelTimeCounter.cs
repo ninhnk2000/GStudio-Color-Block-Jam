@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using PrimeTween;
@@ -17,10 +18,13 @@ public class LevelTimeCounter : MonoBehaviour
     private Coroutine _countingCoroutine;
     private bool _isFreeze;
 
+    public static event Action loseLevelEvent;
+
     private void Awake()
     {
         LevelLoader.startLevelEvent += OnLevelStarted;
         BoosterUI.freezeTimeEvent += FreezeTime;
+        RevivePopup.reviveEvent += Revive;
 
         _tweens = new List<Tween>();
     }
@@ -29,6 +33,7 @@ public class LevelTimeCounter : MonoBehaviour
     {
         LevelLoader.startLevelEvent -= OnLevelStarted;
         BoosterUI.freezeTimeEvent -= FreezeTime;
+        RevivePopup.reviveEvent -= Revive;
 
         CommonUtil.StopAllTweens(_tweens);
     }
@@ -60,6 +65,8 @@ public class LevelTimeCounter : MonoBehaviour
 
             yield return waitForSeconds;
         }
+
+        loseLevelEvent?.Invoke();
     }
 
     private void FreezeTime()
@@ -95,6 +102,13 @@ public class LevelTimeCounter : MonoBehaviour
                 })
             );
         }
+    }
+
+    private void Revive(BoosterType boosterType)
+    {
+        totalSecond = 20;
+
+        _countingCoroutine = StartCoroutine(Counting());
     }
 
     string ConvertSecondsToMinutesSeconds(float seconds)

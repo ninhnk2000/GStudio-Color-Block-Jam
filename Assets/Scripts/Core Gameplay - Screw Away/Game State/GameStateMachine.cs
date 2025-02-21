@@ -27,7 +27,7 @@ public class GameStateMachine : MonoBehaviour
     {
         LevelLoader.startLevelEvent += EnterPlayingState;
         BlockManager.winLevelEvent += EnterWinState;
-        ScrewBoxManager.loseLevelEvent += EnterLoseState;
+        LevelTimeCounter.loseLevelEvent += EnterLoseState;
         TimingBomb.loseLevelEvent += EnterLoseState;
         RevivePopup.reviveEvent += OnRevived;
 
@@ -38,7 +38,7 @@ public class GameStateMachine : MonoBehaviour
     {
         LevelLoader.startLevelEvent -= EnterPlayingState;
         BlockManager.winLevelEvent -= EnterWinState;
-        ScrewBoxManager.loseLevelEvent -= EnterLoseState;
+        LevelTimeCounter.loseLevelEvent -= EnterLoseState;
         TimingBomb.loseLevelEvent -= EnterLoseState;
         RevivePopup.reviveEvent -= OnRevived;
     }

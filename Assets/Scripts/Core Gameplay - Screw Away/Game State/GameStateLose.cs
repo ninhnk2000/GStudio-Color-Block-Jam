@@ -30,7 +30,7 @@ public class GameStateLose : BaseGameState
 
     public override void Enter()
     {
-        loseLevelEvent?.Invoke();
+        showRevivePopupEvent?.Invoke(BoosterType.FreezeTime);
 
         // if (_gameStateMachine.ScrewBoxesObserver.NumLockedScrewBoxes == 0)
         // {

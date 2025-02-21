@@ -8,14 +8,8 @@ using static GameEnum;
 public class RevivePopup : BasePopup
 {
     [SerializeField] private Button reviveByDiamondButton;
-    [SerializeField] private Image reviveByDiamondButtonForeground;
-    [SerializeField] private Image boosterImage;
     [SerializeField] private Button reviveByAdsButton;
     [SerializeField] private TMP_Text costText;
-
-    [Header("SPRITE")]
-    [SerializeField] private Sprite unlockBoxSprite;
-    [SerializeField] private Sprite clearHolesSprite;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private UserResourcesObserver userResourcesObserver;
@@ -62,17 +56,6 @@ public class RevivePopup : BasePopup
 
         SoundManager.Instance.PlaySoundLose();
 
-        // if (boosterType == BoosterType.UnlockScrewBox)
-        // {
-        //     boosterImage.sprite = unlockBoxSprite;
-        // }
-        // else if (boosterType == BoosterType.ClearScrewPorts)
-        // {
-        //     boosterImage.sprite = clearHolesSprite;
-        // }
-
-        UIUtil.SetSizeKeepRatioY(boosterImage, 0.2f * container.sizeDelta.x);
-
         reviveByDiamondButton.interactable = true;
 
         _currentBoosterOnRevive = boosterType;
@@ -115,10 +98,10 @@ public class RevivePopup : BasePopup
 
     private void ReviveByAds()
     {
-        // if (_isInTransition)
-        // {
-        //     return;
-        // }
+        if (_isInTransition)
+        {
+            return;
+        }
 
         // ActionWatchVideo actionWatchVideo;
 
@@ -131,7 +114,8 @@ public class RevivePopup : BasePopup
         //     default: actionWatchVideo = ActionWatchVideo.UnlockScrewBox; break;
         // }
 
-        // AdmobAdsMax.Instance.ShowVideoReward(OnRewaredAdCompleted, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: actionWatchVideo);
+        AdmobAdsMax.Instance.ShowVideoReward(
+            OnRewaredAdCompleted, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: ActionWatchVideo.AddTime);
     }
 
     private void OnRewaredAdCompleted()
