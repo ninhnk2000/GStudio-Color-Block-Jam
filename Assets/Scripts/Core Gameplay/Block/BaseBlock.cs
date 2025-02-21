@@ -175,12 +175,12 @@ public class BaseBlock : MonoBehaviour
 
         if (blockProperty.IsMoving)
         {
-            if (_isMovingLastFrame && (_targetPosition - _prevTargetPosition).magnitude < 0.02f)
-            {
-                _blockRigidBody.linearVelocity = Vector3.zero;
+            // if (_isMovingLastFrame && (_targetPosition - _prevTargetPosition).magnitude < 0.02f)
+            // {
+            //     _blockRigidBody.linearVelocity = Vector3.zero;
 
-                return;
-            }
+            //     return;
+            // }
 
             float tileSize = GamePersistentVariable.tileSize;
 
@@ -199,7 +199,8 @@ public class BaseBlock : MonoBehaviour
                 _prevTargetPosition = _targetPosition;
             }
 
-            Vector3 direction = (_targetPosition - _prevTargetPosition);
+            // Vector3 direction = _targetPosition - _prevTargetPosition;
+            Vector3 direction = _targetPosition - transform.position;
 
             if (!_isMovingLastFrame)
             {
