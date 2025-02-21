@@ -8,7 +8,6 @@ using static GameEnum;
 public class BuyBoosterPopup : BasePopup
 {
     [SerializeField] private Button buyWithDiamondButton;
-    [SerializeField] private Image buyWithDiamondButtonForeground;
     [SerializeField] private Button getWithAdsButton;
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text costText;
@@ -38,7 +37,8 @@ public class BuyBoosterPopup : BasePopup
         BoosterUI.showBuyBoosterPopupEvent += ShowBuyBoosterPopup;
         BoosterItemUI.showBuyBoosterPopupEvent += ShowBuyBoosterPopup;
         ScrewBoxUI.showBuyBoosterPopupEvent += ShowBuyBoosterPopup;
-        ScrewSelectionInput.breakObjectEvent += OnConfirmedBreakObject;
+        BlockSelectionInput.breakObjectEvent += OnConfirmedBreakObject;
+        BlockSelectionInput.vacumnEvent += OnConfirmedVacumn;
 
         buyWithDiamondButton.onClick.AddListener(GetWithCoin);
         getWithAdsButton.onClick.AddListener(GetWithAds);
@@ -49,7 +49,8 @@ public class BuyBoosterPopup : BasePopup
         BoosterUI.showBuyBoosterPopupEvent -= ShowBuyBoosterPopup;
         BoosterItemUI.showBuyBoosterPopupEvent -= ShowBuyBoosterPopup;
         ScrewBoxUI.showBuyBoosterPopupEvent -= ShowBuyBoosterPopup;
-        ScrewSelectionInput.breakObjectEvent -= OnConfirmedBreakObject;
+        BlockSelectionInput.breakObjectEvent -= OnConfirmedBreakObject;
+        BlockSelectionInput.vacumnEvent -= OnConfirmedVacumn;
     }
 
     private void ShowBuyBoosterPopup(BoosterType boosterType)
@@ -86,7 +87,7 @@ public class BuyBoosterPopup : BasePopup
 
         if (userResourcesObserver.UserResources.CoinQuantity >= boosterDataObserver.BoosterCosts[boosterIndex])
         {
-            if (_boosterType == BoosterType.BreakObject)
+            if (_boosterType == BoosterType.BreakObject || _boosterType == BoosterType.Vacumn)
             {
                 userResourcesObserver.ChangeBoosterQuantity(boosterIndex, 1);
 
@@ -94,17 +95,6 @@ public class BuyBoosterPopup : BasePopup
 
                 _isBoughtBreakObjectBoosterByCoin = true;
             }
-            // else if (_boosterType == BoosterType.UnlockScrewBox)
-            // {
-            //     userResourcesObserver.ChangeCoin(-boosterDataObserver.BoosterCosts[boosterIndex]);
-
-            //     Hide(onCompletedAction: () =>
-            //     {
-            //         unlockScrewBoxEvent?.Invoke();
-            //     });
-
-            //     return;
-            // }
             else
             {
                 userResourcesObserver.UserResources.CoinQuantity -= boosterDataObserver.BoosterCosts[boosterIndex];
@@ -166,6 +156,16 @@ public class BuyBoosterPopup : BasePopup
     }
 
     private void OnConfirmedBreakObject()
+    {
+        if (_isBoughtBreakObjectBoosterByCoin)
+        {
+            userResourcesObserver.ChangeCoin(-boosterDataObserver.BoosterCosts[(int)_boosterType]);
+
+            _isBoughtBreakObjectBoosterByCoin = false;
+        }
+    }
+
+    private void OnConfirmedVacumn(GameFaction faction, Vector3 vacumnPosition)
     {
         if (_isBoughtBreakObjectBoosterByCoin)
         {

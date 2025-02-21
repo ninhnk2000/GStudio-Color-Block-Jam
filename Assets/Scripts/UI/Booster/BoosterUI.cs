@@ -136,6 +136,8 @@ public class BoosterUI : MonoBehaviour
             return;
         }
 
+        Debug.Log("SAFERIO " + boosterType);
+
         if (boosterType == BoosterType.FreezeTime)
         {
             FreezeTime();

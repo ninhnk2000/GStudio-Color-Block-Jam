@@ -311,7 +311,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Good Job!
+  m_text: Booster
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: d4bdcb50a821c66469622e29c402db4d, type: 2}
@@ -538,7 +538,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Level 5 Completed!
+  m_text: Level {level} Completed!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
   m_sharedMaterial: {fileID: 2327973666622027767, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
@@ -1126,7 +1126,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Continue
+  m_text: Claim now
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: f7a02a874ba8c6d4797bf6f666106e87, type: 2}
@@ -1153,7 +1153,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 62.15
+  m_fontSize: 53.2
   m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1266,9 +1266,8 @@ MonoBehaviour:
   closeButton: {fileID: 4105070932183059291}
   route: 17
   isRouteActiveFromStart: 0
-  isAbleToHideOnClickOutside: 1
+  isAbleToHideOnClickOutside: 0
   buyWithDiamondButton: {fileID: 3696929823513074187}
-  buyWithDiamondButtonForeground: {fileID: 0}
   getWithAdsButton: {fileID: 6757407959856365082}
   icon: {fileID: 6423396166341458331}
   costText: {fileID: 5763659255987939911}

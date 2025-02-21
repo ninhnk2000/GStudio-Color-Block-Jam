@@ -74,21 +74,19 @@ public class BoosterItemUI : MonoBehaviour
 
         int quantity = userResourcesObserver.UserResources.BoosterQuantities[boosterIndex];
 
-        if (currentLevel.Value < levelToUnlock)
-        {
-            Lock(isLocked: true);
-        }
-        else
-        {
-            Lock(isLocked: false);
-        }
+        bool isLock = currentLevel.Value < levelToUnlock;
+
+        Lock(isLocked: isLock);
 
         if (quantity > 0)
         {
-            quantityTextContainer.gameObject.SetActive(true);
-            addButtonRT.gameObject.SetActive(false);
+            if (!isLock)
+            {
+                quantityTextContainer.gameObject.SetActive(true);
+                addButtonRT.gameObject.SetActive(false);
 
-            quantityText.text = $"{quantity}";
+                quantityText.text = $"{quantity}";
+            }
         }
         else
         {
