@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PrimeTween;
 using Saferio.Util.SaferioTween;
+using Unity.VisualScripting;
 using UnityEngine;
 using static GameEnum;
 
@@ -175,12 +176,12 @@ public class BaseBlock : MonoBehaviour
 
         if (blockProperty.IsMoving)
         {
-            // if (_isMovingLastFrame && (_targetPosition - _prevTargetPosition).magnitude < 0.02f)
-            // {
-            //     _blockRigidBody.linearVelocity = Vector3.zero;
+            if (_isMovingLastFrame && (_targetPosition - transform.position).magnitude < 0.2f)
+            {
+                _blockRigidBody.linearVelocity = Vector3.zero;
 
-            //     return;
-            // }
+                return;
+            }
 
             float tileSize = GamePersistentVariable.tileSize;
 
@@ -202,43 +203,130 @@ public class BaseBlock : MonoBehaviour
             // Vector3 direction = _targetPosition - _prevTargetPosition;
             Vector3 direction = _targetPosition - transform.position;
 
-            if (!_isMovingLastFrame)
+            // if (!_isMovingLastFrame)
+            // {
+            //     if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            //     {
+            //         _prevDirection = Direction.Right;
+            //     }
+            //     else
+            //     {
+            //         _prevDirection = Direction.Up;
+            //     }
+            // }
+            // else
+            // {
+            //     if (_prevDirection == Direction.Right)
+            //     {
+            //         if (Mathf.Abs(direction.z) > Mathf.Abs(direction.x))
+            //         {
+            //             _prevDirection = Direction.Up;
+            //         }
+            //     }
+            //     else
+            //     {
+            //         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            //         {
+            //             _prevDirection = Direction.Right;
+            //         }
+            //     }
+            // }
+
+            // if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            // {
+            //     direction.z = 0;
+            // }
+            // else
+            // {
+            //     direction.x = 0;
+            // }
+
+            // if (_prevDirection == Direction.Right)
+            // {
+            //     direction.z = 0;
+            // }
+            // else
+            // {
+            //     direction.x = 0;
+            // }
+
+            RaycastHit obstacleHorizontal;
+            RaycastHit obstacleVertical;
+
+            Vector3 size = blockServiceLocator.Size;
+
+            int layerMask = 1 << LayerMask.NameToLayer("Default");
+
+            Physics.BoxCast(transform.position, 0.5f * new Vector3(0.1f * size.x, size.y, size.z),
+                new Vector3(direction.x, 0, 0).normalized, out obstacleHorizontal, Quaternion.identity, 0.95f * size.x, layerMask);
+            Physics.BoxCast(transform.position, 0.5f * new Vector3(size.x, size.y, 0.1f * size.z),
+                new Vector3(0, 0, direction.z).normalized, out obstacleVertical, Quaternion.identity, 0.95f * size.z, layerMask);
+
+            Debug.Log("SAFERIO " + obstacleHorizontal.collider + "/" + obstacleVertical.collider + "/" + direction);
+
+            if (obstacleHorizontal.collider != null)
             {
-                if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+                float distanceX = Mathf.Abs(transform.position.x - obstacleHorizontal.point.x);
+                float distanceZ = Mathf.Abs(transform.position.z - obstacleHorizontal.point.z);
+
+                Debug.Log("SAFERIO " + distanceX + "/" + (0.6f * size.x));
+                if (distanceX < 0.6f * size.x && distanceZ < 0.47f * size.z)
                 {
-                    _prevDirection = Direction.Right;
-                }
-                else
-                {
-                    _prevDirection = Direction.Up;
+                    direction.x = 0;
                 }
             }
-            else
+            if (obstacleVertical.collider != null)
             {
-                if (_prevDirection == Direction.Right)
+                float distanceX = Mathf.Abs(transform.position.x - obstacleVertical.point.x);
+                float distanceZ = Mathf.Abs(transform.position.z - obstacleVertical.point.z);
+
+                if (distanceZ < 0.6f * size.z && distanceX < 0.47f * size.x)
                 {
-                    if (Mathf.Abs(direction.z) > Mathf.Abs(direction.x))
-                    {
-                        _prevDirection = Direction.Up;
-                    }
-                }
-                else
-                {
-                    if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
-                    {
-                        _prevDirection = Direction.Right;
-                    }
+                    direction.z = 0;
                 }
             }
 
-            if (_prevDirection == Direction.Right)
-            {
-                direction.z = 0;
-            }
-            else
-            {
-                direction.x = 0;
-            }
+            // Debug.Log(direction);
+
+            // if (obstacleHorizontal.collider == null && obstacleVertical.collider == null)
+            // {
+            //     if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            //     {
+            //         direction.z = 0;
+            //     }
+            //     else
+            //     {
+            //         direction.x = 0;
+            //     }
+            // }
+            // else if (obstacleHorizontal.collider == null)
+            // {
+            //     direction.z = 0;
+            // }
+            // else if (obstacleVertical.collider == null)
+            // {
+            //     direction.x = 0;
+            // }
+            // else
+            // {
+            //     if (obstacleHorizontal.distance < obstacleVertical.distance)
+            //     {
+            //         direction.z = 0;
+            //     }
+            //     else
+            //     {
+            //         direction.x = 0;
+            //     }
+
+            //     // if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            //     // {
+            //     //     direction.z = 0;
+            //     // }
+            //     // else
+            //     // {
+            //     //     direction.x = 0;
+            //     // }
+            // }
 
             float maxDistance = 0.5f * tileSize;
             float maxVelocity = 45 * 0.5f * tileSize;
