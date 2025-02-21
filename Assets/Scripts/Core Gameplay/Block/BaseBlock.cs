@@ -18,7 +18,7 @@ public class BaseBlock : MonoBehaviour
     private Vector3 _targetPosition;
     private bool _isMovingLastFrame;
     private Vector3 _prevTargetPosition;
-    private Direction _prevDirection;
+    private Vector3 _prevDirection;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float speedMultiplier = 15f;
@@ -31,6 +31,19 @@ public class BaseBlock : MonoBehaviour
     private bool _isSnapping;
     private float _tileSize;
     private bool _isLimitMovingSpeedOnNearObstacles;
+    #endregion
+
+
+
+    #region MOVEMENT
+    private Vector3 _moveDirection;
+    bool _isLockedHorizontal;
+    bool _isLockedVertical;
+    private float _lockHorizontalTime;
+    private float _lockVericalTime;
+    private int _horizontalColliderInstanceId;
+    private int _verticalColliderInstanceId;
+    private Vector3 _prevPosition;
     #endregion
 
     public BlockServiceLocator BlockServiceLocator
@@ -71,7 +84,7 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.constraints |= RigidbodyConstraints.FreezePositionY;
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 90;
+        speedMultiplier = 60;
         snappingLerpRatio = 1f / 2;
 
         _tileSize = GamePersistentVariable.tileSize;
@@ -125,7 +138,7 @@ public class BaseBlock : MonoBehaviour
         }));
     }
 
-    private void FixedUpdate()
+    void Update()
     {
         if (_isSnapping)
         {
@@ -145,7 +158,7 @@ public class BaseBlock : MonoBehaviour
                     direction = -Vector3.right;
                 }
 
-                maxDistance = 0.5f * blockServiceLocator.Size.x;
+                maxDistance = 0.3f * blockServiceLocator.Size.x;
 
                 bool IsDisintegrate = blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
 
@@ -160,7 +173,7 @@ public class BaseBlock : MonoBehaviour
                         direction = -Vector3.forward;
                     }
 
-                    maxDistance = 0.5f * blockServiceLocator.Size.z;
+                    maxDistance = 0.3f * blockServiceLocator.Size.z;
 
                     blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
                 }
@@ -173,10 +186,13 @@ public class BaseBlock : MonoBehaviour
         {
             transform.RotateAround(Vector3.up, 6);
         }
+    }
 
+    private void FixedUpdate()
+    {
         if (blockProperty.IsMoving)
         {
-            if (_isMovingLastFrame && (_targetPosition - transform.position).magnitude < 0.2f)
+            if (_isMovingLastFrame && (_targetPosition - transform.position).magnitude < 1f)
             {
                 _blockRigidBody.linearVelocity = Vector3.zero;
 
@@ -185,168 +201,216 @@ public class BaseBlock : MonoBehaviour
 
             float tileSize = GamePersistentVariable.tileSize;
 
-            // if (Mathf.Abs(_targetPosition.x - transform.position.x) < 0.03f * tileSize)
-            // {
-            //     _targetPosition = _targetPosition.ChangeX(transform.position.x);
-            // }
-
-            // if (Mathf.Abs(_targetPosition.z - transform.position.z) < 0.03f * tileSize)
-            // {
-            //     _targetPosition = _targetPosition.ChangeZ(transform.position.z);
-            // }
-
             if (!_isMovingLastFrame)
             {
                 _prevTargetPosition = _targetPosition;
             }
 
-            // Vector3 direction = _targetPosition - _prevTargetPosition;
-            Vector3 direction = _targetPosition - transform.position;
+            // Vector3 direction = _targetPosition - transform.position;
+            Vector3 direction = _targetPosition - _prevTargetPosition;
 
-            // if (!_isMovingLastFrame)
+            // RaycastHit obstacleHorizontal;
+            // RaycastHit obstacleVertical;
+
+            // Vector3 size = blockServiceLocator.Size;
+
+            // int layerMask = 1 << LayerMask.NameToLayer("Default");
+
+            // Physics.BoxCast(transform.position, 0.5f * new Vector3(0.1f * size.x, size.y, size.z),
+            //     new Vector3(direction.x, 0, 0).normalized, out obstacleHorizontal, Quaternion.identity, 0.95f * size.x, layerMask);
+            // Physics.BoxCast(transform.position, 0.5f * new Vector3(size.x, size.y, 0.1f * size.z),
+            //     new Vector3(0, 0, direction.z).normalized, out obstacleVertical, Quaternion.identity, 0.95f * size.z, layerMask);
+
+
+
+            // if (obstacleHorizontal.collider != null)
             // {
-            //     if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
-            //     {
-            //         _prevDirection = Direction.Right;
-            //     }
-            //     else
-            //     {
-            //         _prevDirection = Direction.Up;
-            //     }
-            // }
-            // else
-            // {
-            //     if (_prevDirection == Direction.Right)
-            //     {
-            //         if (Mathf.Abs(direction.z) > Mathf.Abs(direction.x))
-            //         {
-            //             _prevDirection = Direction.Up;
-            //         }
-            //     }
-            //     else
-            //     {
-            //         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
-            //         {
-            //             _prevDirection = Direction.Right;
-            //         }
-            //     }
-            // }
+            //     float distanceX = Mathf.Abs(transform.position.x - obstacleHorizontal.point.x);
+            //     float distanceZ = Mathf.Abs(transform.position.z - obstacleHorizontal.point.z);
 
-            // if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
-            // {
-            //     direction.z = 0;
-            // }
-            // else
-            // {
-            //     direction.x = 0;
-            // }
-
-            // if (_prevDirection == Direction.Right)
-            // {
-            //     direction.z = 0;
-            // }
-            // else
-            // {
-            //     direction.x = 0;
-            // }
-
-            RaycastHit obstacleHorizontal;
-            RaycastHit obstacleVertical;
-
-            Vector3 size = blockServiceLocator.Size;
-
-            int layerMask = 1 << LayerMask.NameToLayer("Default");
-
-            Physics.BoxCast(transform.position, 0.5f * new Vector3(0.1f * size.x, size.y, size.z),
-                new Vector3(direction.x, 0, 0).normalized, out obstacleHorizontal, Quaternion.identity, 0.95f * size.x, layerMask);
-            Physics.BoxCast(transform.position, 0.5f * new Vector3(size.x, size.y, 0.1f * size.z),
-                new Vector3(0, 0, direction.z).normalized, out obstacleVertical, Quaternion.identity, 0.95f * size.z, layerMask);
-
-            Debug.Log("SAFERIO " + obstacleHorizontal.collider + "/" + obstacleVertical.collider + "/" + direction);
-
-            if (obstacleHorizontal.collider != null)
-            {
-                float distanceX = Mathf.Abs(transform.position.x - obstacleHorizontal.point.x);
-                float distanceZ = Mathf.Abs(transform.position.z - obstacleHorizontal.point.z);
-
-                Debug.Log("SAFERIO " + distanceX + "/" + (0.6f * size.x));
-                if (distanceX < 0.6f * size.x && distanceZ < 0.47f * size.z)
-                {
-                    direction.x = 0;
-                }
-            }
-            if (obstacleVertical.collider != null)
-            {
-                float distanceX = Mathf.Abs(transform.position.x - obstacleVertical.point.x);
-                float distanceZ = Mathf.Abs(transform.position.z - obstacleVertical.point.z);
-
-                if (distanceZ < 0.6f * size.z && distanceX < 0.47f * size.x)
-                {
-                    direction.z = 0;
-                }
-            }
-
-            // Debug.Log(direction);
-
-            // if (obstacleHorizontal.collider == null && obstacleVertical.collider == null)
-            // {
-            //     if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
-            //     {
-            //         direction.z = 0;
-            //     }
-            //     else
+            //     if (distanceX < 0.5f * size.x)
             //     {
             //         direction.x = 0;
             //     }
             // }
-            // else if (obstacleHorizontal.collider == null)
+            // if (obstacleVertical.collider != null)
             // {
-            //     direction.z = 0;
-            // }
-            // else if (obstacleVertical.collider == null)
-            // {
-            //     direction.x = 0;
-            // }
-            // else
-            // {
-            //     if (obstacleHorizontal.distance < obstacleVertical.distance)
+            //     float distanceX = Mathf.Abs(transform.position.x - obstacleVertical.point.x);
+            //     float distanceZ = Mathf.Abs(transform.position.z - obstacleVertical.point.z);
+
+            //     if (distanceZ < 0.5f * size.z)
             //     {
             //         direction.z = 0;
             //     }
-            //     else
-            //     {
-            //         direction.x = 0;
-            //     }
-
-            //     // if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
-            //     // {
-            //     //     direction.z = 0;
-            //     // }
-            //     // else
-            //     // {
-            //     //     direction.x = 0;
-            //     // }
             // }
 
-            float maxDistance = 0.5f * tileSize;
-            float maxVelocity = 45 * 0.5f * tileSize;
+            // Debug.Log("SAFERIO: " + obstacleHorizontal.collider + " / " + obstacleVertical.collider + " / " + direction);
 
-            Vector3 velocity = speedMultiplier * direction;
+            if (_isMovingLastFrame)
+            {
+                if (!_isLockedHorizontal && !_isLockedVertical)
+                {
+                    if (_prevDirection.x > 0 && transform.position.x < _prevPosition.x + 0.1f)
+                    {
+                        _isLockedHorizontal = true;
+                    }
+                    if (_prevDirection.x < 0 && transform.position.x > _prevPosition.x - 0.1f)
+                    {
+                        _isLockedHorizontal = true;
+                    }
+
+                    if (_prevDirection.z > 0 && transform.position.z < _prevPosition.z + 0.1f)
+                    {
+                        _isLockedVertical = true;
+                    }
+                    if (_prevDirection.z < 0 && transform.position.z > _prevPosition.z - 0.1f)
+                    {
+                        _isLockedVertical = true;
+                    }
+                }
+            }
+
+            if (_isLockedHorizontal)
+            {
+                direction.x = 0;
+
+                _lockHorizontalTime += 1;
+
+                if (_lockHorizontalTime > 4)
+                {
+                    _isLockedHorizontal = false;
+                    _lockHorizontalTime = 0;
+                }
+            }
+
+            if (_isLockedVertical)
+            {
+                direction.z = 0;
+
+                _lockVericalTime += 1;
+
+                if (_lockVericalTime > 4)
+                {
+                    _isLockedVertical = false;
+                    _lockVericalTime = 0;
+                }
+            }
+
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            {
+                direction.z = 0;
+            }
+            else
+            {
+                direction.x = 0;
+            }
+
+            // Debug.Log("SAFERIO " + _isLockedHorizontal + "/" + _isLockedVertical + "/" + direction);
+
+            Vector3 ndirection = _targetPosition - transform.position;
+
+            if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
+            {
+                _moveDirection.z = 0;
+            }
+            else
+            {
+                _moveDirection.x = 0;
+            }
+
+            float maxVelocity = speedMultiplier;
+
+            Vector3 velocity = speedMultiplier * _moveDirection;
 
             velocity.x = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
             velocity.z = Mathf.Clamp(velocity.z, -maxVelocity, maxVelocity);
-
-            _blockRigidBody.linearVelocity = velocity;
 
             if (!_isMovingLastFrame)
             {
                 _isMovingLastFrame = true;
             }
+            else
+            {
+                _blockRigidBody.linearVelocity = velocity;
+            }
 
             _prevTargetPosition = _targetPosition;
+            _prevDirection = _moveDirection;
+            _prevPosition = transform.position;
         }
     }
     #endregion
+
+    // private void OnCollisionEnter(Collision other)
+    // {
+    //     if (!_isMovingLastFrame)
+    //     {
+    //         return;
+    //     }
+
+    //     if (_isLockedHorizontal || _isLockedVertical)
+    //     {
+    //         return;
+    //     }
+
+    //     if (other.gameObject.GetComponent<BaseBlock>() == null)
+    //     {
+    //         return;
+    //     }
+
+    //     Debug.Log(_prevDirection);
+
+    //     if (Mathf.Abs(_prevDirection.x) > Mathf.Abs(_prevDirection.z))
+    //     {
+    //         _isLockedHorizontal = true;
+
+    //         _horizontalColliderInstanceId = other.gameObject.GetInstanceID();
+    //     }
+    //     else
+    //     {
+    //         _isLockedVertical = true;
+
+    //         _verticalColliderInstanceId = other.gameObject.GetInstanceID();
+    //     }
+
+    //     // if (Mathf.Abs(transform.position.x - other.transform.position.x) > Mathf.Abs(transform.position.z - other.transform.position.z))
+    //     // {
+    //     //     _isLockedHorizontal = true;
+    //     //     _lockHorizontalTime = 0;
+
+    //     //     _horizontalColliderInstanceId = other.gameObject.GetInstanceID();
+    //     // }
+    //     // else
+    //     // {
+    //     //     _isLockedVertical = true;
+    //     //     _lockVericalTime = 0;
+
+    //     //     _verticalColliderInstanceId = other.gameObject.GetInstanceID();
+    //     // }
+
+    //     _prevPosition = transform.position;
+    // }
+
+    // void OnCollisionExit(Collision collision)
+    // {
+    //     if (_isLockedHorizontal)
+    //     {
+    //         if (collision.gameObject.GetInstanceID() == _horizontalColliderInstanceId)
+    //         {
+    //             _isLockedHorizontal = false;
+    //         }
+    //     }
+
+    //     if (_isLockedVertical)
+    //     {
+    //         if (collision.gameObject.GetInstanceID() == _verticalColliderInstanceId)
+    //         {
+    //             _isLockedVertical = false;
+    //         }
+    //     }
+    // }
+
+    // On
 
     #region FOR BETTER GAME FEEL
     private void ScaleOnLevelStarted()
@@ -388,6 +452,34 @@ public class BaseBlock : MonoBehaviour
         // _targetPosition = targetPosition.ChangeY(1.1f * _initialPosition.y);
 
         _targetPosition = targetPosition.ChangeY(_initialPosition.y);
+    }
+
+    public virtual void Move(Vector2 direction)
+    {
+        if (blockProperty.IsDisintegrating)
+        {
+            return;
+        }
+
+        if (_isSnapping)
+        {
+            return;
+        }
+
+        if (!blockProperty.IsMoving)
+        {
+            blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(true);
+
+            _blockRigidBody.isKinematic = false;
+
+            movePairedBlock?.Invoke(gameObject.GetInstanceID(), true);
+
+            _isSnapping = false;
+
+            blockProperty.IsMoving = true;
+        }
+
+        _moveDirection = new Vector3(direction.x, 0, direction.y);
     }
 
     public virtual void Stop()

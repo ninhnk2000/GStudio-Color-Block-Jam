@@ -104,6 +104,7 @@ public class AdmobAdsMax : MonoBehaviour
         List<string> testDeviceIds = new List<string>();
 
         testDeviceIds.Add("07276CEBDF187D3173080B9D8CF4FAB4");
+        testDeviceIds.Add("5360A1B78DFA03B5BF8E964B5E27F91A");
 
         MobileAds.SetRequestConfiguration(new RequestConfiguration
         {
