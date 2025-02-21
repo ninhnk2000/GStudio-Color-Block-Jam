@@ -41,6 +41,7 @@ public class BasePopup : MonoBehaviour
         UserLivesUI.switchRouteEvent += OnRouteSwitched;
         LivesShopPopup.switchRouteEvent += OnRouteSwitched;
         ReplenishLifeManager.switchRouteEvent += OnRouteSwitched;
+        ReplayPopup.switchRouteEvent += OnRouteSwitched;
 
         if (closeButton != null)
         {
@@ -84,6 +85,7 @@ public class BasePopup : MonoBehaviour
         UserLivesUI.switchRouteEvent -= OnRouteSwitched;
         LivesShopPopup.switchRouteEvent -= OnRouteSwitched;
         ReplenishLifeManager.switchRouteEvent -= OnRouteSwitched;
+        ReplayPopup.switchRouteEvent -= OnRouteSwitched;
 
         UnregisterMoreEvent();
 

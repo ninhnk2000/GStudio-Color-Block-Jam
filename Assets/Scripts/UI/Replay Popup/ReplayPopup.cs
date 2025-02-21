@@ -13,9 +13,11 @@ public class ReplayPopup : BasePopup
     [SerializeField] private GameSetting gameSetting;
     [SerializeField] private LevelObserver levelObserver;
     [SerializeField] private LevelBoosterObserver levelBoosterObserver;
-    
+
     public static event Action replayLevelEvent;
     public static event Action<int> changeLivesNumberEvent;
+
+    public static event Action<ScreenRoute> switchRouteEvent;
 
     protected override void MoreActionInAwake()
     {
@@ -24,6 +26,13 @@ public class ReplayPopup : BasePopup
 
     private void Replay()
     {
+        if (GamePersistentVariable.livesData.CurrentLives <= 0)
+        {
+            switchRouteEvent?.Invoke(ScreenRoute.LivesShop);
+
+            return;
+        }
+
         bool isShowInterReplayLevel = RemoteConfigController.GetBoolConfig(FirebaseConfig.IS_SHOW_INTER_REPLAY_LEVEL, false);
 
         if (isShowInterReplayLevel)

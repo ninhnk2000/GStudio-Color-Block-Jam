@@ -29,6 +29,8 @@ public class ReplenishLifeManager : MonoBehaviour
 
         _livesData = DataUtility.Load(GameConstants.USER_LIVES_DATA, new LivesData());
 
+        GamePersistentVariable.livesData = _livesData;
+
         StartCoroutine(Counting());
 
         updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
@@ -64,6 +66,8 @@ public class ReplenishLifeManager : MonoBehaviour
                 }
 
                 DataUtility.Save(GameConstants.USER_LIVES_DATA, _livesData);
+
+                GamePersistentVariable.livesData = _livesData;
             }
             else
             {
@@ -84,6 +88,8 @@ public class ReplenishLifeManager : MonoBehaviour
         _livesData.CurrentLives += value;
 
         DataUtility.Save(GameConstants.USER_LIVES_DATA, _livesData);
+
+        GamePersistentVariable.livesData = _livesData;
 
         updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
     }

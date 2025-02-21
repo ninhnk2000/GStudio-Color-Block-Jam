@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 535598585866769710}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.01}
+  m_LocalPosition: {x: 0, y: 0, z: -0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -274,15 +274,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 9
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5062faa7168378d4e8420feec1df7e73, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 42613614af011bc47858306a40ac079d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5737d8691102fcb4aa51d267adb87373, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: d4bdcb50a821c66469622e29c402db4d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294962322
-  m_fontColor: {r: 0.5707547, g: 0.92393124, b: 1, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -360,8 +360,8 @@ GameObject:
   - component: {fileID: 1498880182680717613}
   - component: {fileID: 583727596212904661}
   - component: {fileID: 2445866066603038457}
-  - component: {fileID: 9113167198684832809}
   - component: {fileID: 2203198376218026948}
+  - component: {fileID: 1575999040879102997}
   m_Layer: 0
   m_Name: 2x2 Block - Freeze
   m_TagString: Untagged
@@ -561,28 +561,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!64 &9113167198684832809
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9095178608538404645}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: dc719bf29a0fef545acb5568a50689e3, type: 2}
 --- !u!65 &2203198376218026948
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -604,6 +582,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 1.5}
   m_Center: {x: -0.000000834465, y: 0.00000005960466, z: 0}
+--- !u!65 &1575999040879102997
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9095178608538404645}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.0078115, y: 3.9929585, z: 3}
+  m_Center: {x: 0.000000059604645, y: 0, z: 0.00000003725291}
 --- !u!1001 &2356021677842056335
 PrefabInstance:
   m_ObjectHideFlags: 0

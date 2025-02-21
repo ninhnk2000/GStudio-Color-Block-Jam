@@ -10,6 +10,10 @@ public static class GamePersistentVariable
     public static float tileDistance;
     public static Vector2 screenSizeWorld;
 
+    #region LIVES
+    public static LivesData livesData;
+    #endregion
+
     #region SETTING
     public static bool IsVibrate;
     #endregion

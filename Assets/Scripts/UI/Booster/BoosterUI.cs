@@ -60,8 +60,8 @@ public class BoosterUI : MonoBehaviour
         ScrewBoxManager.enableBoosterEvent += EnableBooster;
         ScrewManager.enableBoosterEvent += EnableBoosterWithoutWarningPopup;
         RevivePopup.reviveEvent += OnRevived;
-        BlockSelectionInput.breakObjectEvent += DisableBreakObjectMode;
-        BlockSelectionInput.vacumnEvent += DisableVacumnMode;
+        BlockSelectionInput.breakObjectEvent += ConfirmBreakObject;
+        BlockSelectionInput.vacumnEvent += ConfirmVacumnBooster;
 
         addMoreScrewPortButton.onClick.AddListener(() => UseBooster(BoosterType.FreezeTime));
         breakObjectButton.onClick.AddListener(() => UseBooster(BoosterType.BreakObject));
@@ -148,10 +148,6 @@ public class BoosterUI : MonoBehaviour
         {
             EnableVacumnMode();
         }
-        // else if (boosterType == BoosterType.ClearScrewPorts)
-        // {
-        //     ClearAllScrewPorts();
-        // }
     }
 
     private void FreezeTime()
@@ -198,6 +194,13 @@ public class BoosterUI : MonoBehaviour
         });
     }
 
+    private void ConfirmBreakObject()
+    {
+        ConsumeBooster(boosterIndex: (int)BoosterType.BreakObject);
+
+        DisableBreakObjectMode();
+    }
+
     private void DisableBreakObjectMode()
     {
         Tween.LocalPositionY(boosterContainer, _initialBoosterContainerPosition.y, duration: transitionTime);
@@ -236,6 +239,13 @@ public class BoosterUI : MonoBehaviour
 
             _isInTransition = false;
         });
+    }
+
+    private void ConfirmVacumnBooster(GameFaction faction, Vector3 vacumnPosition)
+    {
+        ConsumeBooster(boosterIndex: (int)BoosterType.Vacumn);
+
+        DisableVacumnMode(faction, vacumnPosition);
     }
 
     private void DisableVacumnMode(GameFaction faction, Vector3 vacumnPosition)
