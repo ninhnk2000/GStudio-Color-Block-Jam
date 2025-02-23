@@ -18,6 +18,7 @@ public class GameplayCamera : MonoBehaviour
         BasicObjectPart.shakeCameraEvent += Shake;
         MultiPhaseLevelManager.zoomCameraEvent += Zoom;
         MultiPhaseLevelManager.resetCameraEvent += Reset;
+        LevelLoader.setLevelCameraOrthographicSize += SetFieldOfView;
 
         _initialOrthographicSize = gameplayCamera.orthographicSize;
         _targetOrthographicSize = gameplayCamera.orthographicSize;
@@ -33,6 +34,7 @@ public class GameplayCamera : MonoBehaviour
         BasicObjectPart.shakeCameraEvent -= Shake;
         MultiPhaseLevelManager.zoomCameraEvent -= Zoom;
         MultiPhaseLevelManager.resetCameraEvent -= Reset;
+        LevelLoader.setLevelCameraOrthographicSize -= SetFieldOfView;
     }
 
     private void Update()
@@ -62,5 +64,10 @@ public class GameplayCamera : MonoBehaviour
     private void Shake()
     {
         Tween.ShakeCamera(gameplayCamera, 1, duration: 0.3f);
+    }
+
+    private void SetFieldOfView(float fieldOfView)
+    {
+        gameplayCamera.fieldOfView = fieldOfView;
     }
 }

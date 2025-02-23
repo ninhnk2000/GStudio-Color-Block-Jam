@@ -84,7 +84,7 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.constraints |= RigidbodyConstraints.FreezePositionY;
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 60;
+        speedMultiplier = 45;
         snappingLerpRatio = 1f / 2;
 
         _tileSize = GamePersistentVariable.tileSize;
@@ -593,6 +593,8 @@ public class BaseBlock : MonoBehaviour
         // _blockCollider.enabled = false;
 
         CandyCoded.HapticFeedback.HapticFeedback.MediumFeedback();
+
+        SoundManager.Instance.PlaySoundBreakObject();
 
         if (direction == Direction.Right)
         {

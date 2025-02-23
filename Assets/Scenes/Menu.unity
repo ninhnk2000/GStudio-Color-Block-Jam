@@ -868,6 +868,79 @@ MonoBehaviour:
   - Language: Spanish
     Text: Eliminar paquete de anuncios
     Object: {fileID: 0}
+--- !u!1 &189752924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 189752925}
+  - component: {fileID: 189752926}
+  m_Layer: 0
+  m_Name: Freeze Time
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &189752925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189752924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &189752926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189752924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: Freeze Time
+    Object: {fileID: 0}
+  - Language: French
+    Text: Temps de gel
+    Object: {fileID: 0}
+  - Language: German
+    Text: Zeit einfrieren
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: Tempo di congelamento
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: "\u51CD\u7D50\u6642\u9593"
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uB3D9\uACB0 \uC2DC\uAC04"
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: Tempo de congelamento
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0417\u0430\u043C\u043E\u0440\u043E\u0437\u0438\u0442\u044C \u0432\u0440\u0435\u043C\u044F"
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: "Tiempo de congelaci\xF3n"
+    Object: {fileID: 0}
 --- !u!224 &227653485 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7670575743862605259, guid: 342c7966970a0f0448cd16ff0535bc48, type: 3}
@@ -6403,6 +6476,79 @@ MonoBehaviour:
   - Language: Spanish
     Text: Pausa
     Object: {fileID: 0}
+--- !u!1 &1250582554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1250582555}
+  - component: {fileID: 1250582556}
+  m_Layer: 0
+  m_Name: Vacumn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1250582555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250582554}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1250582556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250582554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: Vacumn
+    Object: {fileID: 0}
+  - Language: French
+    Text: 
+    Object: {fileID: 0}
+  - Language: German
+    Text: Vakumn
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: Vacumn
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: vacumn
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uC9C4\uACF5"
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: Vacum
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0412\u0430\u043A\u043C\u0430"
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: Vaca
+    Object: {fileID: 0}
 --- !u!1 &1258436357
 GameObject:
   m_ObjectHideFlags: 0
@@ -6983,6 +7129,8 @@ Transform:
   - {fileID: 1326719343}
   - {fileID: 636840090}
   - {fileID: 1794495337}
+  - {fileID: 189752925}
+  - {fileID: 1250582555}
   m_Father: {fileID: 619569312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1353185547

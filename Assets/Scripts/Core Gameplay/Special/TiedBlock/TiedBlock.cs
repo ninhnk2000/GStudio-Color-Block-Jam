@@ -18,14 +18,14 @@ public class TiedBlock : BaseBlock
         remainingRopeText.text = $"{remainingRope}";
     }
 
-    public override void Move(Vector3 targetPosition)
+    public override void Move(Vector2 direction)
     {
         if (_isTied)
         {
             return;
         }
 
-        base.Move(targetPosition);
+        base.Move(direction);
     }
 
     public override void Stop()

@@ -22,6 +22,7 @@ public class LevelLoader : MonoBehaviour
     public static event Action showSceneTransitionEvent;
     public static event Action<BaseBlock[]> sendLevelBaseBlocksDataEvent;
     public static event Action<float, float, float, float> updateBoundEvent;
+    public static event Action<float> setLevelCameraOrthographicSize;
 
     private void Awake()
     {
@@ -96,6 +97,17 @@ public class LevelLoader : MonoBehaviour
             if (op.Status == AsyncOperationStatus.Succeeded)
             {
                 GameObject level = Instantiate(op.Result, transform);
+
+                LevelCameraModifier levelCameraModifier = level.GetComponent<LevelCameraModifier>();
+
+                if (levelCameraModifier != null)
+                {
+                    setLevelCameraOrthographicSize?.Invoke(levelCameraModifier.FieldOfView);
+                }
+                else
+                {
+                    setLevelCameraOrthographicSize?.Invoke(GameConstants.DEFAULT_CAMERA_FIELD_OF_VIEW);
+                }
 
                 ManageBaseBlocks(level.transform);
             }

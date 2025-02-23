@@ -155,6 +155,7 @@ public static class GameConstants
     #endregion
 
     #region COLOR BLOCK JAM
+    public static float DEFAULT_CAMERA_FIELD_OF_VIEW = 70;
     public static float TINY_FLOAT_VALUE = 0.001f;
     public static int DEFAULT_LIVES = 5;
     #endregion
