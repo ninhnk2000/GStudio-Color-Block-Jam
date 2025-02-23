@@ -11,6 +11,7 @@ public class UserLivesUI : MonoBehaviour
     [SerializeField] private Button openLivesShopPopupButton;
 
     private LivesData _livesData;
+    private int _numLives;
 
     public static Action<ScreenRoute> switchRouteEvent;
 
@@ -41,10 +42,19 @@ public class UserLivesUI : MonoBehaviour
         {
             replenishLifeTimeText.text = $"Full";
         }
+
+        _numLives = lives;
     }
 
     private void OpenLivesShopPopup()
     {
-        switchRouteEvent?.Invoke(ScreenRoute.LivesShop);
+        if (_numLives < GameConstants.DEFAULT_LIVES)
+        {
+            switchRouteEvent?.Invoke(ScreenRoute.LivesShop);
+        }
+        else
+        {
+            switchRouteEvent?.Invoke(ScreenRoute.Notification);
+        }
     }
 }

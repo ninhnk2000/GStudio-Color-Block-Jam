@@ -94,9 +94,9 @@ public class WinPopup : BasePopup
         })
         .OnComplete(() =>
             {
-                // userResourcesObserver.UserResources.CoinQuantity += numCoin;
+                userResourcesObserver.UserResources.CoinQuantity += numCoin;
 
-                // userResourcesObserver.Save();
+                userResourcesObserver.Save();
 
                 _tweens.Add(Tween.Scale(continueButton.transform, 1, duration: timeCollectCoin));
             })
