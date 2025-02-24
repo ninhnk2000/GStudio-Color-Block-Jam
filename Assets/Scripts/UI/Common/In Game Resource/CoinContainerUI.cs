@@ -32,6 +32,7 @@ public class CoinContainerUI : MonoBehaviour
     {
         // SaferioIAPManager.iapProductPurchasedCompletedEvent += OnCoinPurchased;
         UserResourcesManager.updateCoinTextEvent += UpdateCoinText;
+        BuyBoosterPopup.updateCoinTextEvent += UpdateCoinText;
         SaferioIAPManager.collectCoinEvent += CollectCoin;
         ResourceEarnPopup.collectCoinEvent += CollectCoin;
 
@@ -56,6 +57,7 @@ public class CoinContainerUI : MonoBehaviour
     {
         // SaferioIAPManager.iapProductPurchasedCompletedEvent -= OnCoinPurchased;
         UserResourcesManager.updateCoinTextEvent -= UpdateCoinText;
+        BuyBoosterPopup.updateCoinTextEvent -= UpdateCoinText;
         SaferioIAPManager.collectCoinEvent -= CollectCoin;
         ResourceEarnPopup.collectCoinEvent -= CollectCoin;
 
