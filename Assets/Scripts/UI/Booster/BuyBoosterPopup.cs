@@ -31,6 +31,7 @@ public class BuyBoosterPopup : BasePopup
     public static event Action<ScreenRoute> openIAPShopPopupEvent;
     public static event Action<ScreenRoute> switchRouteEvent;
     public static event Action<int> updateBoosterQuantityEvent;
+    public static event Action<float> updateCoinTextEvent;
 
     protected override void RegisterMoreEvent()
     {
@@ -97,8 +98,10 @@ public class BuyBoosterPopup : BasePopup
             }
             else
             {
-                userResourcesObserver.UserResources.CoinQuantity -= boosterDataObserver.BoosterCosts[boosterIndex];
+                userResourcesObserver.ChangeCoin(-boosterDataObserver.BoosterCosts[boosterIndex]);
                 userResourcesObserver.UserResources.BoosterQuantities[boosterIndex]++;
+
+                updateCoinTextEvent?.Invoke(userResourcesObserver.UserResources.CoinQuantity);
             }
 
             userResourcesObserver.Save();
@@ -161,6 +164,8 @@ public class BuyBoosterPopup : BasePopup
         {
             userResourcesObserver.ChangeCoin(-boosterDataObserver.BoosterCosts[(int)_boosterType]);
 
+            updateCoinTextEvent?.Invoke(userResourcesObserver.UserResources.CoinQuantity);
+
             _isBoughtBreakObjectBoosterByCoin = false;
         }
     }
@@ -170,6 +175,8 @@ public class BuyBoosterPopup : BasePopup
         if (_isBoughtBreakObjectBoosterByCoin)
         {
             userResourcesObserver.ChangeCoin(-boosterDataObserver.BoosterCosts[(int)_boosterType]);
+
+            updateCoinTextEvent?.Invoke(userResourcesObserver.UserResources.CoinQuantity);
 
             _isBoughtBreakObjectBoosterByCoin = false;
         }

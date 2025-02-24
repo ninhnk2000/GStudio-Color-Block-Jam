@@ -84,7 +84,7 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.constraints |= RigidbodyConstraints.FreezePositionY;
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 45;
+        speedMultiplier = 50;
         snappingLerpRatio = 1f / 2;
 
         _tileSize = GamePersistentVariable.tileSize;
