@@ -111,8 +111,10 @@ public class BlockCollider : MonoBehaviour
 
     public bool CheckDisintegration(Vector3 direction, float maxDistance)
     {
-        RaycastHit[] hits = Physics.BoxCastAll(transform.position + TransformUtil.ComponentWiseMultiply(direction, 0.25f * blockServiceLocator.Size),
-            0.2f * blockServiceLocator.Size, direction, Quaternion.identity, maxDistance);
+        maxDistance = 0.25f * GamePersistentVariable.tileSize;
+
+        RaycastHit[] hits = Physics.BoxCastAll(transform.position,
+            0.5f * blockServiceLocator.Size, direction, Quaternion.identity, maxDistance);
 
         BaseBarricade matchBarricade = null;
 

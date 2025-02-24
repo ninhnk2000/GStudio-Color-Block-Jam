@@ -140,6 +140,41 @@ public class BaseBlock : MonoBehaviour
 
     void Update()
     {
+        if (blockProperty.IsMoving && !blockProperty.IsDisintegrating)
+        {
+            Vector3 direction;
+            float maxDistance;
+
+            if (transform.position.x > 0)
+            {
+                direction = Vector3.right;
+            }
+            else
+            {
+                direction = -Vector3.right;
+            }
+
+            maxDistance = 0.3f * blockServiceLocator.Size.x;
+
+            bool IsDisintegrate = blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
+
+            if (!IsDisintegrate)
+            {
+                if (transform.position.z > 0)
+                {
+                    direction = Vector3.forward;
+                }
+                else
+                {
+                    direction = -Vector3.forward;
+                }
+
+                maxDistance = 0.3f * blockServiceLocator.Size.z;
+
+                IsDisintegrate = blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
+            }
+        }
+
         if (_isSnapping)
         {
             transform.position = Vector3.Lerp(transform.position, _snapPosition, snappingLerpRatio);
@@ -190,6 +225,11 @@ public class BaseBlock : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (blockProperty.IsDisintegrating)
+        {
+            return;
+        }
+
         if (blockProperty.IsMoving)
         {
             if (_isMovingLastFrame && (_targetPosition - transform.position).magnitude < 1f)
