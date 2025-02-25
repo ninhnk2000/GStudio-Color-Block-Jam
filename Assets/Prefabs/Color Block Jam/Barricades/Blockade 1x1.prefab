@@ -25,13 +25,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2356210031770800994}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: 0, y: 2.6, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3673546673742742345}
-  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!212 &5224509077462996770
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5928c205d7b5da4e834c95821e7b79d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrow: {fileID: 2356210031770800994}
   barricadeServiceLocator: {fileID: 4623236987445485292}
   barricadeMaterialsContainer: {fileID: 11400000, guid: 94f3cf926c562d74bbbeb4d85a6d33ce, type: 2}
   _renderer: {fileID: 574832555576461507}

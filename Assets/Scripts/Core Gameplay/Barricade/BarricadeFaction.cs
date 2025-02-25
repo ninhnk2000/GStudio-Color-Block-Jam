@@ -7,6 +7,8 @@ using static GameEnum;
 public class BarricadeFaction : MonoBehaviour
 {
     // [SerializeField] private GameFaction faction;
+    [SerializeField] private GameObject arrow;
+
     [SerializeField] private BarricadeServiceLocator barricadeServiceLocator;
 
     [SerializeField] private BarricadeMaterialsContainer barricadeMaterialsContainer;
@@ -85,10 +87,14 @@ public class BarricadeFaction : MonoBehaviour
         if (faction == GameFaction.Disabled)
         {
             meshRenderer.enabled = true;
+
+            arrow.gameObject.SetActive(false);
         }
         else
         {
             meshRenderer.enabled = false;
+
+            arrow.gameObject.SetActive(true);
         }
 
         meshRenderer.enabled = true;
@@ -136,29 +142,5 @@ public class BarricadeFaction : MonoBehaviour
         //         }
         //     }
         // }
-    }
-
-    public void SetFaction()
-    {
-        if (_propertyBlock == null)
-        {
-            Init();
-        }
-
-        _propertyBlock.SetColor("_Color", FactionUtility.GetColorForFaction(barricadeServiceLocator.BarricadeProperty.Faction));
-
-        _renderer.SetPropertyBlock(_propertyBlock);
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            BarricadeTile barricadeTile = transform.GetChild(i).GetComponent<BarricadeTile>();
-
-            if (barricadeTile == null)
-            {
-                return;
-            }
-
-            barricadeTile.DisintegrationFx.GetComponent<ParticleSystemRenderer>().SetPropertyBlock(_propertyBlock);
-        }
     }
 }
