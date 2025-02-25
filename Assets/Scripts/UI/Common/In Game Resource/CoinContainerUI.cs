@@ -31,6 +31,7 @@ public class CoinContainerUI : MonoBehaviour
     private void Awake()
     {
         // SaferioIAPManager.iapProductPurchasedCompletedEvent += OnCoinPurchased;
+        LevelLoader.startLevelEvent += OnLevelStarted;
         UserResourcesManager.updateCoinTextEvent += UpdateCoinText;
         BuyBoosterPopup.updateCoinTextEvent += UpdateCoinText;
         SaferioIAPManager.collectCoinEvent += CollectCoin;
@@ -56,6 +57,7 @@ public class CoinContainerUI : MonoBehaviour
     private void OnDestroy()
     {
         // SaferioIAPManager.iapProductPurchasedCompletedEvent -= OnCoinPurchased;
+        LevelLoader.startLevelEvent -= OnLevelStarted;
         UserResourcesManager.updateCoinTextEvent -= UpdateCoinText;
         BuyBoosterPopup.updateCoinTextEvent -= UpdateCoinText;
         SaferioIAPManager.collectCoinEvent -= CollectCoin;
@@ -70,6 +72,11 @@ public class CoinContainerUI : MonoBehaviour
 
     //     collectCoinEvent?.Invoke(positionRelativeToCanvas);
     // }
+
+    private void OnLevelStarted()
+    {
+        coinText.text = $"{userResourcesObserver.UserResources.CoinQuantity}";
+    }
 
     private void UpdateCoinText(float value)
     {
