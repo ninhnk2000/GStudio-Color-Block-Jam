@@ -657,9 +657,9 @@ public enum ActionClick
 public enum ActionWatchVideo
 {
     None = 0,
-    AddHole,
+    FreezeTime,
     BreakObject,
-    ClearHoles,
+    Vacumn,
     UnlockScrewBox,
     AddTime
 }

@@ -20,6 +20,7 @@ public class PausePopup : BasePopup
     public static event Action<bool> enableBackgroundMusicEvent;
     public static event Action<bool> enableGameSoundEvent;
     public static event Action replayLevelEvent;
+    public static event Action<ScreenRoute> switchRouteEvent;
 
     protected override void MoreActionInAwake()
     {
@@ -46,13 +47,15 @@ public class PausePopup : BasePopup
 
     private void ReturnHome()
     {
-        // avoid spamming
-        returnHomeButton.interactable = false;
-        replayLevelButton.interactable = false;
+        switchRouteEvent?.Invoke(ScreenRoute.ReturnHome);
+        
+        // // avoid spamming
+        // returnHomeButton.interactable = false;
+        // replayLevelButton.interactable = false;
 
-        SaferioTracking.TrackLevelLose(currentLevel.Value, levelObserver.Progress, levelBoosterObserver, EndLevelReason.ReturnHome.ToString());
+        // SaferioTracking.TrackLevelLose(currentLevel.Value, levelObserver.Progress, levelBoosterObserver, EndLevelReason.ReturnHome.ToString());
 
-        Addressables.LoadSceneAsync(GameConstants.MENU_SCENE);
+        // Addressables.LoadSceneAsync(GameConstants.MENU_SCENE);
     }
 
     private void Replay()

@@ -31,7 +31,8 @@ public class GameEnum : MonoBehaviour
         Notification,
         ResourcesEarn,
         LivesShop,
-        Replay
+        Replay,
+        ReturnHome
     }
 
     public enum GameFaction

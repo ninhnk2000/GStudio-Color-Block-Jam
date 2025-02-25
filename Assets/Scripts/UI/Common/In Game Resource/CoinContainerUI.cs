@@ -18,6 +18,9 @@ public class CoinContainerUI : MonoBehaviour
 
     [SerializeField] private UserResourcesObserver userResourcesObserver;
 
+    [Header("CUSTOMIZE")]
+    [SerializeField] private bool isPreventCollectCoin;
+
     #region PRIVATE FIELD
     private List<Tween> _tweens;
     private bool _isInTransition;
@@ -98,6 +101,11 @@ public class CoinContainerUI : MonoBehaviour
 
     private void CollectCoin(int value)
     {
+        if (isPreventCollectCoin)
+        {
+            return;
+        }
+
         if (!gameObject.activeInHierarchy)
         {
             return;

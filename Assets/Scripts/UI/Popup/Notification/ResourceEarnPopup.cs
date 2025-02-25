@@ -97,8 +97,6 @@ public class ResourceEarnPopup : BasePopup
 
         Vector3 position = Vector3.zero;
 
-        position.y = 0.08f * container.sizeDelta.y;
-
         for (int i = 0; i < resourceGroups.Length; i++)
         {
             resourceGroups[i].gameObject.SetActive(false);

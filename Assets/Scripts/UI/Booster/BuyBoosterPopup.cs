@@ -68,7 +68,7 @@ public class BuyBoosterPopup : BasePopup
         title.TranslationName = leanTranslationTitle[(int)_boosterType];
         boosterDescription.TranslationName = leanTranslationNames[(int)_boosterType];
 
-        getWithAdsButton.onClick.RemoveAllListeners();
+        // getWithAdsButton.onClick.RemoveAllListeners();
 
         // if (boosterType == BoosterType.UnlockScrewBox)
         // {
@@ -122,17 +122,17 @@ public class BuyBoosterPopup : BasePopup
 
     private void GetWithAds()
     {
-        // ActionWatchVideo actionWatchVideo;
+        ActionWatchVideo actionWatchVideo;
 
-        // switch (_boosterType)
-        // {
-        //     case BoosterType.AddScrewPort: actionWatchVideo = ActionWatchVideo.AddHole; break;
-        //     case BoosterType.BreakObject: actionWatchVideo = ActionWatchVideo.BreakObject; break;
-        //     case BoosterType.ClearScrewPorts: actionWatchVideo = ActionWatchVideo.ClearHoles; break;
-        //     default: actionWatchVideo = ActionWatchVideo.AddHole; break;
-        // }
+        switch (_boosterType)
+        {
+            case BoosterType.FreezeTime: actionWatchVideo = ActionWatchVideo.FreezeTime; break;
+            case BoosterType.BreakObject: actionWatchVideo = ActionWatchVideo.BreakObject; break;
+            case BoosterType.Vacumn: actionWatchVideo = ActionWatchVideo.Vacumn; break;
+            default: actionWatchVideo = ActionWatchVideo.FreezeTime; break;
+        }
 
-        // AdmobAdsMax.Instance.ShowVideoReward(OnRewaredAdCompleted, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: actionWatchVideo);
+        AdmobAdsMax.Instance.ShowVideoReward(OnRewaredAdCompleted, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: actionWatchVideo);
     }
 
     private void OnRewaredAdCompleted()

@@ -17,7 +17,7 @@ public class ReplenishLifeManager : MonoBehaviour
 
     void Awake()
     {
-        MenuScreen.changeLivesNumberEvent += ChangeLivesNumber;
+        ReturnHomePopup.changeLivesNumberEvent += ChangeLivesNumber;
         LivesShopPopup.changeLivesNumberEvent += ChangeLivesNumber;
         ReplayPopup.changeLivesNumberEvent += ChangeLivesNumber;
         SceneManager.sceneLoaded += OnSceneChanged;
@@ -40,7 +40,7 @@ public class ReplenishLifeManager : MonoBehaviour
 
     void OnDestroy()
     {
-        MenuScreen.changeLivesNumberEvent -= ChangeLivesNumber;
+        ReturnHomePopup.changeLivesNumberEvent -= ChangeLivesNumber;
         LivesShopPopup.changeLivesNumberEvent -= ChangeLivesNumber;
         ReplayPopup.changeLivesNumberEvent -= ChangeLivesNumber;
         SceneManager.sceneLoaded -= OnSceneChanged;
@@ -48,6 +48,11 @@ public class ReplenishLifeManager : MonoBehaviour
 
     void OnSceneChanged(Scene scene, LoadSceneMode loadSceneMode)
     {
+        if (_livesData == null)
+        {
+            return;
+        }
+
         updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
     }
 

@@ -46,6 +46,11 @@ public class LevelTimeCounter : MonoBehaviour
         }
 
         _countingCoroutine = StartCoroutine(Counting());
+
+        if (_isFreeze)
+        {
+            Unfreeze();
+        }
     }
 
     private IEnumerator Counting()
@@ -102,6 +107,15 @@ public class LevelTimeCounter : MonoBehaviour
                 })
             );
         }
+    }
+
+    private void Unfreeze()
+    {
+        CommonUtil.StopAllTweens(_tweens);
+
+        FreezedEffect(isFreeze: false);
+
+        _isFreeze = false;
     }
 
     private void Revive(BoosterType boosterType)
