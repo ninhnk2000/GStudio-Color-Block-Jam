@@ -58,7 +58,7 @@ public class BlockCollider : MonoBehaviour
             {
                 Vector3 direction;
 
-                if (barricade.Direction == Direction.Right)
+                if (barricade.Direction == Direction.Up)
                 {
                     direction = Vector3.right;
                 }
@@ -113,10 +113,12 @@ public class BlockCollider : MonoBehaviour
     {
         maxDistance = 0.25f * GamePersistentVariable.tileSize;
 
-        RaycastHit[] hits = Physics.BoxCastAll(transform.position,
-            0.5f * blockServiceLocator.Size, direction, Quaternion.identity, maxDistance);
+        RaycastHit[] hits = Physics.BoxCastAll(transform.position + 0.1f * direction,
+            0.4f * blockServiceLocator.Size, direction, Quaternion.identity, maxDistance);
 
         BaseBarricade matchBarricade = null;
+
+        // int random = Random.Range(111, 9999);
 
         for (int i = 0; i < hits.Length; i++)
         {
@@ -154,11 +156,63 @@ public class BlockCollider : MonoBehaviour
                 {
                     if (barricadeTile.Faction != blockServiceLocator.block.BlockProperty.Faction)
                     {
-                        return false;
+                        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+                        {
+                            if (direction.x > 0)
+                            {
+                                // Debug.Log("SAFERIO " + barricadeTile.Faction + "/" + direction + "/" + random);
+                                // Debug.Log("SAFERIO " + barricadeTile.transform.position + "/" + transform.position + "/" + random);
+
+                                if (barricadeTile.transform.position.x > transform.position.x)
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                if (barricadeTile.transform.position.x < transform.position.x)
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (direction.z > 0)
+                            {
+                                if (barricadeTile.transform.position.z > transform.position.z)
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                if (barricadeTile.transform.position.z < transform.position.z)
+                                {
+                                    return false;
+                                }
+                            }
+                        }
                     }
                     else
                     {
                         matchBarricade = barricadeTile.BarricadeServiceLocator.barricade;
+
+                        // invalid
+                        if (barricadeTile.Direction == Direction.Right || barricadeTile.Direction == Direction.Left)
+                        {
+                            if (Mathf.Abs(direction.z) > Mathf.Abs(direction.x))
+                            {
+                                matchBarricade = null;
+                            }
+                        }
+                        if (barricadeTile.Direction == Direction.Up || barricadeTile.Direction == Direction.Down)
+                        {
+                            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+                            {
+                                matchBarricade = null;
+                            }
+                        }
                     }
                 }
             }

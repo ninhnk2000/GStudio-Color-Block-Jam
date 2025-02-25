@@ -98,16 +98,17 @@ public class LevelLoader : MonoBehaviour
             {
                 GameObject level = Instantiate(op.Result, transform);
 
-                LevelCameraModifier levelCameraModifier = level.GetComponent<LevelCameraModifier>();
+                // MANUAL CAMERA FOV MODIFIER
+                // LevelCameraModifier levelCameraModifier = level.GetComponent<LevelCameraModifier>();
 
-                if (levelCameraModifier != null)
-                {
-                    setLevelCameraOrthographicSize?.Invoke(levelCameraModifier.FieldOfView);
-                }
-                else
-                {
-                    setLevelCameraOrthographicSize?.Invoke(GameConstants.DEFAULT_CAMERA_FIELD_OF_VIEW);
-                }
+                // if (levelCameraModifier != null)
+                // {
+                //     setLevelCameraOrthographicSize?.Invoke(levelCameraModifier.FieldOfView);
+                // }
+                // else
+                // {
+                //     setLevelCameraOrthographicSize?.Invoke(GameConstants.DEFAULT_CAMERA_FIELD_OF_VIEW);
+                // }
 
                 ManageBaseBlocks(level.transform);
             }
@@ -226,5 +227,8 @@ public class LevelLoader : MonoBehaviour
                 barricades[i].transform.eulerAngles = new Vector3(0, 0, 0);
             }
         }
+
+        // CAMERA
+        setLevelCameraOrthographicSize?.Invoke(50 + 0.3f * boardTiles.Length);
     }
 }

@@ -158,6 +158,14 @@ public class BaseBlock : MonoBehaviour
 
             bool IsDisintegrate = blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
 
+            if (blockProperty.isCheckDisintegrationBothRightLeft)
+            {
+                if (!IsDisintegrate)
+                {
+                    IsDisintegrate = blockServiceLocator.blockCollider.CheckDisintegration(-direction, maxDistance);
+                }
+            }
+
             if (!IsDisintegrate)
             {
                 if (transform.position.z > 0)

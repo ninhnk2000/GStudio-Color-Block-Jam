@@ -10,6 +10,9 @@ public class BlockProperty
     [SerializeField] private int numTileZ;
     [SerializeField] private int[] emptyTileIndexes;
 
+    // FOR LEVEL 10
+    [SerializeField] public bool isCheckDisintegrationBothRightLeft;
+
     private bool _isMoving;
     private bool _isDisintegrating;
     private bool _isRotating;
