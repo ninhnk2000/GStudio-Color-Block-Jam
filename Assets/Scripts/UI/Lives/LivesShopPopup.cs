@@ -18,6 +18,7 @@ public class LivesShopPopup : BasePopup
     protected override void MoreActionInAwake()
     {
         refillByCoinButton.onClick.AddListener(RefillByCoin);
+        refillByAdsButton.onClick.AddListener(RefillByAds);
     }
 
     protected override void Show(Action onCompletedAction = null)
@@ -33,7 +34,6 @@ public class LivesShopPopup : BasePopup
     {
         AdmobAdsMax.Instance.ShowVideoReward(
             OnRewaredAdCompletedToRefillLives, actionNotLoadedVideo: ShowAdsNotLoadedPopup, actionClose: null, actionType: ActionWatchVideo.UnlockScrewBox);
-
     }
 
     private void OnRewaredAdCompletedToRefillLives()

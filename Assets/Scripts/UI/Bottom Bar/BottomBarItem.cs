@@ -73,7 +73,8 @@ public class BottomBarItem : MonoBehaviour
             // iconRT.localPosition = new Vector3(_iconInitialPosition.x, _iconInitialPosition.y + ratio * 0.6f * _slotSize, 0);
             // textRT.localScale = ratio * Vector3.one;
 
-            activeState.color = ColorUtil.WithAlpha(activeState.color, ratio * 0.6f + 0.4f);
+            activeState.color = ColorUtil.WithAlpha(activeState.color, ratio * 0.5f + 0.5f);
+            activeState.transform.localScale = (ratio * 0.5f + 0.5f) * Vector3.one;
         }
 
         // if (ratio == 1)

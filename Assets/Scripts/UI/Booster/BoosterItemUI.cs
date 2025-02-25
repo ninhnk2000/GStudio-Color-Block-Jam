@@ -91,7 +91,11 @@ public class BoosterItemUI : MonoBehaviour
         else
         {
             quantityTextContainer.gameObject.SetActive(false);
-            addButtonRT.gameObject.SetActive(true);
+
+            if (!isLock)
+            {
+                addButtonRT.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -144,6 +148,8 @@ public class BoosterItemUI : MonoBehaviour
 
             int quantity = userResourcesObserver.UserResources.BoosterQuantities[boosterIndex];
 
+            bool isLock = currentLevel.Value < levelToUnlock;
+
             if (quantity > 0)
             {
                 quantityTextContainer.gameObject.SetActive(true);
@@ -154,7 +160,11 @@ public class BoosterItemUI : MonoBehaviour
             else
             {
                 quantityTextContainer.gameObject.SetActive(false);
-                addButtonRT.gameObject.SetActive(true);
+
+                if (!isLock)
+                {
+                    addButtonRT.gameObject.SetActive(true);
+                }
             }
         }
     }
@@ -167,6 +177,8 @@ public class BoosterItemUI : MonoBehaviour
 
             int quantity = userResourcesObserver.UserResources.BoosterQuantities[boosterIndex];
 
+            bool isLock = currentLevel.Value < levelToUnlock;
+
             if (quantity > 0)
             {
                 quantityTextContainer.gameObject.SetActive(true);
@@ -177,7 +189,11 @@ public class BoosterItemUI : MonoBehaviour
             else
             {
                 quantityTextContainer.gameObject.SetActive(false);
-                addButtonRT.gameObject.SetActive(true);
+
+                if (!isLock)
+                {
+                    addButtonRT.gameObject.SetActive(true);
+                }
             }
         }
     }

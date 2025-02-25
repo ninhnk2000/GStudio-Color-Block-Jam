@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static GameEnum;
 
 public class ReplenishLifeManager : MonoBehaviour
@@ -19,6 +20,7 @@ public class ReplenishLifeManager : MonoBehaviour
         MenuScreen.changeLivesNumberEvent += ChangeLivesNumber;
         LivesShopPopup.changeLivesNumberEvent += ChangeLivesNumber;
         ReplayPopup.changeLivesNumberEvent += ChangeLivesNumber;
+        SceneManager.sceneLoaded += OnSceneChanged;
     }
 
     void Start()
@@ -41,6 +43,12 @@ public class ReplenishLifeManager : MonoBehaviour
         MenuScreen.changeLivesNumberEvent -= ChangeLivesNumber;
         LivesShopPopup.changeLivesNumberEvent -= ChangeLivesNumber;
         ReplayPopup.changeLivesNumberEvent -= ChangeLivesNumber;
+        SceneManager.sceneLoaded -= OnSceneChanged;
+    }
+
+    void OnSceneChanged(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
     }
 
     private IEnumerator Counting()
@@ -51,23 +59,9 @@ public class ReplenishLifeManager : MonoBehaviour
         {
             if (_livesData.CurrentLives < MaxLives)
             {
-                TimeSpan timeSinceLastReplenish = DateTime.Now - _livesData.LastReplenishTime;
+                UpdateRemainingReplenishLife();
 
-                double remainingTime = ReplenishTime - timeSinceLastReplenish.TotalSeconds;
 
-                updateLivesReplenishTimeEvent?.Invoke(ConvertTimeFormat(remainingTime));
-
-                if (remainingTime <= 0)
-                {
-                    _livesData.CurrentLives++;
-                    _livesData.LastReplenishTime = DateTime.Now;
-
-                    updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
-                }
-
-                DataUtility.Save(GameConstants.USER_LIVES_DATA, _livesData);
-
-                GamePersistentVariable.livesData = _livesData;
             }
             else
             {
@@ -76,6 +70,27 @@ public class ReplenishLifeManager : MonoBehaviour
 
             yield return waitOneSecond;
         }
+    }
+
+    private void UpdateRemainingReplenishLife()
+    {
+        TimeSpan timeSinceLastReplenish = DateTime.Now - _livesData.LastReplenishTime;
+
+        double remainingTime = ReplenishTime - timeSinceLastReplenish.TotalSeconds;
+
+        updateLivesReplenishTimeEvent?.Invoke(ConvertTimeFormat(remainingTime));
+
+        if (remainingTime <= 0)
+        {
+            _livesData.CurrentLives++;
+            _livesData.LastReplenishTime = DateTime.Now;
+
+            updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
+        }
+
+        DataUtility.Save(GameConstants.USER_LIVES_DATA, _livesData);
+
+        GamePersistentVariable.livesData = _livesData;
     }
 
     private void Replenish(int numLives)
@@ -91,13 +106,15 @@ public class ReplenishLifeManager : MonoBehaviour
 
         GamePersistentVariable.livesData = _livesData;
 
+        UpdateRemainingReplenishLife();
+
         updateLivesNumberEvent?.Invoke(_livesData.CurrentLives);
     }
 
     #region UTIL
     private string ConvertTimeFormat(double time)
     {
-        return $"{TimeSpan.FromSeconds(time).ToString(@"hh\:mm\:ss")}";
+        return $"{TimeSpan.FromSeconds(time).ToString(@"mm\:ss")}";
     }
     #endregion
 }

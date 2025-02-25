@@ -64,6 +64,8 @@ public class AdmobAdsMax : MonoBehaviour
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+
+            return;
         }
         else
         {
