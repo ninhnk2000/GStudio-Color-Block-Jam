@@ -27,9 +27,12 @@ public class ReplenishLifeManager : MonoBehaviour
     {
         LivesData defaultLivesData = new LivesData();
 
+        defaultLivesData.CurrentLives = MaxLives;
         defaultLivesData.LastReplenishTime = DateTime.Now;
 
-        _livesData = DataUtility.Load(GameConstants.USER_LIVES_DATA, new LivesData());
+        _livesData = DataUtility.Load(GameConstants.USER_LIVES_DATA, defaultLivesData);
+
+        DataUtility.Save(GameConstants.USER_LIVES_DATA, _livesData);
 
         GamePersistentVariable.livesData = _livesData;
 

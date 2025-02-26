@@ -59,9 +59,11 @@ public class LevelTimeCounter : MonoBehaviour
 
         int remainingSecond = totalSecond;
 
+        timeText.text = ConvertSecondsToMinutesSeconds(remainingSecond);
+
         while (remainingSecond > 0)
         {
-            if (!_isFreeze)
+            if (!_isFreeze && GamePersistentVariable.isLevelDirty)
             {
                 timeText.text = ConvertSecondsToMinutesSeconds(remainingSecond);
 

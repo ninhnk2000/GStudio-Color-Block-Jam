@@ -12,6 +12,7 @@ public static class GamePersistentVariable
 
     #region LIVES
     public static LivesData livesData;
+    public static bool isLevelDirty;
     #endregion
 
     #region SETTING

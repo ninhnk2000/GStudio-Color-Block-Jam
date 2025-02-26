@@ -98,6 +98,8 @@ public class LevelLoader : MonoBehaviour
             {
                 GameObject level = Instantiate(op.Result, transform);
 
+                GamePersistentVariable.isLevelDirty = false;
+
                 // MANUAL CAMERA FOV MODIFIER
                 // LevelCameraModifier levelCameraModifier = level.GetComponent<LevelCameraModifier>();
 
@@ -229,6 +231,6 @@ public class LevelLoader : MonoBehaviour
         }
 
         // CAMERA
-        setLevelCameraOrthographicSize?.Invoke(50 + 0.3f * boardTiles.Length);
+        setLevelCameraOrthographicSize?.Invoke(50 + rightBound);
     }
 }

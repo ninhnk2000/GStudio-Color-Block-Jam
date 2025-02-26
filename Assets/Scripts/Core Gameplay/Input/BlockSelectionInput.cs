@@ -164,6 +164,11 @@ public class BlockSelectionInput : MonoBehaviour
             }
 
             _selectedBlock.Move(direction.normalized);
+
+            if (!GamePersistentVariable.isLevelDirty)
+            {
+                GamePersistentVariable.isLevelDirty = true;
+            }
         }
     }
 
