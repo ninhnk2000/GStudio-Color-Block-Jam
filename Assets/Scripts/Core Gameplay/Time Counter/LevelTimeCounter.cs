@@ -14,11 +14,22 @@ public class LevelTimeCounter : MonoBehaviour
 
     [SerializeField] private int totalSecond;
 
+    [SerializeField] private IntVariable currentLevel;
+
     private List<Tween> _tweens;
     private Coroutine _countingCoroutine;
     private bool _isFreeze;
 
     public static event Action loseLevelEvent;
+
+    // TEMP
+    private int[] levelsTime = new int[50] {
+        300, 300, 300, 300, 300, 300, 300, 300, 300, 300,
+        100, 75, 150, 120, 100, 80, 120, 120, 100, 140,
+        100, 90, 100, 150, 85, 100, 130, 120, 170, 200,
+        100, 90, 80, 120, 60, 90, 115, 120, 180, 240,
+        130, 150, 120, 160, 195, 120, 120, 200, 200, 200
+    };
 
     private void Awake()
     {
@@ -57,7 +68,7 @@ public class LevelTimeCounter : MonoBehaviour
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(1);
 
-        int remainingSecond = totalSecond;
+        int remainingSecond = levelsTime[currentLevel.Value % 50];
 
         timeText.text = ConvertSecondsToMinutesSeconds(remainingSecond);
 

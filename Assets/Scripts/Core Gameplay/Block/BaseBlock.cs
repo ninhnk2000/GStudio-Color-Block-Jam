@@ -21,7 +21,7 @@ public class BaseBlock : MonoBehaviour
     private Vector3 _prevDirection;
 
     [Header("CUSTOMIZE")]
-    [SerializeField] private float speedMultiplier = 15f;
+    [SerializeField] private float speedMultiplier;
     [SerializeField] private float snappingLerpRatio = 0.2f;
     [SerializeField] private LayerMask layerMaskCheckTile;
 
@@ -70,6 +70,15 @@ public class BaseBlock : MonoBehaviour
     public static event Action blockCompletedEvent;
     public static event Action<int, bool> movePairedBlock;
 
+
+
+
+
+    #region TEST MOVE
+    private Vector3 _startMovingPosition;
+    private Vector3 _startMovingMousePosition;
+    #endregion
+
     #region LIFE CYCLE
     private void Awake()
     {
@@ -84,11 +93,21 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.constraints |= RigidbodyConstraints.FreezePositionY;
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 90f;
+        speedMultiplier = 50f;
         snappingLerpRatio = 1f / 2;
 
         _tileSize = GamePersistentVariable.tileSize;
         _initialPosition = transform.position;
+
+        if (GamePersistentVariable.canvasSize.x == 0)
+        {
+            GamePersistentVariable.canvasSize.x = 1080;
+        }
+
+        if (GamePersistentVariable.canvasSize.y == 0)
+        {
+            GamePersistentVariable.canvasSize.y = 1920;
+        }
 
         ScaleOnLevelStarted();
 
@@ -222,7 +241,38 @@ public class BaseBlock : MonoBehaviour
                 _moveDirection.x = 0;
             }
 
-            float maxVelocity = speedMultiplier;
+            float maxVelocity = 57;
+
+            Vector3 scaledMoveDirection = new Vector3(
+                _moveDirection.x / (0.06f * 1080), 0, _moveDirection.z / (0.06f * 1920));
+
+            scaledMoveDirection = new Vector3(Mathf.Clamp(scaledMoveDirection.x, -1, 1), 0, Mathf.Clamp(scaledMoveDirection.z, -1, 1));
+
+            // if (Mathf.Abs(scaledMoveDirection.x) < 0.5f)
+            // {
+            //     scaledMoveDirection.x /= 2;
+            // }
+            // if (Mathf.Abs(scaledMoveDirection.z) < 0.5f)
+            // {
+            //     scaledMoveDirection.z /= 2;
+            // }
+
+            Vector3 expectedDestination;
+
+            expectedDestination.x = _startMovingPosition.x + (Input.mousePosition.x - _startMovingMousePosition.x) * 0.03f;
+            expectedDestination.y = transform.position.y;
+            expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.03f;
+
+            _moveDirection = expectedDestination - transform.position;
+
+            if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
+            {
+                _moveDirection.z = 0;
+            }
+            else
+            {
+                _moveDirection.x = 0;
+            }
 
             Vector3 velocity = speedMultiplier * _moveDirection;
 
@@ -353,6 +403,12 @@ public class BaseBlock : MonoBehaviour
             _isSnapping = false;
 
             blockProperty.IsMoving = true;
+
+
+
+
+            _startMovingPosition = transform.position;
+            _startMovingMousePosition = Input.mousePosition;
         }
 
         _moveDirection = new Vector3(direction.x, 0, direction.y);

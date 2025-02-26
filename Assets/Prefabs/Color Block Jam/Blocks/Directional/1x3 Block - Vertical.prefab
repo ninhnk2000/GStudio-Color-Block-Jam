@@ -158,6 +158,7 @@ MonoBehaviour:
     numTileX: 1
     numTileZ: 3
     emptyTileIndexes: 
+    isCheckDisintegrationBothRightLeft: 0
   speedMultiplier: 15
   snappingLerpRatio: 0.2
   layerMaskCheckTile:
@@ -309,7 +310,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 114
   m_CollisionDetection: 0
 --- !u!65 &1217904060559458607
 BoxCollider:
