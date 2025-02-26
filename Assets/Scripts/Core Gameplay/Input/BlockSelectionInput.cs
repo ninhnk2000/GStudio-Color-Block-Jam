@@ -160,10 +160,12 @@ public class BlockSelectionInput : MonoBehaviour
 
             if (direction.magnitude < thresholdMove)
             {
+                _selectedBlock.Move(Vector2.zero);
+
                 return;
             }
 
-            _selectedBlock.Move(direction.normalized);
+            _selectedBlock.Move(direction);
 
             if (!GamePersistentVariable.isLevelDirty)
             {
@@ -171,37 +173,6 @@ public class BlockSelectionInput : MonoBehaviour
             }
         }
     }
-
-    // private void MoveBlock()
-    // {
-    //     if (_selectedBlock != null)
-    //     {
-    //         if (!_isSelectedLastFrame)
-    //         {
-    //             _isSelectedLastFrame = true;
-
-    //             return;
-    //         }
-
-    //         Vector2 direction = Input.mousePosition - _prevTouchPosition;
-
-    //         _prevTouchPosition = Input.mousePosition;
-
-    //         if (direction.magnitude < thresholdMove)
-    //         {
-    //             return;
-    //         }
-
-    //         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-
-    //         Physics.Raycast(ray, out RaycastHit hit, 100);
-
-    //         if (hit.collider != null)
-    //         {
-    //             _selectedBlock.Move(hit.collider.transform.position);
-    //         }
-    //     }
-    // }
 
     private void BreakBlock()
     {

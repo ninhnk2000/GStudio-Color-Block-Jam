@@ -111,10 +111,50 @@ public class BlockCollider : MonoBehaviour
 
     public bool CheckDisintegration(Vector3 direction, float maxDistance)
     {
-        maxDistance = 0.25f * GamePersistentVariable.tileSize;
+        maxDistance = 0.5f * GamePersistentVariable.tileSize;
 
-        RaycastHit[] hits = Physics.BoxCastAll(transform.position + 0.1f * direction,
-            0.4f * blockServiceLocator.Size, direction, Quaternion.identity, maxDistance);
+        Direction sparsedDirection = Direction.Right;
+
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+        {
+            if (direction.x > 0)
+            {
+                sparsedDirection = Direction.Right;
+            }
+            else
+            {
+                sparsedDirection = Direction.Left;
+            }
+        }
+        else
+        {
+            if (direction.z > 0)
+            {
+                sparsedDirection = Direction.Up;
+            }
+            else
+            {
+                sparsedDirection = Direction.Down;
+            }
+        }
+
+
+        Vector3 halfExtent = 0.4f * blockServiceLocator.Size;
+        float extrude;
+
+        if (sparsedDirection == Direction.Right || sparsedDirection == Direction.Left)
+        {
+            halfExtent.x = 0.1f;
+            extrude = blockServiceLocator.Size.x;
+        }
+        else
+        {
+            halfExtent.z = 0.1f;
+            extrude = blockServiceLocator.Size.z;
+        }
+
+        RaycastHit[] hits = Physics.BoxCastAll(transform.position + 0.45f * extrude * direction,
+            halfExtent, direction, Quaternion.identity, maxDistance);
 
         BaseBarricade matchBarricade = null;
 
