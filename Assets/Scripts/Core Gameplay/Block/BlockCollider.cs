@@ -142,18 +142,18 @@ public class BlockCollider : MonoBehaviour
         Vector3 halfExtent = 0.4f * blockServiceLocator.Size;
         float extrude;
 
-        if (sparsedDirection == Direction.Right || sparsedDirection == Direction.Left)
-        {
-            halfExtent.x = 0.1f;
-            extrude = blockServiceLocator.Size.x;
-        }
-        else
-        {
-            halfExtent.z = 0.1f;
-            extrude = blockServiceLocator.Size.z;
-        }
+        // if (sparsedDirection == Direction.Right || sparsedDirection == Direction.Left)
+        // {
+        //     halfExtent.x = 0.1f;
+        //     extrude = blockServiceLocator.Size.x;
+        // }
+        // else
+        // {
+        //     halfExtent.z = 0.1f;
+        //     extrude = blockServiceLocator.Size.z;
+        // }
 
-        RaycastHit[] hits = Physics.BoxCastAll(transform.position + 0.45f * extrude * direction,
+        RaycastHit[] hits = Physics.BoxCastAll(transform.position,
             halfExtent, direction, Quaternion.identity, maxDistance);
 
         BaseBarricade matchBarricade = null;
@@ -180,7 +180,22 @@ public class BlockCollider : MonoBehaviour
 
                 if (block != null)
                 {
-                    return false;
+                    if (sparsedDirection == Direction.Up && block.transform.position.z > transform.position.z)
+                    {
+                        return false;
+                    }
+                    if (sparsedDirection == Direction.Down && block.transform.position.z < transform.position.z)
+                    {
+                        return false;
+                    }
+                    if (sparsedDirection == Direction.Right && block.transform.position.x > transform.position.x)
+                    {
+                        return false;
+                    }
+                    if (sparsedDirection == Direction.Left && block.transform.position.x > transform.position.x)
+                    {
+                        return false;
+                    }
                 }
 
                 JumpingBarricade jumpingBarricade = hits[i].collider.GetComponent<JumpingBarricade>();

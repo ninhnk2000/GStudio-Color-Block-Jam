@@ -28,6 +28,10 @@ public class LockedBlock : BaseBlock
 
     public override void Move(Vector2 direction)
     {
+        CommonUtil.StopAllTweens(_tweens);
+
+        _tweens.Add(Tween.Scale(transform, 1.1f * transform.localScale, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.3f));
+
         if (_isLocked)
         {
             return;

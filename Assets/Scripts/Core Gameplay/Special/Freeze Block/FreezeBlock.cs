@@ -1,3 +1,4 @@
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class FreezeBlock : BaseBlock
     [SerializeField] private ParticleSystem breakIceFx;
 
     private bool _isFreeze;
+    private bool _isInTransition;
 
     protected override void MoreLogicInAwake()
     {
@@ -29,6 +31,21 @@ public class FreezeBlock : BaseBlock
     {
         if (_isFreeze)
         {
+            if (_isInTransition)
+            {
+                return;
+            }
+            else
+            {
+                _isInTransition = true;
+            }
+
+            _tweens.Add(Tween.Scale(transform, 1.1f * transform.localScale, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f)
+            .OnComplete(() =>
+            {
+                _isInTransition = false;
+            }));
+
             return;
         }
 

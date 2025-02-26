@@ -12,7 +12,7 @@ public class BaseBlock : MonoBehaviour
     private BlockServiceLocator blockServiceLocator;
     [SerializeField] private BlockProperty blockProperty;
 
-    private List<Tween> _tweens;
+    protected List<Tween> _tweens;
     private Rigidbody _blockRigidBody;
     private MeshCollider _blockCollider;
     private Vector3 _targetPosition;
@@ -84,7 +84,7 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.constraints |= RigidbodyConstraints.FreezePositionY;
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 50f;
+        speedMultiplier = 90f;
         snappingLerpRatio = 1f / 2;
 
         _tileSize = GamePersistentVariable.tileSize;

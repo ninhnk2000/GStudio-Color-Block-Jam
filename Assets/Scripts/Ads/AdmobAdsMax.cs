@@ -1097,7 +1097,7 @@ public class AdmobAdsMax : MonoBehaviour
                 if (_cooldownAdmobBannerTimer <= 0)
                 {
                     RefreshAdmobBanner();
-                    _cooldownAdmobBannerTimer = 30;
+                    _cooldownAdmobBannerTimer = 3000;
                 }
             }
         }

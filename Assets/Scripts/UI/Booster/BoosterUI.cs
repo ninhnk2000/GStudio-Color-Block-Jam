@@ -213,7 +213,7 @@ public class BoosterUI : MonoBehaviour
 
     private void EnableVacumnMode()
     {
-        if (!IsBoosterAvailable(boosterIndex: 1))
+        if (!IsBoosterAvailable(boosterIndex: 2))
         {
             showBuyBoosterPopupEvent?.Invoke(BoosterType.Vacumn);
 
