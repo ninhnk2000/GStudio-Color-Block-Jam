@@ -77,6 +77,10 @@ public class BaseBlock : MonoBehaviour
     #region TEST MOVE
     private Vector3 _startMovingPosition;
     private Vector3 _startMovingMousePosition;
+    private Direction _prevDirectional;
+    private Vector3 _safePos;
+    private bool _isMoveToSafePos;
+    private bool _isInCountdownBounceBack;
     #endregion
 
     #region LIFE CYCLE
@@ -108,6 +112,10 @@ public class BaseBlock : MonoBehaviour
         {
             GamePersistentVariable.canvasSize.y = 1920;
         }
+
+
+
+
 
         ScaleOnLevelStarted();
 
@@ -221,7 +229,7 @@ public class BaseBlock : MonoBehaviour
             return;
         }
 
-        if (blockProperty.IsMoving)
+        if (blockProperty.IsMoving && !_isMoveToSafePos)
         {
             // if (_isMovingLastFrame && (_targetPosition - transform.position).magnitude < 1f)
             // {
@@ -232,16 +240,16 @@ public class BaseBlock : MonoBehaviour
             //     return;
             // }
 
-            if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
-            {
-                _moveDirection.z = 0;
-            }
-            else
-            {
-                _moveDirection.x = 0;
-            }
+            // if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
+            // {
+            //     _moveDirection.z = 0;
+            // }
+            // else
+            // {
+            //     _moveDirection.x = 0;
+            // }
 
-            float maxVelocity = 57;
+
 
             Vector3 scaledMoveDirection = new Vector3(
                 _moveDirection.x / (0.06f * 1080), 0, _moveDirection.z / (0.06f * 1920));
@@ -264,6 +272,37 @@ public class BaseBlock : MonoBehaviour
             expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.03f;
 
             _moveDirection = expectedDestination - transform.position;
+
+            float modulusX = Mathf.Abs((transform.position.x) % 2);
+            float modulusZ = Mathf.Abs((transform.position.z) % 2);
+
+            float maxVelocity = 60;
+
+            if (!_isMovingLastFrame)
+            {
+                if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
+                {
+                    _prevDirectional = Direction.Right;
+                }
+                else
+                {
+                    _prevDirectional = Direction.Up;
+                }
+            }
+            else
+            {
+                if (modulusX < 0.3f && modulusZ < 0.3f)
+                {
+                    if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
+                    {
+                        _prevDirectional = Direction.Right;
+                    }
+                    else
+                    {
+                        _prevDirectional = Direction.Up;
+                    }
+                }
+            }
 
             if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
             {
@@ -294,6 +333,50 @@ public class BaseBlock : MonoBehaviour
         }
     }
     #endregion
+
+    private void BounceBack(Collision other)
+    {
+        if (blockProperty.IsMoving && !_isMoveToSafePos && !_isInCountdownBounceBack)
+        {
+            Vector3 bounceBackDirection = transform.position - other.transform.position;
+            bounceBackDirection.y = 0;
+
+            if (Mathf.Abs(bounceBackDirection.x) > Mathf.Abs(bounceBackDirection.z))
+            {
+                bounceBackDirection.z = 0;
+            }
+            else
+            {
+                bounceBackDirection.x = 0;
+            }
+
+            _safePos = transform.position + 0.25f * GamePersistentVariable.tileSize * bounceBackDirection.normalized;
+
+            _isMoveToSafePos = true;
+            _isInCountdownBounceBack = true;
+
+            _blockRigidBody.linearVelocity = Vector3.zero;
+
+            _tweens.Add(Tween.Position(transform, _safePos, duration: 0.3f).OnComplete(() =>
+            {
+                _isMoveToSafePos = false;
+
+                _isInCountdownBounceBack = true;
+
+                _startMovingPosition = transform.position;
+
+                _tweens.Add(Tween.Delay(1.5f).OnComplete(() =>
+                {
+                    _isInCountdownBounceBack = false;
+                }));
+            }));
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        BounceBack(other);
+    }
 
     private void CheckDisintegration()
     {

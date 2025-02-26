@@ -8,6 +8,7 @@ public class LockedBlock : BaseBlock
     [SerializeField] private Transform blockLock;
     [SerializeField] private int remainingKeyToUnlock;
     private bool _isLocked;
+    private bool _isInTransition;
 
     [SerializeField] private TMP_Text remainingKeyToUnlockText;
     [SerializeField] private ParticleSystem breakIceFx;
@@ -28,12 +29,23 @@ public class LockedBlock : BaseBlock
 
     public override void Move(Vector2 direction)
     {
-        CommonUtil.StopAllTweens(_tweens);
-
-        _tweens.Add(Tween.Scale(transform, 1.1f * transform.localScale, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.3f));
-
         if (_isLocked)
         {
+            if (_isInTransition)
+            {
+                return;
+            }
+            else
+            {
+                _isInTransition = true;
+            }
+
+            _tweens.Add(Tween.Scale(transform, 1.1f * transform.localScale, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f)
+            .OnComplete(() =>
+            {
+                _isInTransition = false;
+            }));
+
             return;
         }
 
