@@ -267,56 +267,19 @@ public class BaseBlock : MonoBehaviour
             // }
 
 
-
-            Vector3 scaledMoveDirection = new Vector3(
-                _moveDirection.x / (0.06f * 1080), 0, _moveDirection.z / (0.06f * 1920));
-
-            scaledMoveDirection = new Vector3(Mathf.Clamp(scaledMoveDirection.x, -1, 1), 0, Mathf.Clamp(scaledMoveDirection.z, -1, 1));
-
-            // if (Mathf.Abs(scaledMoveDirection.x) < 0.5f)
-            // {
-            //     scaledMoveDirection.x /= 2;
-            // }
-            // if (Mathf.Abs(scaledMoveDirection.z) < 0.5f)
-            // {
-            //     scaledMoveDirection.z /= 2;
-            // }
-
             Vector3 expectedDestination;
 
-            expectedDestination.x = _startMovingPosition.x + (Input.mousePosition.x - _startMovingMousePosition.x) * 0.03f;
+            expectedDestination.x = _startMovingPosition.x + (Input.mousePosition.x - _startMovingMousePosition.x) * 0.025f;
             expectedDestination.y = transform.position.y;
-            expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.03f;
+            expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.025f;
 
-
-
-            if (!_isMovingLastFrame)
-            {
-                if (_destinations.Count > 0)
-                {
-                    _currentDestination = _destinations.Dequeue();
-                }
-            }
-            else
-            {
-                if (Vector3.Distance(transform.position, _currentDestination) < 1f)
-                {
-                    if (_destinations.Count > 0)
-                    {
-                        _currentDestination = _destinations.Dequeue();
-                    }
-                }
-            }
 
             Vector3 lastMoveDirection = _moveDirection;
 
             Vector3 expectedMoveDirection = expectedDestination - transform.position;
             _moveDirection = expectedMoveDirection;
 
-            float modulusX = Mathf.Abs((transform.position.x) % 2);
-            float modulusZ = Mathf.Abs((transform.position.z) % 2);
-
-            float maxVelocity = 70;
+            float maxVelocity = 85;
 
             // if (!_isMovingLastFrame)
             // {
