@@ -113,6 +113,7 @@ public class BoosterUI : MonoBehaviour
         _isInTransition = false;
         _isEnable = true;
         _isPreventShowWarningPopup = false;
+        _isTimeFreezing = false;
     }
 
     private void OnRevived(BoosterType boosterType)
