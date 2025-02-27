@@ -32,6 +32,7 @@ public class BottomBarItem : MonoBehaviour
     {
         BottomBar.setHighlightPositionEvent += OnSwipe;
         CoinContainerUI.goToIAPShopEvent += GoToIAPShop;
+        LivesShopPopup.openIAPShopPopupEvent += OpenIAPShop;
 
         selectButton.onClick.AddListener(Select);
 
@@ -44,6 +45,7 @@ public class BottomBarItem : MonoBehaviour
     {
         BottomBar.setHighlightPositionEvent -= OnSwipe;
         CoinContainerUI.goToIAPShopEvent -= GoToIAPShop;
+        LivesShopPopup.openIAPShopPopupEvent -= OpenIAPShop;
     }
 
     private void OnSwipe(float highlightPosition)
@@ -98,6 +100,14 @@ public class BottomBarItem : MonoBehaviour
     }
 
     private void GoToIAPShop()
+    {
+        if (route == ScreenRoute.IAPShop)
+        {
+            SelectWithoutSound();
+        }
+    }
+
+    private void OpenIAPShop(ScreenRoute prevRoute)
     {
         if (route == ScreenRoute.IAPShop)
         {

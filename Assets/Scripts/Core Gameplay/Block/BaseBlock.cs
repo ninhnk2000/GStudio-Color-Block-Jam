@@ -801,6 +801,9 @@ public class BaseBlock : MonoBehaviour
                 blockCompletedEvent?.Invoke();
             });
         });
+
+        // KEY
+        UnlockKey();
     }
 
     public void Vacumn(Vector3 vacumnPosition)

@@ -6,6 +6,7 @@ public class LockedBlock : BaseBlock
 {
     [Header("LOCKED BLOCK")]
     [SerializeField] private Transform blockLock;
+    [SerializeField] private Transform[] chains;
     [SerializeField] private int remainingKeyToUnlock;
     private bool _isLocked;
     private bool _isInTransition;
@@ -75,13 +76,21 @@ public class LockedBlock : BaseBlock
 
                 remainingKeyToUnlockText.text = $"{remainingKeyToUnlock}";
 
+                Debug.Log("SAFERIO " + remainingKeyToUnlockText);
+
                 key.gameObject.SetActive(false);
 
                 if (remainingKeyToUnlock == 0)
                 {
                     _isLocked = false;
 
-                    blockLock.gameObject.SetActive(false);
+                    Tween.PositionY(blockLock, blockLock.position.y - 5, duration: 0.3f);
+                    Tween.PositionY(remainingKeyToUnlockText.transform, remainingKeyToUnlockText.transform.position.y - 5, duration: 0.3f);
+
+                    for (int i = 0; i < chains.Length; i++)
+                    {
+                        Tween.PositionY(chains[i], chains[i].position.y - 5, duration: 0.3f);
+                    }
 
                     breakIceFx.Play();
                 }

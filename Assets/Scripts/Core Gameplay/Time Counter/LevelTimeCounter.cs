@@ -57,6 +57,8 @@ public class LevelTimeCounter : MonoBehaviour
             StopCoroutine(_countingCoroutine);
         }
 
+        totalSecond = levelsTime[currentLevel.Value % 50];
+
         _countingCoroutine = StartCoroutine(Counting());
 
         if (_isFreeze)
@@ -69,7 +71,7 @@ public class LevelTimeCounter : MonoBehaviour
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(1);
 
-        int remainingSecond = levelsTime[currentLevel.Value % 50];
+        int remainingSecond = totalSecond;
 
         timeText.text = ConvertSecondsToMinutesSeconds(remainingSecond);
 

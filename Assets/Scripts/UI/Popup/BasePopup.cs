@@ -43,6 +43,7 @@ public class BasePopup : MonoBehaviour
         ReplenishLifeManager.switchRouteEvent += OnRouteSwitched;
         ReplayPopup.switchRouteEvent += OnRouteSwitched;
         PausePopup.switchRouteEvent += OnRouteSwitched;
+        ReturnHomePopup.switchRouteEvent += OnRouteSwitched;
 
         if (closeButton != null)
         {
@@ -88,6 +89,7 @@ public class BasePopup : MonoBehaviour
         ReplenishLifeManager.switchRouteEvent -= OnRouteSwitched;
         ReplayPopup.switchRouteEvent -= OnRouteSwitched;
         PausePopup.switchRouteEvent -= OnRouteSwitched;
+        ReturnHomePopup.switchRouteEvent -= OnRouteSwitched;
 
         UnregisterMoreEvent();
 

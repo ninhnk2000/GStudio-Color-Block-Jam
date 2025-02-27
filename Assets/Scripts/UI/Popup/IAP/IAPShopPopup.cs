@@ -27,6 +27,7 @@ public class IAPShopPopup : BasePopup
     {
         BuyBoosterPopup.openIAPShopPopupEvent += ShowAndScrollToCoinPack;
         RevivePopup.openIAPShopPopupEvent += ShowAndScrollToCoinPack;
+        LivesShopPopup.openIAPShopPopupEvent += ShowAndScrollToCoinPack;
         ResourceEarnPopup.showResourcesEarnPopupEvent += OnResourcesEarnPopupShown;
         CoinContainerUI.goToIAPShopEvent += Show;
     }
@@ -35,6 +36,7 @@ public class IAPShopPopup : BasePopup
     {
         BuyBoosterPopup.openIAPShopPopupEvent -= ShowAndScrollToCoinPack;
         RevivePopup.openIAPShopPopupEvent -= ShowAndScrollToCoinPack;
+        LivesShopPopup.openIAPShopPopupEvent -= ShowAndScrollToCoinPack;
         ResourceEarnPopup.showResourcesEarnPopupEvent -= OnResourcesEarnPopupShown;
         CoinContainerUI.goToIAPShopEvent -= Show;
     }

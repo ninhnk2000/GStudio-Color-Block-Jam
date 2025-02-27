@@ -16,6 +16,7 @@ public class ReturnHomePopup : BasePopup
     [SerializeField] private LevelBoosterObserver levelBoosterObserver;
 
     public static event Action<int> changeLivesNumberEvent;
+    public static event Action<ScreenRoute> switchRouteEvent;
 
     protected override void MoreActionInAwake()
     {
@@ -24,6 +25,13 @@ public class ReturnHomePopup : BasePopup
 
     private void ReturnHome()
     {
+        if (GamePersistentVariable.livesData.CurrentLives <= 0)
+        {
+            switchRouteEvent?.Invoke(ScreenRoute.LivesShop);
+
+            return;
+        }
+
         // avoid spamming
         homeButton.interactable = false;
 

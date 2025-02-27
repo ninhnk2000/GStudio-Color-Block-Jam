@@ -12,9 +12,13 @@ public class LivesShopPopup : BasePopup
 
     private LivesData _livesData;
 
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private UserResourcesObserver userResourcesObserver;
+
     public static event Action<int> changeLivesNumberEvent;
     public static event Action<ScreenRoute> switchRouteEvent;
     public static event Action runPendingReplayCommandEvent;
+    public static event Action<ScreenRoute> openIAPShopPopupEvent;
 
     protected override void MoreActionInAwake()
     {
@@ -52,15 +56,31 @@ public class LivesShopPopup : BasePopup
 
     private void RefillByCoin()
     {
-        ActualRefill();
+        userResourcesObserver.Load();
+
+        if (userResourcesObserver.UserResources.CoinQuantity >= 100)
+        {
+            userResourcesObserver.ChangeCoin(-100);
+
+            ActualRefill();
+        }
+        else
+        {
+            Hide(onCompletedAction: () =>
+            {
+                openIAPShopPopupEvent?.Invoke(ScreenRoute.LivesShop);
+            });
+        }
     }
 
-    private void ActualRefill() {
+    private void ActualRefill()
+    {
         changeLivesNumberEvent?.Invoke(1);
 
         Hide();
 
-        if(GamePersistentVariable.isPendingReplay) {
+        if (GamePersistentVariable.isPendingReplay)
+        {
             runPendingReplayCommandEvent?.Invoke();
 
             GamePersistentVariable.isPendingReplay = false;
