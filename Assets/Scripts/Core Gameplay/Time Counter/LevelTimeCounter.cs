@@ -12,6 +12,10 @@ public class LevelTimeCounter : MonoBehaviour
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private Image freezedBackground;
 
+    [SerializeField] private CanvasGroup freezeProgressGroup;
+    [SerializeField] private Slider freezeProgress;
+    [SerializeField] private Image freezeProgressFill;
+
     [SerializeField] private int totalSecond;
 
     [SerializeField] private IntVariable currentLevel;
@@ -65,6 +69,8 @@ public class LevelTimeCounter : MonoBehaviour
         {
             Unfreeze();
         }
+
+        freezeProgressGroup.gameObject.SetActive(false);
     }
 
     private IEnumerator Counting()
@@ -95,6 +101,33 @@ public class LevelTimeCounter : MonoBehaviour
     private void FreezeTime()
     {
         _isFreeze = true;
+
+        freezeProgressGroup.gameObject.SetActive(true);
+
+        freezeProgress.value = 1;
+
+        // progress bar
+        _tweens.Add(Tween.Custom(0, 1, duration: 0.3f, onValueChange: newVal =>
+        {
+            freezeProgressGroup.alpha = newVal;
+
+            _tweens.Add(Tween.Custom(1, 0, duration: 9.7f, onValueChange: newVal =>
+            {
+                freezeProgress.value = newVal;
+                freezeProgressFill.color = ColorUtil.WithAlpha(freezeProgressFill.color, 2 * (newVal - 0.08f));
+            }).OnComplete(() =>
+            {
+                _tweens.Add(Tween.Custom(1, 0, duration: 0.3f, onValueChange: newVal =>
+                {
+                    freezeProgressGroup.alpha = newVal;
+                })
+                .OnComplete(() =>
+                {
+                    freezeProgressGroup.gameObject.SetActive(false);
+                })
+                );
+            }));
+        }));
 
         _tweens.Add(Tween.Delay(10).OnComplete(() =>
         {
