@@ -1706,9 +1706,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1159581076686836400}
     m_Modifications:
+    - target: {fileID: 1402059953739599898, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
+      propertyPath: m_text
+      value: Booster Unlocked
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402059953739599898, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
+      propertyPath: m_fontSize
+      value: 117.6
+      objectReference: {fileID: 0}
     - target: {fileID: 1750244227239200076, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953803898992045816, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
+      propertyPath: m_text
+      value: You have unlocked the Freeze Timer!
       objectReference: {fileID: 0}
     - target: {fileID: 1994163594947687338, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
       propertyPath: m_IsActive
@@ -1725,6 +1737,14 @@ PrefabInstance:
     - target: {fileID: 2062564784486056247, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2600725477837294480, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
+      propertyPath: m_text
+      value: Freezes time for 10 seconds
+      objectReference: {fileID: 0}
+    - target: {fileID: 2600725477837294480, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
+      propertyPath: m_fontSize
+      value: 52.9
       objectReference: {fileID: 0}
     - target: {fileID: 2708919734349890879, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
       propertyPath: m_Pivot.x
@@ -1857,7 +1877,7 @@ PrefabInstance:
     - target: {fileID: 9030612946114008697, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
       propertyPath: boosterButton
       value: 
-      objectReference: {fileID: 2556291872418898812}
+      objectReference: {fileID: 7591244340079507158}
     - target: {fileID: 9155561651542578082, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1872,9 +1892,9 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2708919734349890879, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
   m_PrefabInstance: {fileID: 2795697060652334911}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2556291872418898812 stripped
+--- !u!114 &7591244340079507158 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 411386948766538819, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5734713089332021737, guid: edb5ad59c41828e4bad3a3de2419f846, type: 3}
   m_PrefabInstance: {fileID: 2795697060652334911}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

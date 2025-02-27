@@ -21,6 +21,7 @@ public class LevelTimeCounter : MonoBehaviour
     private bool _isFreeze;
 
     public static event Action loseLevelEvent;
+    public static event Action unfreezeTimeEvent;
 
     // TEMP
     private int[] levelsTime = new int[50] {
@@ -127,6 +128,8 @@ public class LevelTimeCounter : MonoBehaviour
         CommonUtil.StopAllTweens(_tweens);
 
         FreezedEffect(isFreeze: false);
+
+        unfreezeTimeEvent?.Invoke();
 
         _isFreeze = false;
     }

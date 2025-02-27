@@ -3451,6 +3451,79 @@ MonoBehaviour:
   - Language: Spanish
     Text: "\xA1Fuera de tiempo!"
     Object: {fileID: 0}
+--- !u!1 &663615768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 663615769}
+  - component: {fileID: 663615770}
+  m_Layer: 0
+  m_Name: The booster is already in use
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &663615769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663615768}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &663615770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663615768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: The booster is already in use.
+    Object: {fileID: 0}
+  - Language: French
+    Text: "Le booster est d\xE9j\xE0 utilis\xE9."
+    Object: {fileID: 0}
+  - Language: German
+    Text: Der Booster ist bereits verwendet.
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: "Il booster \xE8 gi\xE0 in uso."
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: "\u30D6\u30FC\u30B9\u30BF\u30FC\u306F\u3059\u3067\u306B\u4F7F\u7528\u3055\u308C\u3066\u3044\u307E\u3059\u3002"
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uBD80\uC2A4\uD130\uB294 \uC774\uBBF8 \uC0AC\uC6A9 \uC911\uC785\uB2C8\uB2E4."
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: "O refor\xE7o j\xE1 est\xE1 em uso."
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0411\u0443\u0441\u0442\u0435\u0440 \u0443\u0436\u0435 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442\u0441\u044F."
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: "El refuerzo ya est\xE1 en uso."
+    Object: {fileID: 0}
 --- !u!1 &670440681
 GameObject:
   m_ObjectHideFlags: 0
@@ -7131,6 +7204,7 @@ Transform:
   - {fileID: 1794495337}
   - {fileID: 189752925}
   - {fileID: 1250582555}
+  - {fileID: 663615769}
   m_Father: {fileID: 619569312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1353185547

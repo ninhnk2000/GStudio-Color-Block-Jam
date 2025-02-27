@@ -44,6 +44,7 @@ public class BaseBlock : MonoBehaviour
     private int _horizontalColliderInstanceId;
     private int _verticalColliderInstanceId;
     private Vector3 _prevPosition;
+    private Vector3 _lastEnqueuedDestination;
     #endregion
 
     public BlockServiceLocator BlockServiceLocator
@@ -81,6 +82,11 @@ public class BaseBlock : MonoBehaviour
     private Vector3 _safePos;
     private bool _isMoveToSafePos;
     private bool _isInCountdownBounceBack;
+    private Queue<Vector3> _destinations;
+    private Vector3 _currentDestination;
+    private Vector2 _inputDirection;
+    private BoxCollider[] _boxColliders;
+    private Vector3[] _boxColliderSize;
     #endregion
 
     #region LIFE CYCLE
@@ -103,18 +109,29 @@ public class BaseBlock : MonoBehaviour
         _tileSize = GamePersistentVariable.tileSize;
         _initialPosition = transform.position;
 
-        if (GamePersistentVariable.canvasSize.x == 0)
+
+        _destinations = new Queue<Vector3>();
+
+        if (transform.parent.GetComponent<BaseBlock>() == null)
         {
-            GamePersistentVariable.canvasSize.x = 1080;
+            transform.localScale = 1.965f * Vector3.one;
         }
 
-        if (GamePersistentVariable.canvasSize.y == 0)
+        _boxColliders = GetComponents<BoxCollider>();
+
+        _boxColliderSize = new Vector3[_boxColliders.Length];
+
+        PhysicsMaterial physicsMaterial = new PhysicsMaterial();
+
+        physicsMaterial.staticFriction = 0;
+        physicsMaterial.dynamicFriction = 0;
+
+        for (int i = 0; i < _boxColliders.Length; i++)
         {
-            GamePersistentVariable.canvasSize.y = 1920;
+            _boxColliderSize[i] = _boxColliders[i].size;
+
+            _boxColliders[i].material = physicsMaterial;
         }
-
-
-
 
 
         ScaleOnLevelStarted();
@@ -271,47 +288,91 @@ public class BaseBlock : MonoBehaviour
             expectedDestination.y = transform.position.y;
             expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.03f;
 
-            _moveDirection = expectedDestination - transform.position;
+
+
+            if (!_isMovingLastFrame)
+            {
+                if (_destinations.Count > 0)
+                {
+                    _currentDestination = _destinations.Dequeue();
+                }
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, _currentDestination) < 1f)
+                {
+                    if (_destinations.Count > 0)
+                    {
+                        _currentDestination = _destinations.Dequeue();
+                    }
+                }
+            }
+
+            Vector3 lastMoveDirection = _moveDirection;
+
+            Vector3 expectedMoveDirection = expectedDestination - transform.position;
+            _moveDirection = expectedMoveDirection;
 
             float modulusX = Mathf.Abs((transform.position.x) % 2);
             float modulusZ = Mathf.Abs((transform.position.z) % 2);
 
-            float maxVelocity = 60;
+            float maxVelocity = 70;
 
-            if (!_isMovingLastFrame)
-            {
-                if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
-                {
-                    _prevDirectional = Direction.Right;
-                }
-                else
-                {
-                    _prevDirectional = Direction.Up;
-                }
-            }
-            else
-            {
-                if (modulusX < 0.3f && modulusZ < 0.3f)
-                {
-                    if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
-                    {
-                        _prevDirectional = Direction.Right;
-                    }
-                    else
-                    {
-                        _prevDirectional = Direction.Up;
-                    }
-                }
-            }
+            // if (!_isMovingLastFrame)
+            // {
+            //     if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
+            //     {
+            //         _prevDirectional = Direction.Right;
+            //     }
+            //     else
+            //     {
+            //         _prevDirectional = Direction.Up;
+            //     }
+            // }
+            // else
+            // {
+            //     if (modulusX < 0.3f && modulusZ < 0.3f)
+            //     {
+            //         if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
+            //         {
+            //             _prevDirectional = Direction.Right;
+            //         }
+            //         else
+            //         {
+            //             _prevDirectional = Direction.Up;
+            //         }
+            //     }
+            // }
 
-            if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
-            {
-                _moveDirection.z = 0;
-            }
-            else
-            {
-                _moveDirection.x = 0;
-            }
+            // if (Mathf.Abs(_inputDirection.x) > Mathf.Abs(_inputDirection.y))
+            // {
+            //     _moveDirection.z = 0;
+            // }
+            // else
+            // {
+            //     _moveDirection.x = 0;
+            // }
+
+            // if (lastMoveDirection.x > 0 && transform.position.x < _prevPosition.x + 0.1f)
+            // {
+            //     _moveDirection.x = 0;
+
+            // }
+            // if (lastMoveDirection.x < 0 && transform.position.x > _prevPosition.x - 0.1f)
+            // {
+            //     _moveDirection.x = 0;
+
+            // }
+            // if (lastMoveDirection.z < 0 && transform.position.z > _prevPosition.z - 0.1f)
+            // {
+            //     _moveDirection.z = 0;
+
+            // }
+            // if (lastMoveDirection.z < 0 && transform.position.z > _prevPosition.z - 0.1f)
+            // {
+            //     _moveDirection.z = 0;
+
+            // }
 
             Vector3 velocity = speedMultiplier * _moveDirection;
 
@@ -324,8 +385,10 @@ public class BaseBlock : MonoBehaviour
             }
             else
             {
-                _blockRigidBody.linearVelocity = velocity;
+
             }
+
+            _blockRigidBody.linearVelocity = velocity;
 
             _prevTargetPosition = _targetPosition;
             _prevDirection = _moveDirection;
@@ -373,9 +436,49 @@ public class BaseBlock : MonoBehaviour
         }
     }
 
+
+    // void OnCollisionStay(Collision other)
+    // {
+    //     if (blockProperty.IsMoving)
+    //     {
+    //         Vector3 bounceBackDirection = transform.position - other.transform.position;
+    //         bounceBackDirection.y = 0;
+
+    //         bounceBackDirection = bounceBackDirection.normalized;
+
+    //         if (Mathf.Abs(bounceBackDirection.x) > Mathf.Abs(bounceBackDirection.z))
+    //         {
+    //             bounceBackDirection.z = 0;
+    //         }
+    //         else
+    //         {
+    //             bounceBackDirection.x = 0;
+    //         }
+
+    //         Vector3 bounceDistance = bounceBackDirection;
+
+    //         bounceDistance.x = Mathf.Clamp(bounceDistance.x, -0.002f * GamePersistentVariable.tileSize, 0.002f * GamePersistentVariable.tileSize);
+    //         bounceDistance.z = Mathf.Clamp(bounceDistance.z, -0.002f * GamePersistentVariable.tileSize, 0.002f * GamePersistentVariable.tileSize);
+
+    //         _safePos = transform.position + bounceDistance;
+
+    //         _isMoveToSafePos = true;
+    //         // _isInCountdownBounceBack = true;
+
+    //         _blockRigidBody.linearVelocity = Vector3.zero;
+
+    //         transform.position = _safePos;
+    //     }
+    // }
+
+    // void OnCollisionExit(Collision other)
+    // {
+    //     _isMoveToSafePos = false;
+    // }
+
     private void OnCollisionEnter(Collision other)
     {
-        BounceBack(other);
+        // BounceBack(other);
     }
 
     private void CheckDisintegration()
@@ -492,9 +595,31 @@ public class BaseBlock : MonoBehaviour
 
             _startMovingPosition = transform.position;
             _startMovingMousePosition = Input.mousePosition;
+
+            for (int i = 0; i < _boxColliders.Length; i++)
+            {
+                _boxColliders[i].size = 0.98f * _boxColliders[i].size;
+            }
         }
 
         _moveDirection = new Vector3(direction.x, 0, direction.y);
+
+
+
+        Vector3 expectedDestination;
+
+        expectedDestination.x = _startMovingPosition.x + (Input.mousePosition.x - _startMovingMousePosition.x) * 0.03f;
+        expectedDestination.y = transform.position.y;
+        expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.03f;
+
+        if (Vector3.Distance(expectedDestination, _lastEnqueuedDestination) > 1f)
+        {
+            _destinations.Enqueue(expectedDestination);
+
+            _lastEnqueuedDestination = expectedDestination;
+        }
+
+        _inputDirection = direction;
     }
 
     public virtual void Stop()
@@ -515,6 +640,8 @@ public class BaseBlock : MonoBehaviour
         blockProperty.IsMoving = false;
 
         _isMovingLastFrame = false;
+
+        _destinations.Clear();
     }
 
     public void Snap()

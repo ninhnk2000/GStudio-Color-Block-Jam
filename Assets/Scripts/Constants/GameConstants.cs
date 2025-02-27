@@ -146,6 +146,7 @@ public static class GameConstants
     public static string SCREWS = "Screws";
     public static string WARNING = "Warning";
     public static string TOO_FAST_ACTION = "Too fast action";
+    public static string BOOSTER_IN_USE = "The booster is already in use";
     public static string NO_INTERNET = "No internet";
     public static string PLEASE_CHECK_YOUR_INTERNET_CONNECTION = "Please check your internet connection";
     #endregion

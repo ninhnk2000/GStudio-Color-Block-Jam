@@ -44,6 +44,7 @@ public class BoosterUI : MonoBehaviour
     private bool _isInTransition;
     private bool _isEnable;
     private bool _isPreventShowWarningPopup;
+    private bool _isTimeFreezing;
 
     private Vector2 _initialBoosterContainerPosition;
     private Vector2 _initialAddMoreScrewPortButtonPosition;
@@ -62,6 +63,7 @@ public class BoosterUI : MonoBehaviour
         RevivePopup.reviveEvent += OnRevived;
         BlockSelectionInput.breakObjectEvent += ConfirmBreakObject;
         BlockSelectionInput.vacumnEvent += ConfirmVacumnBooster;
+        LevelTimeCounter.unfreezeTimeEvent += UnfreezeTime;
 
         addMoreScrewPortButton.onClick.AddListener(() => UseBooster(BoosterType.FreezeTime));
         breakObjectButton.onClick.AddListener(() => UseBooster(BoosterType.BreakObject));
@@ -91,6 +93,7 @@ public class BoosterUI : MonoBehaviour
         RevivePopup.reviveEvent -= OnRevived;
         BlockSelectionInput.breakObjectEvent -= DisableBreakObjectMode;
         BlockSelectionInput.vacumnEvent -= DisableVacumnMode;
+        LevelTimeCounter.unfreezeTimeEvent -= UnfreezeTime;
 
         CommonUtil.StopAllTweens(_tweens);
     }
@@ -152,6 +155,13 @@ public class BoosterUI : MonoBehaviour
 
     private void FreezeTime()
     {
+        if (_isTimeFreezing)
+        {
+            showNotificationEvent?.Invoke(GameConstants.WARNING, GameConstants.BOOSTER_IN_USE);
+
+            return;
+        }
+
         if (!IsBoosterAvailable(boosterIndex: 0))
         {
             showBuyBoosterPopupEvent?.Invoke(BoosterType.FreezeTime);
@@ -162,6 +172,13 @@ public class BoosterUI : MonoBehaviour
         freezeTimeEvent?.Invoke();
 
         ConsumeBooster(0);
+
+        _isTimeFreezing = true;
+    }
+
+    private void UnfreezeTime()
+    {
+        _isTimeFreezing = false;
     }
 
     private void EnableBreakObjectMode()
