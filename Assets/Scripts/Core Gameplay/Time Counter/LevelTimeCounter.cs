@@ -73,7 +73,7 @@ public class LevelTimeCounter : MonoBehaviour
 
         timeText.text = ConvertSecondsToMinutesSeconds(remainingSecond);
 
-        while (remainingSecond > 0)
+        while (remainingSecond >= 0)
         {
             if (!_isFreeze && GamePersistentVariable.isLevelDirty)
             {
@@ -84,6 +84,8 @@ public class LevelTimeCounter : MonoBehaviour
 
             yield return waitForSeconds;
         }
+
+        yield return waitForSeconds;
 
         loseLevelEvent?.Invoke();
     }

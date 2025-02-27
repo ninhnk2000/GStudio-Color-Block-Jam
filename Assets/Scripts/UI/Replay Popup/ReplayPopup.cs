@@ -21,13 +21,22 @@ public class ReplayPopup : BasePopup
 
     protected override void MoreActionInAwake()
     {
+        LivesShopPopup.runPendingReplayCommandEvent += ActualReplay;
+
         replayLevelButton.onClick.AddListener(Replay);
+    }
+
+    protected override void MoreActionOnDestroy()
+    {
+        LivesShopPopup.runPendingReplayCommandEvent -= ActualReplay;
     }
 
     private void Replay()
     {
         if (GamePersistentVariable.livesData.CurrentLives <= 0)
         {
+            GamePersistentVariable.isPendingReplay = true;
+
             switchRouteEvent?.Invoke(ScreenRoute.LivesShop);
 
             return;

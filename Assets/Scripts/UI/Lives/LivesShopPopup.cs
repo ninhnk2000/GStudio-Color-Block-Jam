@@ -14,6 +14,7 @@ public class LivesShopPopup : BasePopup
 
     public static event Action<int> changeLivesNumberEvent;
     public static event Action<ScreenRoute> switchRouteEvent;
+    public static event Action runPendingReplayCommandEvent;
 
     protected override void MoreActionInAwake()
     {
@@ -40,9 +41,7 @@ public class LivesShopPopup : BasePopup
     {
         Hide(onCompletedAction: () =>
         {
-            changeLivesNumberEvent?.Invoke(1);
-
-            Hide();
+            ActualRefill();
         });
     }
 
@@ -53,8 +52,18 @@ public class LivesShopPopup : BasePopup
 
     private void RefillByCoin()
     {
+        ActualRefill();
+    }
+
+    private void ActualRefill() {
         changeLivesNumberEvent?.Invoke(1);
 
         Hide();
+
+        if(GamePersistentVariable.isPendingReplay) {
+            runPendingReplayCommandEvent?.Invoke();
+
+            GamePersistentVariable.isPendingReplay = false;
+        }
     }
 }
