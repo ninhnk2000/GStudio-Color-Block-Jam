@@ -231,8 +231,8 @@ public class LevelLoader : MonoBehaviour
         }
 
         // CAMERA
-        float sideSize = rightBound > topBound ? rightBound : topBound;
+        float fieldOfView = rightBound < 9 ? 50 : 50 + 1.8f * rightBound;
 
-        setLevelCameraOrthographicSize?.Invoke(50 + 1.5f * sideSize);
+        setLevelCameraOrthographicSize?.Invoke(fieldOfView);
     }
 }

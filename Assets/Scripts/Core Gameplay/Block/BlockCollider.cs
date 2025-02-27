@@ -205,6 +205,39 @@ public class BlockCollider : MonoBehaviour
                     return false;
                 }
 
+                BaseBarricade gate = null;
+
+                if (hits[i].collider.transform.parent != null)
+                {
+                    gate = hits[i].collider.transform.parent.GetComponent<BaseBarricade>();
+                }
+
+                if (gate != null)
+                {
+                    if (gate.Faction == blockServiceLocator.block.BlockProperty.Faction)
+                    {
+                        if (sparsedDirection == Direction.Up || sparsedDirection == Direction.Down)
+                        {
+                            if (transform.position.x - 0.5f * blockServiceLocator.Size.x > gate.transform.position.x - 0.55f * gate.Size.x
+                            && transform.position.x + 0.5f * blockServiceLocator.Size.x < gate.transform.position.x + 0.55f * gate.Size.x
+                            )
+                            {
+                                matchBarricade = gate;
+                            }
+                        }
+
+                        if (sparsedDirection == Direction.Right || sparsedDirection == Direction.Left)
+                        {
+                            if (transform.position.z - 0.5f * blockServiceLocator.Size.z > gate.transform.position.z - 0.55f * gate.Size.z
+                            && transform.position.z + 0.5f * blockServiceLocator.Size.z < gate.transform.position.z + 0.55f * gate.Size.z
+                            )
+                            {
+                                matchBarricade = gate;
+                            }
+                        }
+                    }
+                }
+
                 BarricadeTile barricadeTile = hits[i].collider.GetComponent<BarricadeTile>();
 
                 if (barricadeTile != null)
@@ -251,23 +284,23 @@ public class BlockCollider : MonoBehaviour
                     }
                     else
                     {
-                        matchBarricade = barricadeTile.BarricadeServiceLocator.barricade;
+                        // matchBarricade = barricadeTile.BarricadeServiceLocator.barricade;
 
-                        // invalid
-                        if (barricadeTile.Direction == Direction.Right || barricadeTile.Direction == Direction.Left)
-                        {
-                            if (Mathf.Abs(direction.z) > Mathf.Abs(direction.x))
-                            {
-                                matchBarricade = null;
-                            }
-                        }
-                        if (barricadeTile.Direction == Direction.Up || barricadeTile.Direction == Direction.Down)
-                        {
-                            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
-                            {
-                                matchBarricade = null;
-                            }
-                        }
+                        // // invalid
+                        // if (barricadeTile.Direction == Direction.Right || barricadeTile.Direction == Direction.Left)
+                        // {
+                        //     if (Mathf.Abs(direction.z) > Mathf.Abs(direction.x))
+                        //     {
+                        //         matchBarricade = null;
+                        //     }
+                        // }
+                        // if (barricadeTile.Direction == Direction.Up || barricadeTile.Direction == Direction.Down)
+                        // {
+                        //     if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+                        //     {
+                        //         matchBarricade = null;
+                        //     }
+                        // }
                     }
                 }
             }

@@ -13,6 +13,7 @@ public class BaseBarricade : MonoBehaviour
 
     #region PRIVATE FIELD
     private MeshRenderer _blockSmasherRenderer;
+    [SerializeField] private BoxCollider gateCollider; 
     #endregion
 
     public BarricadeServiceLocator BarricadeServiceLocator
@@ -23,6 +24,11 @@ public class BaseBarricade : MonoBehaviour
     public BarricadeProperty BarricadeProperty
     {
         get => barricadeProperty;
+    }
+
+    public Vector3 Size
+    {
+        get => gateCollider.bounds.size;
     }
 
     public Direction Direction

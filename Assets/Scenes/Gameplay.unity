@@ -5140,10 +5140,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   background: {fileID: 1853162140}
+  levelTexts:
+  - {fileID: 1890799266}
+  - {fileID: 404172898}
+  - {fileID: 8802506031197382534}
   backgroundSprites:
   - {fileID: 21300000, guid: e6c304763b0cc8944b469a6ba5877c43, type: 3}
   - {fileID: 21300000, guid: ab430157bf5a65142bcef31cdaab3208, type: 3}
   - {fileID: 21300000, guid: e179da5b3faf0ab4fa19fcdf01851f7a, type: 3}
+  textMaterials:
+  - {fileID: 2100000, guid: d4bdcb50a821c66469622e29c402db4d, type: 2}
+  - {fileID: 2100000, guid: 06050a8d9be7d7c418b99d28b1fe7065, type: 2}
+  - {fileID: 2100000, guid: e88f1bf329083884b8057a13efbf43b3, type: 2}
   currentLevel: {fileID: 11400000, guid: dfc7835bc5f6fb64d9f4b1582f01db6e, type: 2}
 --- !u!1 &1890799264
 GameObject:
@@ -6334,6 +6342,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6723737150314108465, guid: 87f8ad5411450aa4ebd27420f0cb56ac, type: 3}
   m_PrefabInstance: {fileID: 8802506031197382532}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8802506031197382534 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 842875943192687324, guid: 87f8ad5411450aa4ebd27420f0cb56ac, type: 3}
+  m_PrefabInstance: {fileID: 8802506031197382532}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

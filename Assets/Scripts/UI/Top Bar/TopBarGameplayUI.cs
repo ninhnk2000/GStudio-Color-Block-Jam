@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static GameEnum;
@@ -6,8 +7,10 @@ using static GameEnum;
 public class TopBarGameplayUI : MonoBehaviour
 {
     [SerializeField] private Image background;
+    [SerializeField] private TMP_Text[] levelTexts;
 
     [SerializeField] private Sprite[] backgroundSprites;
+    [SerializeField] private Material[] textMaterials;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private IntVariable currentLevel;
@@ -29,5 +32,10 @@ public class TopBarGameplayUI : MonoBehaviour
         LevelDifficulty levelDifficulty = CommonUtil.GetLevelDifficulty(currentLevel.Value);
 
         background.sprite = backgroundSprites[(int)levelDifficulty];
+
+        for (int i = 0; i < levelTexts.Length; i++)
+        {
+            levelTexts[i].fontMaterial = textMaterials[(int)levelDifficulty];
+        }
     }
 }
