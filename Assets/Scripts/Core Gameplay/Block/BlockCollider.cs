@@ -192,7 +192,7 @@ public class BlockCollider : MonoBehaviour
                     {
                         return false;
                     }
-                    if (sparsedDirection == Direction.Left && block.transform.position.x > transform.position.x)
+                    if (sparsedDirection == Direction.Left && block.transform.position.x < transform.position.x)
                     {
                         return false;
                     }

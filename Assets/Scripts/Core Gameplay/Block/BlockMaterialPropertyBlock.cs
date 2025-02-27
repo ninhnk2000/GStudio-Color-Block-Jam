@@ -16,7 +16,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     [Header("CUSTOMIZE")]
     [SerializeField] private string alphaValueReference;
-    private const float DEFAULT_OUTLINE_WIDTH = 2f;
+    private const float DEFAULT_OUTLINE_WIDTH = 0;
     private Color DEFAULT_OUTLINE_COLOR = ColorUtil.WithAlpha(0.05f * Color.white, 1);
 
     #region PRIVATE FIELD

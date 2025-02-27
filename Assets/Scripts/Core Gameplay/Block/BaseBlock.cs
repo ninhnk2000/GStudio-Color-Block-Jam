@@ -114,7 +114,7 @@ public class BaseBlock : MonoBehaviour
 
         if (transform.parent.GetComponent<BaseBlock>() == null)
         {
-            transform.localScale = 1.965f * Vector3.one;
+            transform.localScale = 1.95f * Vector3.one;
         }
 
         _boxColliders = GetComponents<BoxCollider>();

@@ -28,6 +28,11 @@ public class BarricadeTile : MonoBehaviour
         get => barricadeServiceLocator.BarricadeProperty.Faction;
     }
 
+    void Awake()
+    {
+        GetComponent<BoxCollider>().size *= 0.95f;
+    }
+
     private void PlayDisintegrationFx()
     {
         disintegrationFx.Play();
