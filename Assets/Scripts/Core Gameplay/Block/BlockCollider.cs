@@ -218,8 +218,8 @@ public class BlockCollider : MonoBehaviour
                     {
                         if (sparsedDirection == Direction.Up || sparsedDirection == Direction.Down)
                         {
-                            if (transform.position.x - 0.5f * blockServiceLocator.Size.x > gate.transform.position.x - 0.55f * gate.Size.x
-                            && transform.position.x + 0.5f * blockServiceLocator.Size.x < gate.transform.position.x + 0.55f * gate.Size.x
+                            if (transform.position.x - 0.5f * blockServiceLocator.Size.x > gate.transform.position.x - 0.63f * gate.Size.x
+                            && transform.position.x + 0.5f * blockServiceLocator.Size.x < gate.transform.position.x + 0.63f * gate.Size.x
                             )
                             {
                                 matchBarricade = gate;
@@ -228,8 +228,8 @@ public class BlockCollider : MonoBehaviour
 
                         if (sparsedDirection == Direction.Right || sparsedDirection == Direction.Left)
                         {
-                            if (transform.position.z - 0.5f * blockServiceLocator.Size.z > gate.transform.position.z - 0.55f * gate.Size.z
-                            && transform.position.z + 0.5f * blockServiceLocator.Size.z < gate.transform.position.z + 0.55f * gate.Size.z
+                            if (transform.position.z - 0.5f * blockServiceLocator.Size.z > gate.transform.position.z - 0.63f * gate.Size.z
+                            && transform.position.z + 0.5f * blockServiceLocator.Size.z < gate.transform.position.z + 0.63f * gate.Size.z
                             )
                             {
                                 matchBarricade = gate;

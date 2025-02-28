@@ -611,6 +611,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107160815}
   m_CullTransparentMesh: 1
+--- !u!1 &111335703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 111335704}
+  - component: {fileID: 111335705}
+  m_Layer: 0
+  m_Name: You have unlocked the Hammer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &111335704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111335703}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &111335705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111335703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: You have unlocked the Hammer!
+    Object: {fileID: 0}
+  - Language: French
+    Text: "Vous avez d\xE9verrouill\xE9 le marteau!"
+    Object: {fileID: 0}
+  - Language: German
+    Text: Sie haben den Hammer freigeschaltet!
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: Hai sbloccato il martello!
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: "\u30CF\u30F3\u30DE\u30FC\u306E\u30ED\u30C3\u30AF\u3092\u89E3\u9664\u3057\u307E\u3057\u305F\uFF01"
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uB2F9\uC2E0\uC740 \uB9DD\uCE58\uB97C \uC7A0\uAE08 \uD574\uC81C\uD588\uC2B5\uB2C8\uB2E4!"
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: "Voc\xEA desbloqueou o martelo!"
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0412\u044B \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043B\u0438
+      \u043C\u043E\u043B\u043E\u0442\u043E\u043A!"
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: "\xA1Has desbloqueado el martillo!"
+    Object: {fileID: 0}
 --- !u!1 &125615507
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +758,81 @@ MonoBehaviour:
     Object: {fileID: 0}
   - Language: Spanish
     Text: Recoge {task_requirement_value} tornillos
+    Object: {fileID: 0}
+--- !u!1 &126182314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 126182315}
+  - component: {fileID: 126182316}
+  m_Layer: 0
+  m_Name: Clears all the blocks of selected color
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &126182315
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126182314}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &126182316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126182314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: Clears all the blocks of selected color.
+    Object: {fileID: 0}
+  - Language: French
+    Text: "Efface tous les blocs de couleur s\xE9lectionn\xE9e."
+    Object: {fileID: 0}
+  - Language: German
+    Text: "L\xF6scht alle Bl\xF6cke ausgew\xE4hlter Farbe."
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: Cancella tutti i blocchi di colore selezionato.
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: "\u9078\u629E\u3057\u305F\u8272\u306E\u3059\u3079\u3066\u306E\u30D6\u30ED\u30C3\u30AF\u3092\u30AF\u30EA\u30A2\u3057\u307E\u3059\u3002"
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uC120\uD0DD\uD55C \uC0C9\uC0C1\uC758 \uBAA8\uB4E0 \uBE14\uB85D\uC744
+      \uC9C0 \uC6C1\uB2C8\uB2E4."
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: Limpa todos os blocos de cor selecionada.
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u041E\u0447\u0438\u0449\u0430\u0435\u0442 \u0432\u0441\u0435 \u0431\u043B\u043E\u043A\u0438
+      \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0433\u043E \u0446\u0432\u0435\u0442\u0430."
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: Borra todos los bloques de color seleccionado.
     Object: {fileID: 0}
 --- !u!1 &139358671
 GameObject:
@@ -1636,6 +1785,82 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countdownAds: 0
+--- !u!1 &380787854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 380787855}
+  - component: {fileID: 380787856}
+  m_Layer: 0
+  m_Name: It can be used to clear a single block
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &380787855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380787854}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &380787856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380787854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: It can be used to clear a single block.
+    Object: {fileID: 0}
+  - Language: French
+    Text: "Il peut \xEAtre utilis\xE9 pour effacer un seul bloc."
+    Object: {fileID: 0}
+  - Language: German
+    Text: "Es kann verwendet werden, um einen einzelnen Block zu l\xF6schen."
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: "Pu\xF2 essere usato per cancellare un singolo blocco."
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: "\u5358\u4E00\u306E\u30D6\u30ED\u30C3\u30AF\u3092\u30AF\u30EA\u30A2\u3059\u308B\u305F\u3081\u306B\u4F7F\u7528\u3067\u304D\u307E\u3059\u3002"
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uB2E8\uC77C \uBE14\uB85D\uC744 \uC9C0\uC6B0\uB294 \uB370 \uC0AC\uC6A9\uD560
+      \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: "Pode ser usado para limpar um \xFAnico bloco."
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0415\u0433\u043E \u043C\u043E\u0436\u043D\u043E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C
+      \u0434\u043B\u044F \u043E\u0447\u0438\u0441\u0442\u043A\u0438 \u043E\u0434\u043D\u043E\u0433\u043E
+      \u0431\u043B\u043E\u043A\u0430."
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: Se puede usar para borrar un solo bloque.
+    Object: {fileID: 0}
 --- !u!1 &388174204
 GameObject:
   m_ObjectHideFlags: 0
@@ -6458,7 +6683,7 @@ RectTransform:
   m_Father: {fileID: 1673665026}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.5925926, y: 0.25}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7355,6 +7580,10 @@ Transform:
   - {fileID: 65535806}
   - {fileID: 1537913485}
   - {fileID: 254096406}
+  - {fileID: 111335704}
+  - {fileID: 380787855}
+  - {fileID: 1373321538}
+  - {fileID: 126182315}
   m_Father: {fileID: 619569312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1353185547
@@ -7832,6 +8061,80 @@ MonoBehaviour:
   prefab: {fileID: 6655206068968023495, guid: 32c18610d458dfa40af83d745434d857, type: 3}
   container: {fileID: 1363410858}
   poolSize: 16
+--- !u!1 &1373321537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1373321538}
+  - component: {fileID: 1373321539}
+  m_Layer: 0
+  m_Name: You have unlocked the Color Vacuum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1373321538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373321537}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341924456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1373321539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373321537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: English
+    Text: You have unlocked the Color Vacuum!
+    Object: {fileID: 0}
+  - Language: French
+    Text: "Vous avez d\xE9verrouill\xE9 l'aspirateur des couleurs!"
+    Object: {fileID: 0}
+  - Language: German
+    Text: Sie haben das Farbvakuum freigeschaltet!
+    Object: {fileID: 0}
+  - Language: Italian
+    Text: Hai sbloccato il vuoto di colore!
+    Object: {fileID: 0}
+  - Language: Japanese
+    Text: "\u30AB\u30E9\u30FC\u30D0\u30AD\u30E5\u30FC\u30E0\u306E\u30ED\u30C3\u30AF\u3092\u89E3\u9664\u3057\u307E\u3057\u305F\uFF01"
+    Object: {fileID: 0}
+  - Language: Korean
+    Text: "\uCEEC\uB7EC \uC9C4\uACF5\uC744 \uC7A0\uAE08 \uD574\uC81C\uD588\uC2B5\uB2C8\uB2E4!"
+    Object: {fileID: 0}
+  - Language: Portuguese
+    Text: "Voc\xEA desbloqueou o v\xE1cuo de cores!"
+    Object: {fileID: 0}
+  - Language: Russian
+    Text: "\u0412\u044B \u0440\u0430\u0437\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043B\u0438
+      \u0446\u0432\u0435\u0442\u043E\u0432\u043E\u0439 \u0432\u0430\u043A\u0443\u0443\u043C!"
+    Object: {fileID: 0}
+  - Language: Spanish
+    Text: "\xA1Has desbloqueado la aspiradora de color!"
+    Object: {fileID: 0}
 --- !u!1 &1408452295
 GameObject:
   m_ObjectHideFlags: 0

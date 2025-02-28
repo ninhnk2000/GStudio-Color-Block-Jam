@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 422766054893394587}
   - component: {fileID: 1804027890553188707}
   - component: {fileID: 3522262218853008719}
-  - component: {fileID: 1117936870320009330}
   - component: {fileID: 4809152750220104319}
   m_Layer: 0
   m_Name: 2x2 Block - Layered
@@ -59,6 +58,7 @@ MonoBehaviour:
     numTileX: 2
     numTileZ: 2
     emptyTileIndexes: 
+    isCheckDisintegrationBothRightLeft: 0
   speedMultiplier: 15
   snappingLerpRatio: 0.2
   layerMaskCheckTile:
@@ -212,27 +212,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &1117936870320009330
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8009775256764208275}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3, y: 3, z: 1.5}
-  m_Center: {x: -0.000000834465, y: 0.00000005960466, z: 0}
 --- !u!65 &4809152750220104319
 BoxCollider:
   m_ObjectHideFlags: 0

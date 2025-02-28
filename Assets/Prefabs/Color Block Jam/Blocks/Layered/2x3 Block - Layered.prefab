@@ -17,10 +17,8 @@ GameObject:
   - component: {fileID: 7896359678762342623}
   - component: {fileID: 8411547400214587830}
   - component: {fileID: 8637229665952751735}
-  - component: {fileID: 5741733214934243911}
   - component: {fileID: 8701631771441935398}
   - component: {fileID: 1971795156561690184}
-  - component: {fileID: 7169886473127236848}
   m_Layer: 0
   m_Name: 2x3 Block - Layered
   m_TagString: Untagged
@@ -61,6 +59,7 @@ MonoBehaviour:
     numTileX: 2
     numTileZ: 3
     emptyTileIndexes: 0100000005000000
+    isCheckDisintegrationBothRightLeft: 0
   speedMultiplier: 15
   snappingLerpRatio: 0.2
   layerMaskCheckTile:
@@ -214,28 +213,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!64 &5741733214934243911
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8471878753809911930}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3960169072276652937, guid: 6ab51856bfb478b458f096c9276382b2, type: 3}
 --- !u!65 &8701631771441935398
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -278,27 +255,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 1.975739, z: 3}
   m_Center: {x: 0.0000015232299, y: 1.0121276, z: -2.8449584e-15}
---- !u!65 &7169886473127236848
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8471878753809911930}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6, y: 3, z: 1.5}
-  m_Center: {x: -0.000000834465, y: 0.00000005960466, z: 0}
 --- !u!1001 &1771433410392457370
 PrefabInstance:
   m_ObjectHideFlags: 0

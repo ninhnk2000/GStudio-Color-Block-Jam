@@ -202,6 +202,8 @@ public class BlockSelectionInput : MonoBehaviour
 
                 block.Vacumn(vacumnHead);
 
+                SoundManager.Instance.PlaySoundBreakObject();
+
                 vacumnEvent?.Invoke(block.BlockProperty.Faction, vacumnHead);
 
                 _inputMode = InputMode.Select;

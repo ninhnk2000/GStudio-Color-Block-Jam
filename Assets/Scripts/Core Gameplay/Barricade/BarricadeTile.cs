@@ -30,7 +30,7 @@ public class BarricadeTile : MonoBehaviour
 
     void Awake()
     {
-        GetComponent<BoxCollider>().size *= 0.95f;
+        GetComponent<BoxCollider>().size *= 0.9f;
     }
 
     private void PlayDisintegrationFx()

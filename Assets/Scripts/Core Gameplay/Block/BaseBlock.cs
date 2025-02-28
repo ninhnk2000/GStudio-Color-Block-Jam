@@ -269,9 +269,9 @@ public class BaseBlock : MonoBehaviour
 
             Vector3 expectedDestination;
 
-            expectedDestination.x = _startMovingPosition.x + (Input.mousePosition.x - _startMovingMousePosition.x) * 0.025f;
+            expectedDestination.x = _startMovingPosition.x + (Input.mousePosition.x - _startMovingMousePosition.x) * 0.03f;
             expectedDestination.y = transform.position.y;
-            expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.025f;
+            expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.03f;
 
 
             Vector3 lastMoveDirection = _moveDirection;
@@ -561,7 +561,7 @@ public class BaseBlock : MonoBehaviour
 
             for (int i = 0; i < _boxColliders.Length; i++)
             {
-                _boxColliders[i].size = 0.98f * _boxColliders[i].size;
+                _boxColliders[i].size = 0.99f * _boxColliders[i].size;
             }
         }
 
@@ -764,6 +764,8 @@ public class BaseBlock : MonoBehaviour
                 blockCompletedEvent?.Invoke();
             });
         });
+
+        SoundManager.Instance.PlaySoundBreakObject();
 
         // KEY
         UnlockKey();
