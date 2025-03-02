@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4255019494505195408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0329757c3b3fa6c4b8c4d1977bffa056, type: 3}
+  m_Name: EdgeDetection
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  settings:
+    renderPassEvent: 1000
+    outlineThickness: 2
+    outlineColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24,15 +41,17 @@ MonoBehaviour:
     probeSamplingDebugMesh: {fileID: 0}
     probeSamplingDebugTexture: {fileID: 0}
     probeVolumeBlendStatesCS: {fileID: 0}
-  m_RendererFeatures: []
-  m_RendererFeatureMap: 
+  m_RendererFeatures:
+  - {fileID: -4255019494505195408}
+  - {fileID: 1912885974271850959}
+  m_RendererFeatureMap: 70d8a7555022f3c4cff94ca0a8ef8b1a
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
-  postProcessData: {fileID: 0}
+  postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_AssetVersion: 2
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 4294967295
   m_TransparentLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -65,6 +84,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   _baseProfile: {fileID: 11400000, guid: f2d4d916a6612574cad220d125febbf2, type: 2}
+--- !u!114 &1912885974271850959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62f33db371e97394ebf3283132e5b1be, type: 3}
+  m_Name: DepthNormals
+  m_EditorClassIdentifier: 
+  m_Active: 1
 --- !u!114 &2237412967951356190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,3 +128,35 @@ MonoBehaviour:
   _shader: {fileID: 4800000, guid: 9a902e6d68fe8344890c5926c684e820, type: 3}
   _outlineMat: {fileID: 0}
   _step: {x: 0.0010501015, y: 0.00077000004, z: 0, w: 0}
+--- !u!114 &6201598146265410348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c4b5f26c266c6542881a98f0bde4bd7, type: 3}
+  m_Name: ScreenSpaceOutlines
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  renderPassEvent: 400
+  outlinesLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  outlineSettings:
+    outlineColor: {r: 1, g: 0, b: 0, a: 1}
+    outlineScale: 5.7
+    depthThreshold: 28.2
+    robertsCrossMultiplier: 100
+    normalThreshold: 0.4
+    steepAngleThreshold: 0.2
+    steepAngleMultiplier: 25
+    colorFormat: 0
+    depthBufferBits: 0
+    filterMode: 0
+    backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    perObjectData: 0
+    enableDynamicBatching: 0
+    enableInstancing: 0

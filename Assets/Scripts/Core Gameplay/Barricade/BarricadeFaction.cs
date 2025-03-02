@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PrimeTween;
+using Unity.Mathematics;
 using UnityEngine;
 using static GameEnum;
 
@@ -16,7 +17,9 @@ public class BarricadeFaction : MonoBehaviour
     #region PRIVATE FIELD
     [SerializeField] private List<Tween> _tweens;
     [SerializeField] private Renderer _renderer;
+    [SerializeField] private Renderer _arrowRenderer;
     private MaterialPropertyBlock _propertyBlock;
+    private MaterialPropertyBlock _arrowPropertyBlock;
     #endregion
 
     // public GameFaction Faction
@@ -41,11 +44,18 @@ public class BarricadeFaction : MonoBehaviour
         if (_renderer == null)
         {
             _renderer = GetComponent<Renderer>();
+            
+        }
+
+        if (_arrowRenderer == null)
+        {
+            _arrowRenderer = arrow.GetComponent<Renderer>();
         }
 
         if (_propertyBlock == null)
         {
             _propertyBlock = new MaterialPropertyBlock();
+            _arrowPropertyBlock = new MaterialPropertyBlock();
         }
     }
 
@@ -59,8 +69,10 @@ public class BarricadeFaction : MonoBehaviour
         Color factionColor = FactionUtility.GetColorForFaction(faction);
 
         _propertyBlock.SetColor("_Color", factionColor);
+        _propertyBlock.SetColor("_OutlineColor", factionColor * 3f);
 
-        _renderer.SetPropertyBlock(_propertyBlock);
+        _arrowPropertyBlock.SetColor("_Color", factionColor * 1.8f);
+        _arrowRenderer.SetPropertyBlock(_arrowPropertyBlock);
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -89,18 +101,26 @@ public class BarricadeFaction : MonoBehaviour
             meshRenderer.enabled = true;
 
             arrow.gameObject.SetActive(false);
+
+            _propertyBlock.SetFloat("_OutlineWidth", 0);
+            _propertyBlock.SetFloat("_Alpha", 1);
         }
         else
         {
             meshRenderer.enabled = false;
 
             arrow.gameObject.SetActive(true);
+
+            _propertyBlock.SetFloat("_OutlineWidth", 1.05f);
+            _propertyBlock.SetFloat("_Alpha", 0.2f);
         }
 
         meshRenderer.enabled = true;
         meshRenderer.sharedMaterial = barricadeMaterialsContainer.BarricadeMaterials[(int)faction];
 
         barricadeServiceLocator.BlockSmasherRenderer.gameObject.SetActive(false);
+
+        _renderer.SetPropertyBlock(_propertyBlock);
 
         return;
 
