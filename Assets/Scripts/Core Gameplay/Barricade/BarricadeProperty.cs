@@ -9,6 +9,7 @@ public class BarricadeProperty
     [SerializeField] private Direction direction;
     [SerializeField] private int numTileX;
     [SerializeField] private int numTileZ;
+    [SerializeField] private float additionalPositionX;
 
     public GameFaction Faction
     {
@@ -30,5 +31,10 @@ public class BarricadeProperty
     public int NumTileZ
     {
         get => numTileZ;
+    }
+
+    public float AdditionalPositionX
+    {
+        get => additionalPositionX;
     }
 }

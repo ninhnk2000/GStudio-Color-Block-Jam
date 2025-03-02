@@ -231,7 +231,16 @@ public class LevelLoader : MonoBehaviour
         }
 
         // CAMERA
-        float fieldOfView = rightBound < 9 ? 50 : 50 + 1.8f * rightBound;
+        float fieldOfView;
+
+        if (rightBound < 12)
+        {
+            fieldOfView = 50 + 0.6f * rightBound;
+        }
+        else
+        {
+            fieldOfView = 50 + 1.6f * rightBound;
+        }
 
         setLevelCameraOrthographicSize?.Invoke(fieldOfView);
     }

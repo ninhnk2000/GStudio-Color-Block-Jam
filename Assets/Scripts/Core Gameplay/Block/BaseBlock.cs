@@ -128,6 +128,7 @@ public class BaseBlock : MonoBehaviour
 
         for (int i = 0; i < _boxColliders.Length; i++)
         {
+            _boxColliders[i].size = _boxColliders[i].size.ChangeY(3 * _boxColliders[i].size.y);
             _boxColliderSize[i] = _boxColliders[i].size;
 
             _boxColliders[i].material = physicsMaterial;
@@ -561,7 +562,7 @@ public class BaseBlock : MonoBehaviour
 
             for (int i = 0; i < _boxColliders.Length; i++)
             {
-                _boxColliders[i].size = 0.99f * _boxColliders[i].size;
+                _boxColliders[i].size = 0.99f * _boxColliderSize[i];
             }
         }
 

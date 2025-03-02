@@ -70,6 +70,7 @@ public class BarricadeFaction : MonoBehaviour
 
         _propertyBlock.SetColor("_Color", factionColor);
         _propertyBlock.SetColor("_OutlineColor", factionColor * 3f);
+        _propertyBlock.SetFloat("_AdditionPositionX", barricadeServiceLocator.barricade.BarricadeProperty.AdditionalPositionX);
 
         _arrowPropertyBlock.SetColor("_Color", factionColor * 1.8f);
         _arrowRenderer.SetPropertyBlock(_arrowPropertyBlock);
