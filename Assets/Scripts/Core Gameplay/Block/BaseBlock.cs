@@ -103,7 +103,7 @@ public class BaseBlock : MonoBehaviour
         _blockRigidBody.constraints |= RigidbodyConstraints.FreezePositionY;
         _blockRigidBody.isKinematic = true;
 
-        speedMultiplier = 50f;
+        speedMultiplier = 15f;
         snappingLerpRatio = 1f / 2;
 
         _tileSize = GamePersistentVariable.tileSize;
@@ -121,19 +121,21 @@ public class BaseBlock : MonoBehaviour
 
         _boxColliderSize = new Vector3[_boxColliders.Length];
 
+        // Physics Material
         PhysicsMaterial physicsMaterial = new PhysicsMaterial();
 
         physicsMaterial.staticFriction = 0;
         physicsMaterial.dynamicFriction = 0;
+        physicsMaterial.frictionCombine = PhysicsMaterialCombine.Minimum;
+        physicsMaterial.bounceCombine = PhysicsMaterialCombine.Minimum;
 
         for (int i = 0; i < _boxColliders.Length; i++)
         {
-            _boxColliders[i].size = _boxColliders[i].size.ChangeY(3 * _boxColliders[i].size.y);
+            _boxColliders[i].size = _boxColliders[i].size.ChangeZ(1.3f * _boxColliders[i].size.y);
             _boxColliderSize[i] = _boxColliders[i].size;
 
             _boxColliders[i].material = physicsMaterial;
         }
-
 
         ScaleOnLevelStarted();
 
@@ -268,80 +270,33 @@ public class BaseBlock : MonoBehaviour
             // }
 
 
-            Vector3 expectedDestination;
+            Vector3 expectedDestination = Vector3.zero;
 
-            expectedDestination.x = _startMovingPosition.x + (Input.mousePosition.x - _startMovingMousePosition.x) * 0.03f;
-            expectedDestination.y = transform.position.y;
-            expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.03f;
+            // expectedDestination.x = _startMovingPosition.x + (Input.mousePosition.x - _startMovingMousePosition.x) * 0.03f;
+            // expectedDestination.y = transform.position.y;
+            // expectedDestination.z = _startMovingPosition.z + (Input.mousePosition.y - _startMovingMousePosition.y) * 0.03f;
 
 
-            Vector3 lastMoveDirection = _moveDirection;
 
-            Vector3 expectedMoveDirection = expectedDestination - transform.position;
-            _moveDirection = expectedMoveDirection;
+            if (Input.GetMouseButton(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            float maxVelocity = 85;
+                Physics.Raycast(ray, out RaycastHit hit, 999, LayerMask.GetMask("Background"));
 
-            // if (!_isMovingLastFrame)
-            // {
-            //     if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
-            //     {
-            //         _prevDirectional = Direction.Right;
-            //     }
-            //     else
-            //     {
-            //         _prevDirectional = Direction.Up;
-            //     }
-            // }
-            // else
-            // {
-            //     if (modulusX < 0.3f && modulusZ < 0.3f)
-            //     {
-            //         if (Mathf.Abs(_moveDirection.x) > Mathf.Abs(_moveDirection.z))
-            //         {
-            //             _prevDirectional = Direction.Right;
-            //         }
-            //         else
-            //         {
-            //             _prevDirectional = Direction.Up;
-            //         }
-            //     }
-            // }
-
-            // if (Mathf.Abs(_inputDirection.x) > Mathf.Abs(_inputDirection.y))
-            // {
-            //     _moveDirection.z = 0;
-            // }
-            // else
-            // {
-            //     _moveDirection.x = 0;
-            // }
-
-            // if (lastMoveDirection.x > 0 && transform.position.x < _prevPosition.x + 0.1f)
-            // {
-            //     _moveDirection.x = 0;
-
-            // }
-            // if (lastMoveDirection.x < 0 && transform.position.x > _prevPosition.x - 0.1f)
-            // {
-            //     _moveDirection.x = 0;
-
-            // }
-            // if (lastMoveDirection.z < 0 && transform.position.z > _prevPosition.z - 0.1f)
-            // {
-            //     _moveDirection.z = 0;
-
-            // }
-            // if (lastMoveDirection.z < 0 && transform.position.z > _prevPosition.z - 0.1f)
-            // {
-            //     _moveDirection.z = 0;
-
-            // }
-
-            Vector3 velocity = speedMultiplier * _moveDirection;
-
-            velocity.x = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
-            velocity.z = Mathf.Clamp(velocity.z, -maxVelocity, maxVelocity);
+                if (hit.collider != null)
+                {
+                    expectedDestination = hit.point.ChangeY(transform.position.y);
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                return;
+            }
 
             if (!_isMovingLastFrame)
             {
@@ -349,101 +304,29 @@ public class BaseBlock : MonoBehaviour
             }
             else
             {
+                if (Vector3.Distance(expectedDestination, _prevPosition) > 0.2f)
+                {
+                    Vector3 expectedMoveDirection = expectedDestination - transform.position;
+                    _moveDirection = expectedMoveDirection;
 
+                    float maxVelocity = 75;
+
+                    Vector3 velocity = speedMultiplier * _moveDirection;
+
+                    velocity.x = Mathf.Clamp(velocity.x, -maxVelocity, maxVelocity);
+                    velocity.z = Mathf.Clamp(velocity.z, -maxVelocity, maxVelocity);
+
+                    _blockRigidBody.linearVelocity = velocity;
+                }
             }
-
-            _blockRigidBody.linearVelocity = velocity;
 
             _prevTargetPosition = _targetPosition;
             _prevDirection = _moveDirection;
-            _prevPosition = transform.position;
+            _prevPosition = expectedDestination;
+            // _prevPosition = transform.position;
         }
     }
     #endregion
-
-    private void BounceBack(Collision other)
-    {
-        if (blockProperty.IsMoving && !_isMoveToSafePos && !_isInCountdownBounceBack)
-        {
-            Vector3 bounceBackDirection = transform.position - other.transform.position;
-            bounceBackDirection.y = 0;
-
-            if (Mathf.Abs(bounceBackDirection.x) > Mathf.Abs(bounceBackDirection.z))
-            {
-                bounceBackDirection.z = 0;
-            }
-            else
-            {
-                bounceBackDirection.x = 0;
-            }
-
-            _safePos = transform.position + 0.25f * GamePersistentVariable.tileSize * bounceBackDirection.normalized;
-
-            _isMoveToSafePos = true;
-            _isInCountdownBounceBack = true;
-
-            _blockRigidBody.linearVelocity = Vector3.zero;
-
-            _tweens.Add(Tween.Position(transform, _safePos, duration: 0.3f).OnComplete(() =>
-            {
-                _isMoveToSafePos = false;
-
-                _isInCountdownBounceBack = true;
-
-                _startMovingPosition = transform.position;
-
-                _tweens.Add(Tween.Delay(1.5f).OnComplete(() =>
-                {
-                    _isInCountdownBounceBack = false;
-                }));
-            }));
-        }
-    }
-
-
-    // void OnCollisionStay(Collision other)
-    // {
-    //     if (blockProperty.IsMoving)
-    //     {
-    //         Vector3 bounceBackDirection = transform.position - other.transform.position;
-    //         bounceBackDirection.y = 0;
-
-    //         bounceBackDirection = bounceBackDirection.normalized;
-
-    //         if (Mathf.Abs(bounceBackDirection.x) > Mathf.Abs(bounceBackDirection.z))
-    //         {
-    //             bounceBackDirection.z = 0;
-    //         }
-    //         else
-    //         {
-    //             bounceBackDirection.x = 0;
-    //         }
-
-    //         Vector3 bounceDistance = bounceBackDirection;
-
-    //         bounceDistance.x = Mathf.Clamp(bounceDistance.x, -0.002f * GamePersistentVariable.tileSize, 0.002f * GamePersistentVariable.tileSize);
-    //         bounceDistance.z = Mathf.Clamp(bounceDistance.z, -0.002f * GamePersistentVariable.tileSize, 0.002f * GamePersistentVariable.tileSize);
-
-    //         _safePos = transform.position + bounceDistance;
-
-    //         _isMoveToSafePos = true;
-    //         // _isInCountdownBounceBack = true;
-
-    //         _blockRigidBody.linearVelocity = Vector3.zero;
-
-    //         transform.position = _safePos;
-    //     }
-    // }
-
-    // void OnCollisionExit(Collision other)
-    // {
-    //     _isMoveToSafePos = false;
-    // }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        // BounceBack(other);
-    }
 
     private void CheckDisintegration()
     {
