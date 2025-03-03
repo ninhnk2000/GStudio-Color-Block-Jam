@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using PrimeTween;
 using Saferio.Util.SaferioTween;
@@ -307,7 +308,7 @@ public class BaseBlock : MonoBehaviour
             }
             else
             {
-                if (Vector3.Distance(expectedDestination, _prevPosition) > 0.2f)
+                if (Vector3.Distance(expectedDestination, _prevPosition) > 0.4f)
                 {
                     Vector3 expectedMoveDirection = expectedDestination - transform.position;
                     _moveDirection = expectedMoveDirection;
@@ -323,14 +324,14 @@ public class BaseBlock : MonoBehaviour
                 }
                 else
                 {
-
+                    _blockRigidBody.linearVelocity = Vector2.zero;
                 }
 
                 if (Vector3.Distance(expectedDestination, transform.position) < 1f)
                 {
                     Vector3 expectedMoveDirection = expectedDestination - transform.position;
 
-                    _blockRigidBody.linearVelocity = expectedMoveDirection;
+                    _blockRigidBody.linearVelocity = 0.1f * expectedMoveDirection;
                 }
 
                 if (Vector3.Distance(expectedDestination, transform.position) < 0.1f)
@@ -522,7 +523,7 @@ public class BaseBlock : MonoBehaviour
         }
         else
         {
-            _countdownPreviewSnapping = 20;
+            _countdownPreviewSnapping = 8;
         }
 
         List<BoardTileMaterialPropertyBlock> disableHighlightTiles = _prevPreviewSnappingTiles;
@@ -532,7 +533,7 @@ public class BaseBlock : MonoBehaviour
 
         for (int i = 0; i < _boxColliders.Length; i++)
         {
-            Vector3 halfExtent = 0.4f * new Vector3(_boxColliderSize[i].x, 0.2f, _boxColliderSize[i].y);
+            Vector3 halfExtent = 0.5f * new Vector3(_boxColliderSize[i].x, 0.2f, _boxColliderSize[i].y);
 
             RaycastHit[] hits = Physics.BoxCastAll(
                 transform.position + _boxColliders[i].center, halfExtent, Vector3.down, Quaternion.identity, 10);
@@ -543,23 +544,68 @@ public class BaseBlock : MonoBehaviour
 
                 if (boardTileMaterialPropertyBlock != null)
                 {
-                    boardTileMaterialPropertyBlock.Highlight(true);
-
+                    // boardTileMaterialPropertyBlock.Highlight(true);
 
                     _prevPreviewSnappingTiles.Add(boardTileMaterialPropertyBlock);
+                }
+            }
+        }
 
-                    if (disableHighlightTiles == null)
-                    {
-                        continue;
-                    }
+        Dictionary<BoardTileMaterialPropertyBlock, Vector3> someList = new Dictionary<BoardTileMaterialPropertyBlock, Vector3>();
 
-                    for (int k = 0; k < disableHighlightTiles.Count; k++)
-                    {
-                        if (disableHighlightTiles[k].GetInstanceID() == boardTileMaterialPropertyBlock.GetInstanceID())
-                        {
-                            duplicateHighlightTiles.Add(boardTileMaterialPropertyBlock);
-                        }
-                    }
+        List<BoardTileMaterialPropertyBlock> finalList = new List<BoardTileMaterialPropertyBlock>();
+
+        for (int i = 0; i < _prevPreviewSnappingTiles.Count; i++)
+        {
+            someList.Add(_prevPreviewSnappingTiles[i], _prevPreviewSnappingTiles[i].transform.position - transform.position);
+        }
+
+        List<BoardTileMaterialPropertyBlock> orderedListHorizontal = someList.OrderBy(item => item.Value.x).Select(item => item.Key).ToList();
+        List<BoardTileMaterialPropertyBlock> orderedListVertical = someList.OrderBy(item => item.Value.z).Select(item => item.Key).ToList();
+
+        if (blockProperty.NumTileZ > blockProperty.NumTileX)
+        {
+            for (int i = 0; i < orderedListHorizontal.Count; i++)
+            {
+                if (i / blockProperty.NumTileZ <= blockProperty.NumTileX - 1)
+                {
+                    finalList.Add(orderedListHorizontal[i]);
+                }
+                else
+                {
+                    _prevPreviewSnappingTiles.Remove(orderedListHorizontal[i]);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < orderedListVertical.Count; i++)
+            {
+                if (i / blockProperty.NumTileX <= blockProperty.NumTileZ - 1)
+                {
+                    finalList.Add(orderedListVertical[i]);
+                }
+                else
+                {
+                    _prevPreviewSnappingTiles.Remove(orderedListHorizontal[i]);
+                }
+            }
+        }
+
+        for (int i = 0; i < finalList.Count; i++)
+        {
+            finalList[i].Highlight(true);
+
+            if (disableHighlightTiles == null)
+            {
+                continue;
+            }
+
+            for (int k = 0; k < disableHighlightTiles.Count; k++)
+            {
+                if (disableHighlightTiles[k].GetInstanceID() == finalList[i].GetInstanceID())
+                {
+                    duplicateHighlightTiles.Add(finalList[i]);
                 }
             }
         }

@@ -73,7 +73,7 @@ public class BoardTileMaterialPropertyBlock : MonoBehaviour
         {
             _tweens.Add(Tween.Custom(Color.white, new Color(30 / 255f, 38 / 255f, 74 / 255f, 1), duration: 0.3f, onValueChange: newVal =>
             {
-                _propertyBlock.SetColor("_ColorMultiplier", newVal);
+                _propertyBlock.SetColor("_OutlineColor", newVal);
                 _renderer.SetPropertyBlock(_propertyBlock);
             }));
         }
