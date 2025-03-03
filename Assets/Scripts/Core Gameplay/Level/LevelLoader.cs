@@ -296,7 +296,7 @@ public class LevelLoader : MonoBehaviour
         }
         else
         {
-            fieldOfView = 50 + 1.6f * rightBound;
+            fieldOfView = 50 + 1.5f * rightBound;
         }
 
         setLevelCameraOrthographicSize?.Invoke(fieldOfView);

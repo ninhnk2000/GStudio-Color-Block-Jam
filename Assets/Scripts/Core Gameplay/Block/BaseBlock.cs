@@ -45,6 +45,8 @@ public class BaseBlock : MonoBehaviour
     private int _verticalColliderInstanceId;
     private Vector3 _prevPosition;
     private Vector3 _lastEnqueuedDestination;
+    private int _countdownPreviewSnapping;
+    private List<BoardTileMaterialPropertyBlock> _prevPreviewSnappingTiles;
     #endregion
 
     public BlockServiceLocator BlockServiceLocator
@@ -70,6 +72,7 @@ public class BaseBlock : MonoBehaviour
     public static event Action disintegrateBlockEvent;
     public static event Action blockCompletedEvent;
     public static event Action<int, bool> movePairedBlock;
+    public static event Action disableHighlightTilesEvent;
 
 
 
@@ -318,7 +321,25 @@ public class BaseBlock : MonoBehaviour
 
                     _blockRigidBody.linearVelocity = velocity;
                 }
+                else
+                {
+
+                }
+
+                if (Vector3.Distance(expectedDestination, transform.position) < 1f)
+                {
+                    Vector3 expectedMoveDirection = expectedDestination - transform.position;
+
+                    _blockRigidBody.linearVelocity = expectedMoveDirection;
+                }
+
+                if (Vector3.Distance(expectedDestination, transform.position) < 0.1f)
+                {
+                    _blockRigidBody.linearVelocity = Vector2.zero;
+                }
             }
+
+            PreviewSnapping();
 
             _prevTargetPosition = _targetPosition;
             _prevDirection = _moveDirection;
@@ -491,9 +512,92 @@ public class BaseBlock : MonoBehaviour
         _destinations.Clear();
     }
 
+    private void PreviewSnapping()
+    {
+        if (_countdownPreviewSnapping != 0)
+        {
+            _countdownPreviewSnapping--;
+
+            return;
+        }
+        else
+        {
+            _countdownPreviewSnapping = 20;
+        }
+
+        List<BoardTileMaterialPropertyBlock> disableHighlightTiles = _prevPreviewSnappingTiles;
+        List<BoardTileMaterialPropertyBlock> duplicateHighlightTiles = new List<BoardTileMaterialPropertyBlock>();
+
+        _prevPreviewSnappingTiles = new List<BoardTileMaterialPropertyBlock>();
+
+        for (int i = 0; i < _boxColliders.Length; i++)
+        {
+            Vector3 halfExtent = 0.4f * new Vector3(_boxColliderSize[i].x, 0.2f, _boxColliderSize[i].y);
+
+            RaycastHit[] hits = Physics.BoxCastAll(
+                transform.position + _boxColliders[i].center, halfExtent, Vector3.down, Quaternion.identity, 10);
+
+            for (int j = 0; j < hits.Length; j++)
+            {
+                BoardTileMaterialPropertyBlock boardTileMaterialPropertyBlock = hits[j].collider.GetComponent<BoardTileMaterialPropertyBlock>();
+
+                if (boardTileMaterialPropertyBlock != null)
+                {
+                    boardTileMaterialPropertyBlock.Highlight(true);
+
+
+                    _prevPreviewSnappingTiles.Add(boardTileMaterialPropertyBlock);
+
+                    if (disableHighlightTiles == null)
+                    {
+                        continue;
+                    }
+
+                    for (int k = 0; k < disableHighlightTiles.Count; k++)
+                    {
+                        if (disableHighlightTiles[k].GetInstanceID() == boardTileMaterialPropertyBlock.GetInstanceID())
+                        {
+                            duplicateHighlightTiles.Add(boardTileMaterialPropertyBlock);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (disableHighlightTiles == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < duplicateHighlightTiles.Count; i++)
+        {
+            disableHighlightTiles.Remove(duplicateHighlightTiles[i]);
+        }
+
+        for (int i = 0; i < disableHighlightTiles.Count; i++)
+        {
+            disableHighlightTiles[i].Highlight(false);
+        }
+    }
+
+    private void DisablePreviewSnapping()
+    {
+        if (_prevPreviewSnappingTiles == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < _prevPreviewSnappingTiles.Count; i++)
+        {
+            _prevPreviewSnappingTiles[i].Highlight(false);
+        }
+    }
+
     public void Snap()
     {
         float tileDistance = GamePersistentVariable.tileDistance;
+
+        DisablePreviewSnapping();
 
         Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5, layerMaskCheckTile);
 

@@ -9,11 +9,13 @@ public class BoardTileMaterialPropertyBlock : MonoBehaviour
     private List<Tween> _tweens;
     private Renderer _renderer;
     private MaterialPropertyBlock _propertyBlock;
+    private bool _isHighlight;
     #endregion
 
     private void Awake()
     {
         LevelLoader.updateBoundEvent += SetColorByBoardBounds;
+        BaseBlock.disableHighlightTilesEvent += DisableHighlight;
 
         _tweens = new List<Tween>();
 
@@ -23,6 +25,7 @@ public class BoardTileMaterialPropertyBlock : MonoBehaviour
     void OnDestroy()
     {
         LevelLoader.updateBoundEvent -= SetColorByBoardBounds;
+        BaseBlock.disableHighlightTilesEvent -= DisableHighlight;
 
         CommonUtil.StopAllTweens(_tweens);
     }
@@ -37,6 +40,42 @@ public class BoardTileMaterialPropertyBlock : MonoBehaviour
         if (_propertyBlock == null)
         {
             _propertyBlock = new MaterialPropertyBlock();
+        }
+    }
+
+    private void DisableHighlight()
+    {
+        Highlight(false);
+    }
+
+    public void Highlight(bool isHighlight)
+    {
+        if (isHighlight == _isHighlight)
+        {
+            return;
+        }
+        else
+        {
+            _isHighlight = isHighlight;
+        }
+
+        CommonUtil.StopAllTweens(_tweens);
+
+        if (isHighlight)
+        {
+            _tweens.Add(Tween.Custom(new Color(30 / 255f, 38 / 255f, 74 / 255f, 1), Color.white, duration: 0.3f, onValueChange: newVal =>
+            {
+                _propertyBlock.SetColor("_OutlineColor", newVal);
+                _renderer.SetPropertyBlock(_propertyBlock);
+            }));
+        }
+        else
+        {
+            _tweens.Add(Tween.Custom(Color.white, new Color(30 / 255f, 38 / 255f, 74 / 255f, 1), duration: 0.3f, onValueChange: newVal =>
+            {
+                _propertyBlock.SetColor("_ColorMultiplier", newVal);
+                _renderer.SetPropertyBlock(_propertyBlock);
+            }));
         }
     }
 

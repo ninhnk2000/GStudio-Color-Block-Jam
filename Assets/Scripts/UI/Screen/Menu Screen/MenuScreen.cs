@@ -1,10 +1,10 @@
 using System;
-using System.Threading.Tasks;
 using Lean.Localization;
 using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static GameEnum;
 
@@ -20,6 +20,8 @@ public class MenuScreen : MonoBehaviour
     [SerializeField] private Button weeklyTaskButton;
     [SerializeField] private LeanLocalizedTextMeshProUGUI localizedLevelText;
     [SerializeField] private Image topBarDivider;
+
+    [SerializeField] private AudioListener menuScreenAudioListener;
 
     [SerializeField] private Sprite[] startButtonSprites;
     [SerializeField] private Material[] textMaterials;
@@ -43,6 +45,7 @@ public class MenuScreen : MonoBehaviour
         BottomBarItem.switchRouteEvent += OnScreenRouteSwitched;
         ResourceEarnPopup.removeAdsEvent += OnAdsRemoved;
         SaferioIAPManager.removeAdsEvent += OnAdsRemoved;
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
         localizedLevelText.textTranslatedEvent += OnLevelTextTranslated;
 
@@ -103,6 +106,7 @@ public class MenuScreen : MonoBehaviour
         BottomBarItem.switchRouteEvent -= OnScreenRouteSwitched;
         ResourceEarnPopup.removeAdsEvent -= OnAdsRemoved;
         SaferioIAPManager.removeAdsEvent -= OnAdsRemoved;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
 
         localizedLevelText.textTranslatedEvent -= OnLevelTextTranslated;
     }
@@ -114,8 +118,8 @@ public class MenuScreen : MonoBehaviour
 
     private void StartGame()
     {
-        Addressables.LoadSceneAsync(GameConstants.GAMEPLAY_SCENE);
-        
+        Addressables.LoadSceneAsync(GameConstants.GAMEPLAY_SCENE, UnityEngine.SceneManagement.LoadSceneMode.Additive);
+
         // if (DataUtility.Load<LivesData>(GameConstants.USER_LIVES_DATA, new LivesData()).CurrentLives > 0)
         // {
         //     changeLivesNumberEvent?.Invoke(-1);
@@ -204,5 +208,15 @@ public class MenuScreen : MonoBehaviour
     private int GetDisplayedLevel()
     {
         return currentLevel.Value;
+    }
+
+    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == GameConstants.GAMEPLAY_SCENE)
+        {
+            menuScreenAudioListener.enabled = false;
+
+            SceneManager.UnloadSceneAsync(GameConstants.MENU_SCENE);
+        }
     }
 }
