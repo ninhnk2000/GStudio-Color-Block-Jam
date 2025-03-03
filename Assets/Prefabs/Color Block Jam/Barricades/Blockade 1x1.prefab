@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3076748091471214217
 Transform:
@@ -103,7 +103,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 0
 --- !u!4 &8484794580049916282
 Transform:
@@ -188,7 +188,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7696294514107461412
 Transform:
@@ -245,7 +245,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3673546673742742345
 Transform:
@@ -285,6 +285,7 @@ MonoBehaviour:
     direction: 0
     numTileX: 1
     numTileZ: 1
+    additionalPositionX: 0
   disintegrationDuration: 0.6
   gateCollider: {fileID: 8706329286098594259}
 --- !u!114 &4623236987445485292
@@ -317,6 +318,7 @@ MonoBehaviour:
   barricadeServiceLocator: {fileID: 4623236987445485292}
   barricadeMaterialsContainer: {fileID: 11400000, guid: 94f3cf926c562d74bbbeb4d85a6d33ce, type: 2}
   _renderer: {fileID: 574832555576461507}
+  _arrowRenderer: {fileID: 5224509077462996770}
 --- !u!33 &8916775758205492052
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -419,6 +421,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 45682b7b0673295409409423763a7b30, type: 2}
+    - target: {fileID: 1408889913986875873, guid: f3c3146454c976f488275109db18ca62, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3917328822391013276, guid: f3c3146454c976f488275109db18ca62, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -462,6 +468,14 @@ PrefabInstance:
     - target: {fileID: 6489135331582753489, guid: f3c3146454c976f488275109db18ca62, type: 3}
       propertyPath: m_Name
       value: Barricade Tile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489135331582753489, guid: f3c3146454c976f488275109db18ca62, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221942260426186728, guid: f3c3146454c976f488275109db18ca62, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
