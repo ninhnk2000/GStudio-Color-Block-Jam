@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.RenderGraphModule;
 using UnityEngine.Rendering.Universal;
 
 public class DepthNormalsFeature : ScriptableRendererFeature
@@ -73,6 +74,11 @@ public class DepthNormalsFeature : ScriptableRendererFeature
         public override void FrameCleanup(CommandBuffer cmd)
         {
             cmd.ReleaseTemporaryRT(Shader.PropertyToID(destinationHandle.name));
+        }
+
+        public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
+        {
+            base.RecordRenderGraph(renderGraph, frameData);
         }
     }
 
