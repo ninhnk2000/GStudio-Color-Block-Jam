@@ -163,6 +163,34 @@ public class LevelLoader : MonoBehaviour
         BoardTile[] boardTiles = TransformUtil.GetComponentsFromAllChildren<BoardTile>(level).ToArray();
         BaseBarricade[] barricades = TransformUtil.GetComponentsFromAllChildren<BaseBarricade>(level).ToArray();
 
+        // // Combine meshes
+        // MeshFilter[] boardTileMeshes = new MeshFilter[boardTiles.Length];
+
+        // for (int i = 0; i < boardTiles.Length; i++)
+        // {
+        //     boardTileMeshes[i] = boardTiles[i].GetComponent<MeshFilter>();
+        // }
+
+        // CombineInstance[] combine = new CombineInstance[boardTileMeshes.Length];
+
+        // for (int i = 0; i < boardTileMeshes.Length; i++)
+        // {
+        //     combine[i].mesh = boardTileMeshes[i].sharedMesh;
+        //     combine[i].transform = boardTileMeshes[i].transform.localToWorldMatrix;
+        //     boardTileMeshes[i].gameObject.SetActive(false);
+        // }
+
+        // Mesh combinedMesh = new Mesh();
+        // combinedMesh.CombineMeshes(combine);
+
+        // GameObject combinedObject = new GameObject("Combined Board Tiles");
+        // MeshFilter meshFilter = combinedObject.AddComponent<MeshFilter>();
+        // MeshRenderer meshRenderer = combinedObject.AddComponent<MeshRenderer>();
+
+        // meshFilter.mesh = combinedMesh;
+        // meshRenderer.material = boardTileMeshes[0].GetComponent<MeshRenderer>().sharedMaterial;
+        // //
+
         float tileSize = boardTiles[0].GetComponent<MeshRenderer>().bounds.size.x;
 
         float rightBound = 0;
@@ -228,6 +256,35 @@ public class LevelLoader : MonoBehaviour
 
                 barricades[i].transform.eulerAngles = new Vector3(0, 0, 0);
             }
+
+            if (barricades[i].BarricadeProperty.Direction == Direction.Up)
+            {
+                if (barricades[i].transform.position.z > topBound)
+                {
+                    barricades[i].GateCollider.isTrigger = true;
+                }
+            }
+            else if (barricades[i].BarricadeProperty.Direction == Direction.Down)
+            {
+                if (barricades[i].transform.position.z < bottomBound)
+                {
+                    barricades[i].GateCollider.isTrigger = true;
+                }
+            }
+            else if (barricades[i].BarricadeProperty.Direction == Direction.Right)
+            {
+                if (barricades[i].transform.position.x > rightBound)
+                {
+                    barricades[i].GateCollider.isTrigger = true;
+                }
+            }
+            else if (barricades[i].BarricadeProperty.Direction == Direction.Left)
+            {
+                if (barricades[i].transform.position.x < leftBound)
+                {
+                    barricades[i].GateCollider.isTrigger = true;
+                }
+            }
         }
 
         // CAMERA
@@ -243,5 +300,39 @@ public class LevelLoader : MonoBehaviour
         }
 
         setLevelCameraOrthographicSize?.Invoke(fieldOfView);
+
+        // Generate bound collider
+        GameObject boundContainer = new GameObject("Bound Container");
+
+        boundContainer.transform.SetParent(barricades[0].transform.parent.parent);
+
+        GameObject topBoundCollider = new GameObject("topBoundCollider");
+
+        topBoundCollider.transform.SetParent(boundContainer.transform);
+        topBoundCollider.transform.position = new Vector3(0, 0, topBound + 1);
+        topBoundCollider.AddComponent<BoxCollider>().size = new Vector3(33, 33, 1.8f);
+
+        GameObject bottomBoundCollider = new GameObject("bottomBoundCollider");
+
+        bottomBoundCollider.transform.SetParent(boundContainer.transform);
+        bottomBoundCollider.transform.position = new Vector3(0, 0, bottomBound - 1);
+        bottomBoundCollider.AddComponent<BoxCollider>().size = new Vector3(33, 33, 1.8f);
+
+        GameObject rightBoundCollider = new GameObject("rightBoundCollider");
+
+        rightBoundCollider.transform.SetParent(boundContainer.transform);
+        rightBoundCollider.transform.position = new Vector3(rightBound + 1, 0, 0);
+        rightBoundCollider.AddComponent<BoxCollider>().size = new Vector3(1.8f, 33, 33);
+
+        GameObject leftBoundCollider = new GameObject("leftBoundCollider");
+
+        leftBoundCollider.transform.SetParent(boundContainer.transform);
+        leftBoundCollider.transform.position = new Vector3(leftBound - 1, 0, 0);
+        leftBoundCollider.AddComponent<BoxCollider>().size = new Vector3(1.8f, 33, 33);
+
+        topBoundCollider.layer = LayerMask.NameToLayer("Tile");
+        bottomBoundCollider.layer = LayerMask.NameToLayer("Tile");
+        rightBoundCollider.layer = LayerMask.NameToLayer("Tile");
+        leftBoundCollider.layer = LayerMask.NameToLayer("Tile");
     }
 }

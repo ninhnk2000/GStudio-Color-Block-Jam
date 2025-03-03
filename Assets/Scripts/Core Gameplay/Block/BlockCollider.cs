@@ -24,13 +24,6 @@ public class BlockCollider : MonoBehaviour
 
     public Vector3 boxCastDirection = -Vector3.forward;
 
-    void OnCollisionEnter(Collision other)
-    {
-        _blockRigidbody.linearVelocity = Vector3.zero;
-
-        blockServiceLocator.block.TempDisableMovement();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         return;

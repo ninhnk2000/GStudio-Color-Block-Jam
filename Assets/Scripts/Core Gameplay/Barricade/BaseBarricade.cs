@@ -52,6 +52,11 @@ public class BaseBarricade : MonoBehaviour
         get => _blockSmasherRenderer;
     }
 
+    public BoxCollider GateCollider
+    {
+        get => gateCollider;
+    }
+
     private void Awake()
     {
         _blockSmasherRenderer = blockSmasher.GetComponent<MeshRenderer>();

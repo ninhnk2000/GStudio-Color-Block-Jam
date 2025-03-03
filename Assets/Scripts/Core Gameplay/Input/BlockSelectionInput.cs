@@ -99,7 +99,7 @@ public class BlockSelectionInput : MonoBehaviour
 
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        Physics.Raycast(ray, out RaycastHit hit, 999);
+        Physics.Raycast(ray, out RaycastHit hit, 999, layerMaskCheck);
 
         if (hit.collider != null)
         {
