@@ -308,7 +308,7 @@ public class BaseBlock : MonoBehaviour
             }
             else
             {
-                if (Vector3.Distance(expectedDestination, _prevPosition) > 0.4f)
+                if (Vector3.Distance(expectedDestination, _prevPosition) > 0.13f)
                 {
                     Vector3 expectedMoveDirection = expectedDestination - transform.position;
                     _moveDirection = expectedMoveDirection;
@@ -331,7 +331,7 @@ public class BaseBlock : MonoBehaviour
                 {
                     Vector3 expectedMoveDirection = expectedDestination - transform.position;
 
-                    _blockRigidBody.linearVelocity = 0.1f * expectedMoveDirection;
+                    _blockRigidBody.linearVelocity = expectedMoveDirection;
                 }
 
                 if (Vector3.Distance(expectedDestination, transform.position) < 0.1f)
@@ -560,8 +560,8 @@ public class BaseBlock : MonoBehaviour
             someList.Add(_prevPreviewSnappingTiles[i], _prevPreviewSnappingTiles[i].transform.position - transform.position);
         }
 
-        List<BoardTileMaterialPropertyBlock> orderedListHorizontal = someList.OrderBy(item => item.Value.x).Select(item => item.Key).ToList();
-        List<BoardTileMaterialPropertyBlock> orderedListVertical = someList.OrderBy(item => item.Value.z).Select(item => item.Key).ToList();
+        List<BoardTileMaterialPropertyBlock> orderedListHorizontal = someList.OrderBy(item => Mathf.Abs(item.Value.x)).Select(item => item.Key).ToList();
+        List<BoardTileMaterialPropertyBlock> orderedListVertical = someList.OrderBy(item => Mathf.Abs(item.Value.z)).Select(item => item.Key).ToList();
 
         if (blockProperty.NumTileZ > blockProperty.NumTileX)
         {
@@ -587,7 +587,7 @@ public class BaseBlock : MonoBehaviour
                 }
                 else
                 {
-                    _prevPreviewSnappingTiles.Remove(orderedListHorizontal[i]);
+                    _prevPreviewSnappingTiles.Remove(orderedListVertical[i]);
                 }
             }
         }
