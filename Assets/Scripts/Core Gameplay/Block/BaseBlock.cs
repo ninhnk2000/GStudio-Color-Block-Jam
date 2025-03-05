@@ -13,6 +13,8 @@ public class BaseBlock : MonoBehaviour
     private BlockServiceLocator blockServiceLocator;
     [SerializeField] private BlockProperty blockProperty;
 
+    [SerializeField] private Transform snapPreviewSprite;
+
     protected List<Tween> _tweens;
     private Rigidbody _blockRigidBody;
     private MeshCollider _blockCollider;
@@ -560,18 +562,22 @@ public class BaseBlock : MonoBehaviour
 
         for (int i = 0; i < _prevPreviewSnappingTiles.Count; i++)
         {
-            someList.Add(_prevPreviewSnappingTiles[i], _prevPreviewSnappingTiles[i].transform.position - transform.position);
+            if (!someList.ContainsKey(_prevPreviewSnappingTiles[i]))
+            {
+                someList.Add(_prevPreviewSnappingTiles[i], _prevPreviewSnappingTiles[i].transform.position - transform.position);
+            }
         }
 
-        List<BoardTileMaterialPropertyBlock> orderedListHorizontal = someList
-            .OrderBy(item => Mathf.Abs(item.Value.z))
-            .OrderBy(item => Mathf.Abs(item.Value.x)).Select(item => item.Key).ToList();
-        List<BoardTileMaterialPropertyBlock> orderedListVertical = someList
-            .OrderBy(item => Mathf.Abs(item.Value.x))
-            .OrderBy(item => Mathf.Abs(item.Value.z)).Select(item => item.Key).ToList();
+
+
+
 
         if (blockProperty.NumTileZ > blockProperty.NumTileX)
         {
+            List<BoardTileMaterialPropertyBlock> orderedListHorizontal = someList
+                .OrderBy(item => Mathf.Abs(item.Value.z))
+                .OrderBy(item => Mathf.Abs(item.Value.x)).Select(item => item.Key).ToList();
+
             for (int i = 0; i < orderedListHorizontal.Count; i++)
             {
                 if (i / blockProperty.NumTileZ <= blockProperty.NumTileX - 1)
@@ -584,8 +590,12 @@ public class BaseBlock : MonoBehaviour
                 }
             }
         }
-        else
+        else if (blockProperty.NumTileZ < blockProperty.NumTileX)
         {
+            List<BoardTileMaterialPropertyBlock> orderedListVertical = someList
+                .OrderBy(item => Mathf.Abs(item.Value.x))
+                .OrderBy(item => Mathf.Abs(item.Value.z)).Select(item => item.Key).ToList();
+
             for (int i = 0; i < orderedListVertical.Count; i++)
             {
                 if (i / blockProperty.NumTileX <= blockProperty.NumTileZ - 1)
@@ -596,6 +606,76 @@ public class BaseBlock : MonoBehaviour
                 {
                     _prevPreviewSnappingTiles.Remove(orderedListVertical[i]);
                 }
+            }
+        }
+        else
+        {
+            // List<BoardTileMaterialPropertyBlock> orderedListEqual = someList
+            //     .OrderBy(item => Math.Sqrt(Mathf.Pow(item.Value.x, 2) + Mathf.Pow(item.Value.z, 2))).Select(item => item.Key).ToList();
+
+            //     BoardTileMaterialPropertyBlock nearestOne = orderedListEqual.First();
+
+            // for (int i = 0; i < orderedListEqual.Count; i++)
+            // {
+            //     if (i / blockProperty.NumTileX <= blockProperty.NumTileZ - 1)
+            //     {
+            //         finalList.Add(orderedListEqual[i]);
+            //     }
+            //     else
+            //     {
+            //         _prevPreviewSnappingTiles.Remove(orderedListEqual[i]);
+            //     }
+            // }
+
+            float tileDistance = GamePersistentVariable.tileDistance;
+
+            Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5, layerMaskCheckTile);
+
+            if (hit.collider != null)
+            {
+                _snapPosition = hit.collider.transform.position;
+
+                if (_snapPosition.x > transform.position.x)
+                {
+                    _snapPosition.x -= (BlockProperty.NumTileX - 1) / 2f * tileDistance;
+                }
+                else
+                {
+                    _snapPosition.x += (BlockProperty.NumTileX - 1) / 2f * tileDistance;
+                }
+
+                if (_snapPosition.z > transform.position.z)
+                {
+                    _snapPosition.z -= (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+                }
+                else
+                {
+                    _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+                }
+
+                if (BlockProperty.NumTileX % 2 == 1)
+                {
+                    _snapPosition.x = hit.collider.transform.position.x;
+                }
+
+                if (BlockProperty.NumTileZ % 2 == 1)
+                {
+                    _snapPosition.z = hit.collider.transform.position.z;
+                }
+
+                _snapPosition.y = snapPreviewSprite.position.y;
+
+                if (!snapPreviewSprite.gameObject.activeSelf)
+                {
+                    snapPreviewSprite.gameObject.SetActive(true);
+                }
+
+                snapPreviewSprite.position = _snapPosition;
+            }
+
+            foreach (var item in someList)
+            {
+                _prevPreviewSnappingTiles.Remove(item.Key);
             }
         }
 
@@ -643,6 +723,11 @@ public class BaseBlock : MonoBehaviour
         for (int i = 0; i < _prevPreviewSnappingTiles.Count; i++)
         {
             _prevPreviewSnappingTiles[i].Highlight(false);
+        }
+
+        if (snapPreviewSprite != null)
+        {
+            snapPreviewSprite.gameObject.SetActive(false);
         }
     }
 
