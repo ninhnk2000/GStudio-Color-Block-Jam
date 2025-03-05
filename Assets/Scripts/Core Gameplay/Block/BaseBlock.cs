@@ -91,6 +91,7 @@ public class BaseBlock : MonoBehaviour
     private Vector2 _inputDirection;
     private BoxCollider[] _boxColliders;
     private Vector3[] _boxColliderSize;
+    private Vector3[] _boundSize;
     #endregion
 
     #region LIFE CYCLE
@@ -124,6 +125,7 @@ public class BaseBlock : MonoBehaviour
         _boxColliders = GetComponents<BoxCollider>();
 
         _boxColliderSize = new Vector3[_boxColliders.Length];
+        _boundSize = new Vector3[_boxColliders.Length];
 
         // Physics Material
         PhysicsMaterial physicsMaterial = new PhysicsMaterial();
@@ -135,8 +137,9 @@ public class BaseBlock : MonoBehaviour
 
         for (int i = 0; i < _boxColliders.Length; i++)
         {
-            _boxColliders[i].size = _boxColliders[i].size.ChangeZ(1.3f * _boxColliders[i].size.y);
+            _boxColliders[i].size = _boxColliders[i].size.ChangeZ(1.3f * _boxColliders[i].size.z);
             _boxColliderSize[i] = _boxColliders[i].size;
+            _boundSize[i] = _boxColliders[i].bounds.size;
 
             _boxColliders[i].material = physicsMaterial;
         }
@@ -533,7 +536,7 @@ public class BaseBlock : MonoBehaviour
 
         for (int i = 0; i < _boxColliders.Length; i++)
         {
-            Vector3 halfExtent = 0.5f * new Vector3(_boxColliderSize[i].x, 0.2f, _boxColliderSize[i].y);
+            Vector3 halfExtent = 0.5f * new Vector3(_boundSize[i].x, 0.2f, _boundSize[i].z);
 
             RaycastHit[] hits = Physics.BoxCastAll(
                 transform.position + _boxColliders[i].center, halfExtent, Vector3.down, Quaternion.identity, 10);
@@ -560,8 +563,12 @@ public class BaseBlock : MonoBehaviour
             someList.Add(_prevPreviewSnappingTiles[i], _prevPreviewSnappingTiles[i].transform.position - transform.position);
         }
 
-        List<BoardTileMaterialPropertyBlock> orderedListHorizontal = someList.OrderBy(item => Mathf.Abs(item.Value.x)).Select(item => item.Key).ToList();
-        List<BoardTileMaterialPropertyBlock> orderedListVertical = someList.OrderBy(item => Mathf.Abs(item.Value.z)).Select(item => item.Key).ToList();
+        List<BoardTileMaterialPropertyBlock> orderedListHorizontal = someList
+            .OrderBy(item => Mathf.Abs(item.Value.z))
+            .OrderBy(item => Mathf.Abs(item.Value.x)).Select(item => item.Key).ToList();
+        List<BoardTileMaterialPropertyBlock> orderedListVertical = someList
+            .OrderBy(item => Mathf.Abs(item.Value.x))
+            .OrderBy(item => Mathf.Abs(item.Value.z)).Select(item => item.Key).ToList();
 
         if (blockProperty.NumTileZ > blockProperty.NumTileX)
         {
