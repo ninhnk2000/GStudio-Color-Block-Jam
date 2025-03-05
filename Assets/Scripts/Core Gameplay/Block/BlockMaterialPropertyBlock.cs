@@ -16,8 +16,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     [Header("CUSTOMIZE")]
     [SerializeField] private string alphaValueReference;
-    private const float DEFAULT_OUTLINE_WIDTH = 0;
-    private Color DEFAULT_OUTLINE_COLOR = ColorUtil.WithAlpha(0.05f * Color.white, 1);
+    private const float DEFAULT_OUTLINE_WIDTH = 2f;
+    private Color DEFAULT_OUTLINE_COLOR = ColorUtil.WithAlpha(0.03f * Color.white, 1);
 
     #region PRIVATE FIELD
     [SerializeField] private List<Tween> _tweens;
@@ -252,10 +252,10 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
     public void HideOutlineCompletely()
     {
         CommonUtil.StopAllTweens(_outlineTweens);
-        
+
         // outlineComponent.OutlineColor = ColorUtil.WithAlpha(0.1f * Color.white, 0);
         outlineComponent.OutlineWidth = 0;
-        
+
         // _tweens.Add(Tween.Custom(outlineComponent.OutlineColor, ColorUtil.WithAlpha(0.1f * Color.white, 0), duration: 0.1f, onValueChange: newVal =>
         // {
         //     outlineComponent.OutlineColor = newVal;
