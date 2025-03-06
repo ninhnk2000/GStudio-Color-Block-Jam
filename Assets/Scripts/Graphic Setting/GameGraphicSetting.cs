@@ -8,9 +8,9 @@ public class GameGraphicSetting : MonoBehaviour
 
     void Awake()
     {
-        if (SystemInfo.systemMemorySize < 6000)
-        {
-            postProcessingVolumn.enabled = false;
-        }
+        // if (SystemInfo.systemMemorySize < 6000)
+        // {
+        //     postProcessingVolumn.enabled = false;
+        // }
     }
 }

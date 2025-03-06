@@ -256,6 +256,21 @@ game_LIB_DEPENDS:STATIC=general;android;general;game-activity::game-activity_sta
 //Value Computed by CMake
 game_SOURCE_DIR:STATIC=C:/Unity Projects/GStudio-Color-Block-Jam/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity
 
+//The directory containing a CMake configuration file for games-frame-pacing.
+games-frame-pacing_DIR:PATH=C:/Unity Projects/GStudio-Color-Block-Jam/.utmp/RelWithDebInfo/b522sd6r/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing
+
+//Value Computed by CMake
+swappywrapper_BINARY_DIR:STATIC=C:/Unity Projects/GStudio-Color-Block-Jam/.utmp/RelWithDebInfo/b522sd6r/arm64-v8a/FramePacing
+
+//Value Computed by CMake
+swappywrapper_IS_TOP_LEVEL:STATIC=OFF
+
+//Dependencies for the target
+swappywrapper_LIB_DEPENDS:STATIC=general;android;general;games-frame-pacing::swappy_static;general;log;
+
+//Value Computed by CMake
+swappywrapper_SOURCE_DIR:STATIC=C:/Unity Projects/GStudio-Color-Block-Jam/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing
+
 
 ########################
 # INTERNAL cache entries
@@ -351,7 +366,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

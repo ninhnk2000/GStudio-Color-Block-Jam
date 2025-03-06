@@ -222,7 +222,7 @@ public class BaseBlock : MonoBehaviour
 
         if (blockProperty.IsMoving)
         {
-            _snapPreviewSprite.position = Vector3.Lerp(_snapPreviewSprite.position, _snapPreviewPosition, snappingLerpRatio);
+            _snapPreviewSprite.position = Vector3.Lerp(_snapPreviewSprite.position, _snapPreviewPosition, 1 / 3f);
         }
         else
         {
@@ -410,6 +410,7 @@ public class BaseBlock : MonoBehaviour
                 _snapPreviewSprite = Instantiate(op.Result, transform).transform;
 
                 _snapPreviewSprite.localScale = new Vector3(2 * blockProperty.NumTileX, 2 * blockProperty.NumTileZ, 1);
+                _snapPreviewSprite.eulerAngles = new Vector3(90, 0, 0);
 
                 PreviewSnapSpriteMaterialPropertyBlock materialPropertyBlock = _snapPreviewSprite.GetComponent<PreviewSnapSpriteMaterialPropertyBlock>();
 
@@ -715,11 +716,6 @@ public class BaseBlock : MonoBehaviour
         {
             _prevPreviewSnappingTiles[i].Highlight(false);
         }
-
-        // if (_snapPreviewSprite != null)
-        // {
-        //     _snapPreviewSprite.gameObject.SetActive(false);
-        // }
     }
 
     public void Snap()
