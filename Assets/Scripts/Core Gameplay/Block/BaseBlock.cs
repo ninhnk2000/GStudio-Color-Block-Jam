@@ -125,6 +125,7 @@ public class BaseBlock : MonoBehaviour
 
         if (transform.parent.GetComponent<BaseBlock>() == null)
         {
+            transform.position = transform.position.ChangeY(1.3f);
             transform.localScale = 1.95f * Vector3.one;
         }
 
