@@ -39,6 +39,7 @@ public static class GameConstants
     public static Color SAFERIO_BLUE = new Color(24f / 255, 142f / 255, 233f / 255, 1);
     public static Color SAFERIO_YELLLOW = new Color(246f / 255, 204f / 255, 53f / 255, 1);
     public static Color SAFERIO_WHITE = new Color(223f / 255, 217f / 255, 216f / 255, 1);
+    public static Color SAFERIO_PINK = new Color(253f / 255, 20f / 255, 146f / 255, 1);
     public static Color SAFERIO_CYAN = new Color(41f / 255, 202f / 255, 163f / 255, 1);
     public static Color SAFERIO_BROWN = new Color(139f / 255, 82f / 255, 44f / 255, 1);
     public static Color SAFERIO_DISABLED = new Color(70f / 255, 70f / 255, 70f / 255, 1);

@@ -9,6 +9,7 @@ public class BarricadeFaction : MonoBehaviour
 {
     // [SerializeField] private GameFaction faction;
     [SerializeField] private GameObject arrow;
+    [SerializeField] private Renderer _outlineSpriteRenderer;
 
     [SerializeField] private BarricadeServiceLocator barricadeServiceLocator;
 
@@ -44,7 +45,7 @@ public class BarricadeFaction : MonoBehaviour
         if (_renderer == null)
         {
             _renderer = GetComponent<Renderer>();
-            
+
         }
 
         if (_arrowRenderer == null)
@@ -68,12 +69,25 @@ public class BarricadeFaction : MonoBehaviour
 
         Color factionColor = FactionUtility.GetColorForFaction(faction);
 
+        float ratio = 1 - Mathf.Max(Mathf.Max(factionColor.r + factionColor.g), factionColor.b);
+
+        Color outlineColor = factionColor * 3f;
+
+        outlineColor.r = Mathf.Min(outlineColor.r, 1.8f);
+        outlineColor.g = Mathf.Min(outlineColor.g, 1.8f);
+        outlineColor.b = Mathf.Min(outlineColor.b, 1.8f);
+
         _propertyBlock.SetColor("_Color", factionColor);
-        _propertyBlock.SetColor("_OutlineColor", factionColor * 3f);
+        _propertyBlock.SetColor("_OutlineColor", 2f * factionColor);
         _propertyBlock.SetFloat("_AdditionPositionX", barricadeServiceLocator.barricade.BarricadeProperty.AdditionalPositionX);
 
-        _arrowPropertyBlock.SetColor("_Color", factionColor * 1.8f);
+        _arrowPropertyBlock.SetColor("_Color", 1.5f * factionColor);
         _arrowRenderer.SetPropertyBlock(_arrowPropertyBlock);
+
+        if (_outlineSpriteRenderer != null)
+        {
+            _outlineSpriteRenderer.SetPropertyBlock(_propertyBlock);
+        }
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -100,6 +114,11 @@ public class BarricadeFaction : MonoBehaviour
             meshRenderer.enabled = true;
 
             arrow.gameObject.SetActive(false);
+
+            if (_outlineSpriteRenderer != null)
+            {
+                _outlineSpriteRenderer.gameObject.SetActive(false);
+            }
 
             _propertyBlock.SetFloat("_OutlineWidth", 0);
             _propertyBlock.SetFloat("_Alpha", 1);
