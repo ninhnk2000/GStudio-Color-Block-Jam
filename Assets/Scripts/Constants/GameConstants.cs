@@ -161,6 +161,10 @@ public static class GameConstants
     public static int DEFAULT_LIVES = 5;
     #endregion
 
+    #region ADDRESSABLES
+    public static string SNAP_PREVIEW_SPRITE = "SNAP_PREVIEW_SPRITE";
+    #endregion
+
     #region SHADER
     public static string ADDITION_POSITION_X = "_AdditionPositionX";
     #endregion

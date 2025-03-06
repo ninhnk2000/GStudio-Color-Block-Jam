@@ -4,16 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using PrimeTween;
 using Saferio.Util.SaferioTween;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using static GameEnum;
 
 public class BaseBlock : MonoBehaviour
 {
     private BlockServiceLocator blockServiceLocator;
     [SerializeField] private BlockProperty blockProperty;
-
-    [SerializeField] private Transform snapPreviewSprite;
 
     protected List<Tween> _tweens;
     private Rigidbody _blockRigidBody;
@@ -94,6 +93,11 @@ public class BaseBlock : MonoBehaviour
     private BoxCollider[] _boxColliders;
     private Vector3[] _boxColliderSize;
     private Vector3[] _boundSize;
+    #endregion
+
+    #region SNAP PREVIEW
+    private Transform _snapPreviewSprite;
+    private Vector3 _snapPreviewPosition;
     #endregion
 
     #region LIFE CYCLE
@@ -210,38 +214,21 @@ public class BaseBlock : MonoBehaviour
                 Vector3 direction;
                 float maxDistance;
 
-                // if (transform.position.x > 0)
-                // {
-                //     direction = Vector3.right;
-                // }
-                // else
-                // {
-                //     direction = -Vector3.right;
-                // }
-
-                // maxDistance = 0.3f * blockServiceLocator.Size.x;
-
-                // bool IsDisintegrate = blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
-
-                // if (!IsDisintegrate)
-                // {
-                //     if (transform.position.z > 0)
-                //     {
-                //         direction = Vector3.forward;
-                //     }
-                //     else
-                //     {
-                //         direction = -Vector3.forward;
-                //     }
-
-                //     maxDistance = 0.3f * blockServiceLocator.Size.z;
-
-                //     blockServiceLocator.blockCollider.CheckDisintegration(direction, maxDistance);
-                // }
-
                 CheckDisintegration();
 
                 _isSnapping = false;
+            }
+        }
+
+        if (blockProperty.IsMoving)
+        {
+            _snapPreviewSprite.position = Vector3.Lerp(_snapPreviewSprite.position, _snapPreviewPosition, snappingLerpRatio);
+        }
+        else
+        {
+            if (_snapPreviewSprite != null)
+            {
+                _snapPreviewSprite.gameObject.SetActive(false);
             }
         }
 
@@ -406,8 +393,33 @@ public class BaseBlock : MonoBehaviour
         transform.localScale = Vector3.zero;
 
         _tweens.Add(Tween.Scale(transform, _prevScale, duration: 0.5f));
+
+        CreateSnapPreviewSprite();
     }
     #endregion 
+
+    #region PRVIEW SNAPPING
+    private void CreateSnapPreviewSprite()
+    {
+        AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(GameConstants.SNAP_PREVIEW_SPRITE);
+
+        handle.Completed += (op) =>
+        {
+            if (op.Status == AsyncOperationStatus.Succeeded)
+            {
+                _snapPreviewSprite = Instantiate(op.Result, transform).transform;
+
+                _snapPreviewSprite.localScale = new Vector3(2 * blockProperty.NumTileX, 2 * blockProperty.NumTileZ, 1);
+
+                PreviewSnapSpriteMaterialPropertyBlock materialPropertyBlock = _snapPreviewSprite.GetComponent<PreviewSnapSpriteMaterialPropertyBlock>();
+
+                materialPropertyBlock.SetTiling(new Vector2(2 * blockProperty.NumTileX, 2 * blockProperty.NumTileZ));
+
+                _snapPreviewSprite.gameObject.SetActive(false);
+            }
+        };
+    }
+    #endregion
 
     #region MOVEMENT
     public virtual void Move(Vector3 targetPosition)
@@ -531,186 +543,165 @@ public class BaseBlock : MonoBehaviour
             _countdownPreviewSnapping = 8;
         }
 
-        List<BoardTileMaterialPropertyBlock> disableHighlightTiles = _prevPreviewSnappingTiles;
-        List<BoardTileMaterialPropertyBlock> duplicateHighlightTiles = new List<BoardTileMaterialPropertyBlock>();
+        // List<BoardTileMaterialPropertyBlock> disableHighlightTiles = _prevPreviewSnappingTiles;
+        // List<BoardTileMaterialPropertyBlock> duplicateHighlightTiles = new List<BoardTileMaterialPropertyBlock>();
 
-        _prevPreviewSnappingTiles = new List<BoardTileMaterialPropertyBlock>();
+        // _prevPreviewSnappingTiles = new List<BoardTileMaterialPropertyBlock>();
 
-        for (int i = 0; i < _boxColliders.Length; i++)
+        // for (int i = 0; i < _boxColliders.Length; i++)
+        // {
+        //     Vector3 halfExtent = 0.5f * new Vector3(_boundSize[i].x, 0.2f, _boundSize[i].z);
+
+        //     RaycastHit[] hits = Physics.BoxCastAll(
+        //         transform.position + _boxColliders[i].center, halfExtent, Vector3.down, Quaternion.identity, 10);
+
+        //     for (int j = 0; j < hits.Length; j++)
+        //     {
+        //         BoardTileMaterialPropertyBlock boardTileMaterialPropertyBlock = hits[j].collider.GetComponent<BoardTileMaterialPropertyBlock>();
+
+        //         if (boardTileMaterialPropertyBlock != null)
+        //         {
+        //             // boardTileMaterialPropertyBlock.Highlight(true);
+
+        //             _prevPreviewSnappingTiles.Add(boardTileMaterialPropertyBlock);
+        //         }
+        //     }
+        // }
+
+        // Dictionary<BoardTileMaterialPropertyBlock, Vector3> someList = new Dictionary<BoardTileMaterialPropertyBlock, Vector3>();
+
+        // List<BoardTileMaterialPropertyBlock> finalList = new List<BoardTileMaterialPropertyBlock>();
+
+        // for (int i = 0; i < _prevPreviewSnappingTiles.Count; i++)
+        // {
+        //     if (!someList.ContainsKey(_prevPreviewSnappingTiles[i]))
+        //     {
+        //         someList.Add(_prevPreviewSnappingTiles[i], _prevPreviewSnappingTiles[i].transform.position - transform.position);
+        //     }
+        // }
+
+
+
+        float tileDistance = GamePersistentVariable.tileDistance;
+
+        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5, layerMaskCheckTile);
+
+        if (hit.collider != null)
         {
-            Vector3 halfExtent = 0.5f * new Vector3(_boundSize[i].x, 0.2f, _boundSize[i].z);
+            _snapPosition = hit.collider.transform.position;
 
-            RaycastHit[] hits = Physics.BoxCastAll(
-                transform.position + _boxColliders[i].center, halfExtent, Vector3.down, Quaternion.identity, 10);
-
-            for (int j = 0; j < hits.Length; j++)
+            if (_snapPosition.x > transform.position.x)
             {
-                BoardTileMaterialPropertyBlock boardTileMaterialPropertyBlock = hits[j].collider.GetComponent<BoardTileMaterialPropertyBlock>();
-
-                if (boardTileMaterialPropertyBlock != null)
-                {
-                    // boardTileMaterialPropertyBlock.Highlight(true);
-
-                    _prevPreviewSnappingTiles.Add(boardTileMaterialPropertyBlock);
-                }
+                _snapPosition.x -= (BlockProperty.NumTileX - 1) / 2f * tileDistance;
             }
-        }
-
-        Dictionary<BoardTileMaterialPropertyBlock, Vector3> someList = new Dictionary<BoardTileMaterialPropertyBlock, Vector3>();
-
-        List<BoardTileMaterialPropertyBlock> finalList = new List<BoardTileMaterialPropertyBlock>();
-
-        for (int i = 0; i < _prevPreviewSnappingTiles.Count; i++)
-        {
-            if (!someList.ContainsKey(_prevPreviewSnappingTiles[i]))
+            else
             {
-                someList.Add(_prevPreviewSnappingTiles[i], _prevPreviewSnappingTiles[i].transform.position - transform.position);
-            }
-        }
-
-
-
-
-
-        if (blockProperty.NumTileZ > blockProperty.NumTileX)
-        {
-            List<BoardTileMaterialPropertyBlock> orderedListHorizontal = someList
-                .OrderBy(item => Mathf.Abs(item.Value.z))
-                .OrderBy(item => Mathf.Abs(item.Value.x)).Select(item => item.Key).ToList();
-
-            for (int i = 0; i < orderedListHorizontal.Count; i++)
-            {
-                if (i / blockProperty.NumTileZ <= blockProperty.NumTileX - 1)
-                {
-                    finalList.Add(orderedListHorizontal[i]);
-                }
-                else
-                {
-                    _prevPreviewSnappingTiles.Remove(orderedListHorizontal[i]);
-                }
-            }
-        }
-        else if (blockProperty.NumTileZ < blockProperty.NumTileX)
-        {
-            List<BoardTileMaterialPropertyBlock> orderedListVertical = someList
-                .OrderBy(item => Mathf.Abs(item.Value.x))
-                .OrderBy(item => Mathf.Abs(item.Value.z)).Select(item => item.Key).ToList();
-
-            for (int i = 0; i < orderedListVertical.Count; i++)
-            {
-                if (i / blockProperty.NumTileX <= blockProperty.NumTileZ - 1)
-                {
-                    finalList.Add(orderedListVertical[i]);
-                }
-                else
-                {
-                    _prevPreviewSnappingTiles.Remove(orderedListVertical[i]);
-                }
-            }
-        }
-        else
-        {
-            // List<BoardTileMaterialPropertyBlock> orderedListEqual = someList
-            //     .OrderBy(item => Math.Sqrt(Mathf.Pow(item.Value.x, 2) + Mathf.Pow(item.Value.z, 2))).Select(item => item.Key).ToList();
-
-            //     BoardTileMaterialPropertyBlock nearestOne = orderedListEqual.First();
-
-            // for (int i = 0; i < orderedListEqual.Count; i++)
-            // {
-            //     if (i / blockProperty.NumTileX <= blockProperty.NumTileZ - 1)
-            //     {
-            //         finalList.Add(orderedListEqual[i]);
-            //     }
-            //     else
-            //     {
-            //         _prevPreviewSnappingTiles.Remove(orderedListEqual[i]);
-            //     }
-            // }
-
-            float tileDistance = GamePersistentVariable.tileDistance;
-
-            Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5, layerMaskCheckTile);
-
-            if (hit.collider != null)
-            {
-                _snapPosition = hit.collider.transform.position;
-
-                if (_snapPosition.x > transform.position.x)
-                {
-                    _snapPosition.x -= (BlockProperty.NumTileX - 1) / 2f * tileDistance;
-                }
-                else
-                {
-                    _snapPosition.x += (BlockProperty.NumTileX - 1) / 2f * tileDistance;
-                }
-
-                if (_snapPosition.z > transform.position.z)
-                {
-                    _snapPosition.z -= (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
-                }
-                else
-                {
-                    _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
-                }
-
-                if (BlockProperty.NumTileX % 2 == 1)
-                {
-                    _snapPosition.x = hit.collider.transform.position.x;
-                }
-
-                if (BlockProperty.NumTileZ % 2 == 1)
-                {
-                    _snapPosition.z = hit.collider.transform.position.z;
-                }
-
-                _snapPosition.y = snapPreviewSprite.position.y;
-
-                if (!snapPreviewSprite.gameObject.activeSelf)
-                {
-                    snapPreviewSprite.gameObject.SetActive(true);
-                }
-
-                snapPreviewSprite.position = _snapPosition;
+                _snapPosition.x += (BlockProperty.NumTileX - 1) / 2f * tileDistance;
             }
 
-            foreach (var item in someList)
+            if (_snapPosition.z > transform.position.z)
             {
-                _prevPreviewSnappingTiles.Remove(item.Key);
+                _snapPosition.z -= (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
             }
-        }
-
-        for (int i = 0; i < finalList.Count; i++)
-        {
-            finalList[i].Highlight(true);
-
-            if (disableHighlightTiles == null)
+            else
             {
-                continue;
+                _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
             }
 
-            for (int k = 0; k < disableHighlightTiles.Count; k++)
+            if (BlockProperty.NumTileX % 2 == 1)
             {
-                if (disableHighlightTiles[k].GetInstanceID() == finalList[i].GetInstanceID())
-                {
-                    duplicateHighlightTiles.Add(finalList[i]);
-                }
+                _snapPosition.x = hit.collider.transform.position.x;
             }
+
+            if (BlockProperty.NumTileZ % 2 == 1)
+            {
+                _snapPosition.z = hit.collider.transform.position.z;
+            }
+
+            _snapPosition.y = transform.position.y - 0.5f;
+
+            if (!_snapPreviewSprite.gameObject.activeSelf)
+            {
+                _snapPreviewSprite.gameObject.SetActive(true);
+            }
+
+            _snapPreviewPosition = _snapPosition;
         }
 
-        if (disableHighlightTiles == null)
-        {
-            return;
-        }
 
-        for (int i = 0; i < duplicateHighlightTiles.Count; i++)
-        {
-            disableHighlightTiles.Remove(duplicateHighlightTiles[i]);
-        }
+        // if (blockProperty.NumTileZ > blockProperty.NumTileX)
+        // {
+        //     List<BoardTileMaterialPropertyBlock> orderedListHorizontal = someList
+        //         .OrderBy(item => Mathf.Abs(item.Value.z))
+        //         .OrderBy(item => Mathf.Abs(item.Value.x)).Select(item => item.Key).ToList();
 
-        for (int i = 0; i < disableHighlightTiles.Count; i++)
-        {
-            disableHighlightTiles[i].Highlight(false);
-        }
+        //     for (int i = 0; i < orderedListHorizontal.Count; i++)
+        //     {
+        //         if (i / blockProperty.NumTileZ <= blockProperty.NumTileX - 1)
+        //         {
+        //             finalList.Add(orderedListHorizontal[i]);
+        //         }
+        //         else
+        //         {
+        //             _prevPreviewSnappingTiles.Remove(orderedListHorizontal[i]);
+        //         }
+        //     }
+        // }
+        // else if (blockProperty.NumTileZ < blockProperty.NumTileX)
+        // {
+        //     List<BoardTileMaterialPropertyBlock> orderedListVertical = someList
+        //         .OrderBy(item => Mathf.Abs(item.Value.x))
+        //         .OrderBy(item => Mathf.Abs(item.Value.z)).Select(item => item.Key).ToList();
+
+        //     for (int i = 0; i < orderedListVertical.Count; i++)
+        //     {
+        //         if (i / blockProperty.NumTileX <= blockProperty.NumTileZ - 1)
+        //         {
+        //             finalList.Add(orderedListVertical[i]);
+        //         }
+        //         else
+        //         {
+        //             _prevPreviewSnappingTiles.Remove(orderedListVertical[i]);
+        //         }
+        //     }
+        // }
+        // else
+        // {
+
+        // }
+
+        // for (int i = 0; i < finalList.Count; i++)
+        // {
+        //     finalList[i].Highlight(true);
+
+        //     if (disableHighlightTiles == null)
+        //     {
+        //         continue;
+        //     }
+
+        //     for (int k = 0; k < disableHighlightTiles.Count; k++)
+        //     {
+        //         if (disableHighlightTiles[k].GetInstanceID() == finalList[i].GetInstanceID())
+        //         {
+        //             duplicateHighlightTiles.Add(finalList[i]);
+        //         }
+        //     }
+        // }
+
+        // if (disableHighlightTiles == null)
+        // {
+        //     return;
+        // }
+
+        // for (int i = 0; i < duplicateHighlightTiles.Count; i++)
+        // {
+        //     disableHighlightTiles.Remove(duplicateHighlightTiles[i]);
+        // }
+
+        // for (int i = 0; i < disableHighlightTiles.Count; i++)
+        // {
+        //     disableHighlightTiles[i].Highlight(false);
+        // }
     }
 
     private void DisablePreviewSnapping()
@@ -725,10 +716,10 @@ public class BaseBlock : MonoBehaviour
             _prevPreviewSnappingTiles[i].Highlight(false);
         }
 
-        if (snapPreviewSprite != null)
-        {
-            snapPreviewSprite.gameObject.SetActive(false);
-        }
+        // if (_snapPreviewSprite != null)
+        // {
+        //     _snapPreviewSprite.gameObject.SetActive(false);
+        // }
     }
 
     public void Snap()
