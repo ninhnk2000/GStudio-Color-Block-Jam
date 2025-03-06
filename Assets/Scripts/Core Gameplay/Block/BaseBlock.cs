@@ -117,10 +117,6 @@ public class BaseBlock : MonoBehaviour
         speedMultiplier = 15f;
         snappingLerpRatio = 1f / 2;
 
-        _tileSize = GamePersistentVariable.tileSize;
-        _initialPosition = transform.position;
-
-
         _destinations = new Queue<Vector3>();
 
         if (transform.parent.GetComponent<BaseBlock>() == null)
@@ -128,6 +124,9 @@ public class BaseBlock : MonoBehaviour
             transform.position = transform.position.ChangeY(1.3f);
             transform.localScale = 1.95f * Vector3.one;
         }
+
+        _tileSize = GamePersistentVariable.tileSize;
+        _initialPosition = transform.position;
 
         _boxColliders = GetComponents<BoxCollider>();
 
@@ -523,8 +522,6 @@ public class BaseBlock : MonoBehaviour
 
         Snap();
 
-        blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
-
         blockProperty.IsMoving = false;
 
         _isMovingLastFrame = false;
@@ -590,44 +587,42 @@ public class BaseBlock : MonoBehaviour
 
         if (hit.collider != null)
         {
-            _snapPosition = hit.collider.transform.position;
+            _snapPreviewPosition = hit.collider.transform.position;
 
-            if (_snapPosition.x > transform.position.x)
+            if (_snapPreviewPosition.x > transform.position.x)
             {
-                _snapPosition.x -= (BlockProperty.NumTileX - 1) / 2f * tileDistance;
+                _snapPreviewPosition.x -= (BlockProperty.NumTileX - 1) / 2f * tileDistance;
             }
             else
             {
-                _snapPosition.x += (BlockProperty.NumTileX - 1) / 2f * tileDistance;
+                _snapPreviewPosition.x += (BlockProperty.NumTileX - 1) / 2f * tileDistance;
             }
 
-            if (_snapPosition.z > transform.position.z)
+            if (_snapPreviewPosition.z > transform.position.z)
             {
-                _snapPosition.z -= (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+                _snapPreviewPosition.z -= (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
             }
             else
             {
-                _snapPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
+                _snapPreviewPosition.z += (BlockProperty.NumTileZ - 1) / 2f * tileDistance;
             }
 
             if (BlockProperty.NumTileX % 2 == 1)
             {
-                _snapPosition.x = hit.collider.transform.position.x;
+                _snapPreviewPosition.x = hit.collider.transform.position.x;
             }
 
             if (BlockProperty.NumTileZ % 2 == 1)
             {
-                _snapPosition.z = hit.collider.transform.position.z;
+                _snapPreviewPosition.z = hit.collider.transform.position.z;
             }
 
-            _snapPosition.y = transform.position.y - 0.5f;
+            _snapPreviewPosition.y = transform.position.y - 0.1f;
 
             if (!_snapPreviewSprite.gameObject.activeSelf)
             {
                 _snapPreviewSprite.gameObject.SetActive(true);
             }
-
-            _snapPreviewPosition = _snapPosition;
         }
 
 
@@ -725,6 +720,8 @@ public class BaseBlock : MonoBehaviour
 
         DisablePreviewSnapping();
 
+        blockServiceLocator.blockMaterialPropertyBlock.ShowOutline(false);
+
         Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 5, layerMaskCheckTile);
 
         if (hit.collider != null)
@@ -789,6 +786,8 @@ public class BaseBlock : MonoBehaviour
         blockServiceLocator.blockMaterialPropertyBlock.HideOutlineCompletely();
 
         Snap();
+
+        blockServiceLocator.blockMaterialPropertyBlock.DisableOutline();
 
         blockProperty.IsMoving = false;
         blockProperty.IsDisintegrating = true;

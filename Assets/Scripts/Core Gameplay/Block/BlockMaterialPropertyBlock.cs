@@ -13,6 +13,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     [Header("OUTLINE")]
     [SerializeField] private Outline outlineComponent;
+    [SerializeField] private SpriteRenderer outlineSprite;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private string alphaValueReference;
@@ -23,6 +24,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
     [SerializeField] private List<Tween> _tweens;
     [SerializeField] private List<Tween> _outlineTweens;
     [SerializeField] private Renderer _renderer;
+    private Renderer _outlineSpriteRenderer;
     private MaterialPropertyBlock _propertyBlock;
     private GameFaction _cachedFaction;
     private bool _isInTransition;
@@ -62,6 +64,11 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         if (_renderer == null)
         {
             _renderer = GetComponent<Renderer>();
+        }
+
+        if (_outlineSpriteRenderer == null && outlineSprite != null)
+        {
+            _outlineSpriteRenderer = outlineSprite.GetComponent<Renderer>();
         }
 
         if (_propertyBlock == null)
@@ -202,51 +209,134 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
     private void SetDefaultOutline()
     {
-        outlineComponent.OutlineColor = DEFAULT_OUTLINE_COLOR;
-        outlineComponent.OutlineWidth = DEFAULT_OUTLINE_WIDTH;
+        // if (outlineSprite != null)
+        // {
+        //     outlineSprite.gameObject.SetActive(false);
+        // }
+
+        outlineComponent.enabled = false;
+
+        ShowOutline(false);
+
+        // outlineComponent.OutlineColor = DEFAULT_OUTLINE_COLOR;
+        // outlineComponent.OutlineWidth = DEFAULT_OUTLINE_WIDTH;
     }
 
     public void ShowOutline(bool isShow)
     {
-        // Color outlineColor = _propertyBlock.GetColor("_OutlineColor");
+        if (outlineSprite == null)
+        {
+            return;
+        }
 
-        Color outlineColor = FactionUtility.GetColorForFaction(blockServiceLocator.block.BlockProperty.Faction) * 3f;
+        // float startValue = 0;
+        // float endValue = 1;
 
-        Color startValue = DEFAULT_OUTLINE_COLOR;
+        // if (!isShow)
+        // {
+        //     startValue = 1;
+        //     endValue = 0;
+        // }
+
+        Color startValue = new Color(30 / 255f, 38 / 255f, 74 / 255f, 1);
         Color endValue = Color.white;
 
         if (!isShow)
         {
-            endValue = DEFAULT_OUTLINE_COLOR;
+            startValue = Color.white;
+            endValue = new Color(30 / 255f, 38 / 255f, 74 / 255f, 1);
         }
 
-        CommonUtil.StopAllTweens(_outlineTweens);
+        float startAlphaValue = 0.2f;
+        float endAlphaValue = 1;
+
+        if (!isShow)
+        {
+            startAlphaValue = 1f;
+            endAlphaValue = 0.2f;
+        }
+
+        // if (isShow)
+        // {
+        //     outlineSprite.gameObject.SetActive(true);
+        // }
+
+        _outlineTweens.Add(Tween.Custom(startAlphaValue, endAlphaValue, duration: 0.3f, onValueChange: newVal =>
+        {
+            _propertyBlock.SetFloat("_OutlineAlpha", newVal);
+            // _outlineSpriteRenderer.SetPropertyBlock(_propertyBlock);
+        }));
 
         _outlineTweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
         {
-            outlineComponent.OutlineColor = newVal;
-
-            // _propertyBlock.SetColor("_OutlineColor", ColorUtil.WithAlpha(outlineColor, newVal));
-            // _renderer.SetPropertyBlock(_propertyBlock);
+            _propertyBlock.SetColor("_OutlineColor", newVal);
+            // _propertyBlock.SetFloat("_OutlineAlpha", newVal);
+            _outlineSpriteRenderer.SetPropertyBlock(_propertyBlock);
         })
             .OnComplete(() =>
             {
+                // if (!isShow)
+                // {
+                //     outlineSprite.gameObject.SetActive(false);
+                // }
+
                 _isInTransition = false;
             })
         );
 
-        float startWidthValue = DEFAULT_OUTLINE_WIDTH;
-        float endWidthValue = 4;
+        // // Color outlineColor = _propertyBlock.GetColor("_OutlineColor");
 
-        if (!isShow)
-        {
-            endWidthValue = DEFAULT_OUTLINE_WIDTH;
-        }
+        // Color outlineColor = FactionUtility.GetColorForFaction(blockServiceLocator.block.BlockProperty.Faction) * 3f;
 
-        _outlineTweens.Add(Tween.Custom(startWidthValue, endWidthValue, duration: 0.3f, onValueChange: newVal =>
+        // Color startValue = DEFAULT_OUTLINE_COLOR;
+        // Color endValue = Color.white;
+
+        // if (!isShow)
+        // {
+        //     endValue = DEFAULT_OUTLINE_COLOR;
+        // }
+
+        // CommonUtil.StopAllTweens(_outlineTweens);
+
+        // _outlineTweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
+        // {
+        //     outlineComponent.OutlineColor = newVal;
+
+        //     // _propertyBlock.SetColor("_OutlineColor", ColorUtil.WithAlpha(outlineColor, newVal));
+        //     // _renderer.SetPropertyBlock(_propertyBlock);
+        // })
+        //     .OnComplete(() =>
+        //     {
+        //         _isInTransition = false;
+        //     })
+        // );
+
+        // float startWidthValue = DEFAULT_OUTLINE_WIDTH;
+        // float endWidthValue = 4;
+
+        // if (!isShow)
+        // {
+        //     endWidthValue = DEFAULT_OUTLINE_WIDTH;
+        // }
+
+        // _outlineTweens.Add(Tween.Custom(startWidthValue, endWidthValue, duration: 0.3f, onValueChange: newVal =>
+        // {
+        //     outlineComponent.OutlineWidth = newVal;
+        // }));
+    }
+
+    public void DisableOutline()
+    {
+        _tweens.Add(Tween.Custom(1, 0, duration: 0.3f, onValueChange: newVal =>
         {
-            outlineComponent.OutlineWidth = newVal;
-        }));
+            _propertyBlock.SetFloat("_OutlineAlpha", newVal);
+            _outlineSpriteRenderer.SetPropertyBlock(_propertyBlock);
+        })
+            .OnComplete(() =>
+            {
+                outlineSprite.gameObject.SetActive(false);
+            })
+        );
     }
 
     public void HideOutlineCompletely()
