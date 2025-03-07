@@ -238,22 +238,22 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         //     endValue = 0;
         // }
 
-        Color startValue = new Color(30 / 255f, 38 / 255f, 74 / 255f, 1);
+        Color startValue = new Color(30 / 255f, 30 / 255f, 30 / 255f, 1);
         Color endValue = Color.white;
 
         if (!isShow)
         {
             startValue = Color.white;
-            endValue = new Color(30 / 255f, 38 / 255f, 74 / 255f, 1);
+            endValue = new Color(30 / 255f, 30 / 255f, 30 / 255f, 1);
         }
 
-        float startAlphaValue = 0.2f;
+        float startAlphaValue = 0.5f;
         float endAlphaValue = 1;
 
         if (!isShow)
         {
             startAlphaValue = 1f;
-            endAlphaValue = 0.2f;
+            endAlphaValue = 0.5f;
         }
 
         // if (isShow)

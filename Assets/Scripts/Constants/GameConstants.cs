@@ -45,6 +45,13 @@ public static class GameConstants
     public static Color SAFERIO_DISABLED = new Color(70f / 255, 70f / 255, 70f / 255, 1);
     #endregion
 
+    #region HDR COLOR
+    public static Color SAFERIO_HDR_GREEN = new Color(159f * 1.7f / 255, 231f * 1.7f / 255, 18f * 1.7f / 255, 1);
+    public static Color SAFERIO_HDR_CYAN = new Color(41f * 1.7f / 255, 202f * 1.7f / 255, 163f * 1.7f / 255, 1);
+    public static Color SAFERIO_HDR_YELLLOW = new Color(246f * 1.8f / 255, 204f * 1.8f / 255, 53f * 1.8f / 255, 1);
+    public static Color SAFERIO_HDR_BROWN = new Color(139f * 3 / 255, 82f * 3 / 255, 44f * 3 / 255, 1);
+    #endregion
+
     #region OBJECT POOLING
     public static string TAG_SOUND = "Tag Sound";
     public static string SCREW_BOX = "Screw Box";

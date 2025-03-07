@@ -71,17 +71,17 @@ public class BarricadeFaction : MonoBehaviour
 
         float ratio = 1 - Mathf.Max(Mathf.Max(factionColor.r + factionColor.g), factionColor.b);
 
-        Color outlineColor = factionColor * 3f;
+        Color outlineColor = FactionUtility.GetHDRColorForFaction(faction);
 
         outlineColor.r = Mathf.Min(outlineColor.r, 1.8f);
         outlineColor.g = Mathf.Min(outlineColor.g, 1.8f);
         outlineColor.b = Mathf.Min(outlineColor.b, 1.8f);
 
         _propertyBlock.SetColor("_Color", factionColor);
-        _propertyBlock.SetColor("_OutlineColor", 2f * factionColor);
+        _propertyBlock.SetColor("_OutlineColor", 2.7f * factionColor);
         _propertyBlock.SetFloat("_AdditionPositionX", barricadeServiceLocator.barricade.BarricadeProperty.AdditionalPositionX);
 
-        _arrowPropertyBlock.SetColor("_Color", 1.5f * factionColor);
+        _arrowPropertyBlock.SetColor("_Color", Color.white);
         _arrowRenderer.SetPropertyBlock(_arrowPropertyBlock);
 
         if (_outlineSpriteRenderer != null)

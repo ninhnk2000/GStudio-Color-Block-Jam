@@ -48,4 +48,26 @@ public static class FactionUtility
 
         return GameConstants.SAFERIO_RED;
     }
+
+    public static Color GetHDRColorForFaction(GameFaction faction)
+    {
+        if (faction == GameFaction.Green)
+        {
+            return GameConstants.SAFERIO_HDR_GREEN;
+        }
+        if (faction == GameFaction.Cyan)
+        {
+            return GameConstants.SAFERIO_HDR_CYAN;
+        }
+        else if (faction == GameFaction.Yellow)
+        {
+            return GameConstants.SAFERIO_HDR_YELLLOW;
+        }
+        else if (faction == GameFaction.Brown)
+        {
+            return GameConstants.SAFERIO_HDR_BROWN;
+        }
+
+        return 3f * GetColorForFaction(faction);
+    }
 }
