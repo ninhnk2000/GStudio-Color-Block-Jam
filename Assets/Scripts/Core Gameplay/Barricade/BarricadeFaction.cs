@@ -77,7 +77,7 @@ public class BarricadeFaction : MonoBehaviour
         outlineColor.g = Mathf.Min(outlineColor.g, 1.8f);
         outlineColor.b = Mathf.Min(outlineColor.b, 1.8f);
 
-        _propertyBlock.SetColor("_Color", factionColor);
+        // _propertyBlock.SetColor("_Color", factionColor);
         _propertyBlock.SetColor("_OutlineColor", 2.7f * factionColor);
         _propertyBlock.SetFloat("_AdditionPositionX", barricadeServiceLocator.barricade.BarricadeProperty.AdditionalPositionX);
 

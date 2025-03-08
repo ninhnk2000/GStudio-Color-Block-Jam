@@ -332,7 +332,7 @@ public class BaseBlock : MonoBehaviour
                 }
             }
 
-            PreviewSnapping();
+            // PreviewSnapping();
 
             _prevTargetPosition = _targetPosition;
             _prevDirection = _moveDirection;

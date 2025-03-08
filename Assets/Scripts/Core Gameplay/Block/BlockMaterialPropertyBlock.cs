@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using PrimeTween;
+using Saferio.Util.SaferioTween;
 using UnityEngine;
 using static GameEnum;
 
@@ -28,6 +29,7 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
     private MaterialPropertyBlock _propertyBlock;
     private GameFaction _cachedFaction;
     private bool _isInTransition;
+    private Vector3 _initialOutlineSpritePosition;
     #endregion
 
     private void Awake()
@@ -220,6 +222,8 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
 
         // outlineComponent.OutlineColor = DEFAULT_OUTLINE_COLOR;
         // outlineComponent.OutlineWidth = DEFAULT_OUTLINE_WIDTH;
+
+        _initialOutlineSpritePosition = outlineSprite.transform.position;
     }
 
     public void ShowOutline(bool isShow)
@@ -227,6 +231,17 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         if (outlineSprite == null)
         {
             return;
+        }
+        else
+        {
+            if (isShow)
+            {
+                outlineSprite.sortingOrder = 1;
+            }
+            else
+            {
+                outlineSprite.sortingOrder = 0;
+            }
         }
 
         // float startValue = 0;

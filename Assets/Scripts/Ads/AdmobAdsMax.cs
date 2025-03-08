@@ -1089,6 +1089,8 @@ public class AdmobAdsMax : MonoBehaviour
 
     private void Update()
     {
+        return;
+        
         if (_isShowAdmobBanner || _isTryLoadAdmobBanner)
         {
             if (IsCooldownAdmobBanner)
