@@ -122,7 +122,7 @@ public class BaseBlock : MonoBehaviour
         if (transform.parent.GetComponent<BaseBlock>() == null)
         {
             transform.position = transform.position.ChangeY(1.3f);
-            transform.localScale = 1.95f * Vector3.one;
+            transform.localScale = 1.98f * Vector3.one;
         }
 
         _tileSize = GamePersistentVariable.tileSize;

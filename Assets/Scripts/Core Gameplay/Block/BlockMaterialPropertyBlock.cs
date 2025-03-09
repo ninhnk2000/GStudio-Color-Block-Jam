@@ -253,13 +253,13 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         //     endValue = 0;
         // }
 
-        Color startValue = new Color(30 / 255f, 30 / 255f, 30 / 255f, 1);
+        Color startValue = new Color(7 / 255f, 9 / 255f, 29 / 255f, 1);
         Color endValue = Color.white;
 
         if (!isShow)
         {
             startValue = Color.white;
-            endValue = new Color(30 / 255f, 30 / 255f, 30 / 255f, 1);
+            endValue = new Color(7 / 255f, 9 / 255f, 29 / 255f, 1);
         }
 
         float startAlphaValue = 0.5f;
@@ -276,11 +276,11 @@ public class BlockMaterialPropertyBlock : MonoBehaviour
         //     outlineSprite.gameObject.SetActive(true);
         // }
 
-        _outlineTweens.Add(Tween.Custom(startAlphaValue, endAlphaValue, duration: 0.3f, onValueChange: newVal =>
-        {
-            _propertyBlock.SetFloat("_OutlineAlpha", newVal);
-            // _outlineSpriteRenderer.SetPropertyBlock(_propertyBlock);
-        }));
+        // _outlineTweens.Add(Tween.Custom(startAlphaValue, endAlphaValue, duration: 0.3f, onValueChange: newVal =>
+        // {
+        //     _propertyBlock.SetFloat("_OutlineAlpha", newVal);
+        //     // _outlineSpriteRenderer.SetPropertyBlock(_propertyBlock);
+        // }));
 
         _outlineTweens.Add(Tween.Custom(startValue, endValue, duration: 0.3f, onValueChange: newVal =>
         {
